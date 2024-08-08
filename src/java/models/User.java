@@ -4,57 +4,92 @@
  */
 package models;
 
+import java.util.Date;
+
 /**
  *
  * @author ASUS
  */
 public class User {
     private Integer userId;
-    private String password;
     private String fullname;
     private String address;
-    private String role;
-
+    private String phone;
+    private String email;
+    private String username;
+    private String password;
+    private Date dob;
+    private Integer balance;
+    private Integer roleId;
+    private Boolean status;
+    private String avatar;
+    
     public User() {
     }
 
-    public User(Integer idAccount, String password, String name, String email, Integer roleId) {
-        this.idAccount = idAccount;
-        this.password = password;
-        this.name = name;
+    public User(Integer userId, String fullname, String address, String phone, 
+            String email, String username, String password, Date dob,  Integer balance,
+            Integer roleId, Boolean status, String avatar ) {
+        this.userId  = userId;
+        this.fullname = fullname;
+        this.address = address;
+        this.phone = phone;
         this.email = email;
-        this.role=role;
+        this.username = username;
+        this.password = password;
+        this.dob = dob;
+        this.balance = balance;
+        this.roleId = roleId;
+        this.status = status;
+        this.avatar = avatar;
    }
-      public User(String password, String name, String email, String role) {
-        this.idAccount = null;
-        this.password = password;
-        this.name = name;
+      public User(String fullname, String address, String phone, 
+            String email, String username, String password, Date dob,  Integer balance,
+            Integer roleId, Boolean status, String avatar ) {
+        this.userId  = null;
+        this.fullname = fullname;
+        this.address = address;
+        this.phone = phone;
         this.email = email;
-        this.role=role;
-    }
-
-    public Integer getIdAccount() {
-        return idAccount;
-    }
-
-    public void setIdAccount(Integer idAccount) {
-        this.idAccount = idAccount;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.username = username;
         this.password = password;
+        this.dob = dob;
+        this.balance = balance;
+        this.roleId = roleId;
+        this.status = status;
+        this.avatar = avatar;
     }
 
-    public String getName() {
-        return name;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -65,22 +100,65 @@ public class User {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
+    public String getUsername() {
+        return username;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setUsername(String username) {
+        this.username = username;
     }
-      
-    
 
-    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+    public Integer getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Integer balance) {
+        this.balance = balance;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     @Override
     public String toString() {
-        return "email: "+email+"name: "+name+"password: "+password; // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
+        return "User{" + "fullname=" + fullname + ", username=" + username + ", password=" + password + '}';
     }
- 
-    
+  
 }
