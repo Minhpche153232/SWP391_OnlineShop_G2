@@ -36,5 +36,21 @@ public class DBContext {
         }
 
     }
+    public void close() {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        } catch (Exception e) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+    public Connection getConnection() {
+        return conn;
+    }
   
+    public static void main(String[] args) {
+        DBContext con = new DBContext();
+        System.out.println(con.getConnection());
+    }
 }
