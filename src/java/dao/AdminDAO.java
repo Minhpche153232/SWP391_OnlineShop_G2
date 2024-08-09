@@ -28,8 +28,6 @@ public class AdminDAO extends DBContext {
                         rs.getString("username"), rs.getString("status"));
                 x.add(b);
             }
-            rs.close();
-            ps.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
