@@ -4,10 +4,32 @@
  */
 package models;
 
+import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 /**
  *
  * @author catmi
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Product {
-    
+
+    private int productId;
+    private String productName;
+    private String productCode;
+    private String description;
+    private float price;
+    private Category category;
+    private Brand brand;
+    private boolean isActive;
+    private Type type;
+    List<ProductDetail> productDetails;
 }
