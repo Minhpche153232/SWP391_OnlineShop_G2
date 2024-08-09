@@ -25,7 +25,7 @@ public class AdminDAO extends DBContext {
             while (rs.next()) {
                 User b = new User(rs.getInt("userId"), rs.getString("fullname"),
                         rs.getString("address"), rs.getString("phone"), rs.getString("email"),
-                        rs.getString("username"), rs.getString("status"));
+                        rs.getString("username"), rs.getBoolean("status"));
                 x.add(b);
             }
         } catch (Exception e) {

@@ -24,8 +24,6 @@ public class User {
     private Boolean status;
     private String avatar;
     
-    public User(int aInt, String string, String string1, String string2, String string3, String string4, String string5) {
-    }
 
     public User(Integer userId, String fullname, String address, String phone, 
             String email, String username, String password, Date dob,  Integer balance,
