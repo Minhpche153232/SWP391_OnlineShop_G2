@@ -27,9 +27,7 @@ public class User {
     public User() {
     }
 
-    public User(Integer userId, String fullname, String address, String phone, 
-            String email, String username, String password, Date dob,  Integer balance,
-            Integer roleId, Boolean status, String avatar ) {
+    public User(int userId, String fullname, String address, String phone, String email) {
         this.userId  = userId;
         this.fullname = fullname;
         this.address = address;
@@ -43,16 +41,14 @@ public class User {
         this.status = status;
         this.avatar = avatar;
    }
-      public User(String fullname, String address, String phone, 
-            String email, String username, String password, Date dob,  Integer balance,
-            Integer roleId, Boolean status, String avatar ) {
+      public User(int userId, String fullname, String address, String phone, String email, String username, String status) {
         this.userId  = null;
         this.fullname = fullname;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.username = username;
-        this.password = password;
+        this.password = status;
         this.dob = dob;
         this.balance = balance;
         this.roleId = roleId;
