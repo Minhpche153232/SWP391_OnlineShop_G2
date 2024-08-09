@@ -24,10 +24,12 @@ public class User {
     private Boolean status;
     private String avatar;
     
-    public User() {
+    public User(int aInt, String string, String string1, String string2, String string3, String string4, String string5) {
     }
 
-    public User(int userId, String fullname, String address, String phone, String email) {
+    public User(Integer userId, String fullname, String address, String phone, 
+            String email, String username, String password, Date dob,  Integer balance,
+            Integer roleId, Boolean status, String avatar ) {
         this.userId  = userId;
         this.fullname = fullname;
         this.address = address;
@@ -41,14 +43,16 @@ public class User {
         this.status = status;
         this.avatar = avatar;
    }
-      public User(int userId, String fullname, String address, String phone, String email, String username, String status) {
+      public User(String fullname, String address, String phone, 
+            String email, String username, String password, Date dob,  Integer balance,
+            Integer roleId, Boolean status, String avatar ) {
         this.userId  = null;
         this.fullname = fullname;
         this.address = address;
         this.phone = phone;
         this.email = email;
         this.username = username;
-        this.password = status;
+        this.password = password;
         this.dob = dob;
         this.balance = balance;
         this.roleId = roleId;
