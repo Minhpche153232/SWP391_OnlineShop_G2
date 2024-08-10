@@ -23,6 +23,7 @@ public class User {
     private Integer roleId;
     private Boolean status;
     private String avatar;
+    private boolean gender;
     
     public User() {
     }
@@ -59,6 +60,16 @@ public class User {
         this.status = status;
         this.avatar = avatar;
     }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    public boolean getGender() {
+        return gender;
+    }
+      
+      
 
     public Integer getUserId() {
         return userId;
