@@ -29,7 +29,7 @@ public class Product {
     private float price;
     private Category category;
     private Brand brand;
-    private boolean isActive;
+    private boolean active;
     private Type type;
     List<ProductDetail> productDetails;
 }

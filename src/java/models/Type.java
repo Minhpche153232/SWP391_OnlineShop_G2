@@ -15,7 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-class Type {
+public class Type {
     private int typeId;
     private String typeName;
 }

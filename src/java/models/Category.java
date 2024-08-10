@@ -19,7 +19,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-class Category {
+public class Category {
     private int categoryId;
     private String categoryName;
     private String description;

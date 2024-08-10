@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-class Brand {
+public class Brand {
     private int brandId;
     private String brandName;
 }
