@@ -31,5 +31,6 @@ public class Product {
     private Brand brand;
     private boolean active;
     private Type type;
+    private String image;
     List<ProductDetail> productDetails;
 }
