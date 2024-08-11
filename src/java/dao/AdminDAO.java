@@ -17,8 +17,9 @@ public class AdminDAO extends DBContext {
     public ArrayList<User> getUser() {
         ArrayList<User> x = new ArrayList<>();
 
-        String xSql = "SELECT * FROM User WHERE roleId=2 or roleId=3";
+        String xSql = "SELECT * FROM User";
         try {
+            conn = new DBContext().conn;
             ps = conn.prepareStatement(xSql);
             rs = ps.executeQuery();
 
@@ -33,6 +34,12 @@ public class AdminDAO extends DBContext {
         }
         return x;
     }
-
+    public static void main(String[] args) {
+        AdminDAO dao = new AdminDAO();
+        ArrayList<User> x = dao.getUser();
+        for (User user : x) {
+            System.out.println(user);
+        }
+    }
     }
 

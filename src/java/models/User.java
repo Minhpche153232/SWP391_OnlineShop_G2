@@ -23,6 +23,16 @@ public class User {
     private Integer roleId;
     private Boolean status;
     private String avatar;
+
+    public User(Integer userId, String fullname, String address, String phone, String email, String username, Boolean status) {
+        this.userId = userId;
+        this.fullname = fullname;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.username = username;
+        this.status = status;
+    }
     
 
     public User(Integer userId, String fullname, String address, String phone, 
