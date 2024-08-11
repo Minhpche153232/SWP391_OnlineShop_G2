@@ -4,68 +4,75 @@
  */
 package models;
 
-import java.util.Date;
-
 /**
  *
  * @author ASUS
  */
 public class User {
-    private Integer userId;
+
+    private int userId;
+    private String avatar;
+    private String userName;
+    private String password;
     private String fullname;
     private String address;
-    private String phone;
     private String email;
-    private String username;
-    private String password;
-    private Date dob;
-    private Integer balance;
-    private Integer roleId;
-    private Boolean status;
-    private String avatar;
-    
+    private String phone;
+    private String dob;
+    private float balance;
+    private boolean status;
+    private boolean gender;
+    private String role;
+
     public User() {
     }
 
-    public User(Integer userId, String fullname, String address, String phone, 
-            String email, String username, String password, Date dob,  Integer balance,
-            Integer roleId, Boolean status, String avatar ) {
-        this.userId  = userId;
-        this.fullname = fullname;
-        this.address = address;
-        this.phone = phone;
-        this.email = email;
-        this.username = username;
-        this.password = password;
-        this.dob = dob;
-        this.balance = balance;
-        this.roleId = roleId;
-        this.status = status;
+    public User(int userId, String avatar, String userName, String password, String fullname, String address, String email, String phone, String dob, float balance, boolean status, boolean gender, String role) {
+        this.userId = userId;
         this.avatar = avatar;
-   }
-      public User(String fullname, String address, String phone, 
-            String email, String username, String password, Date dob,  Integer balance,
-            Integer roleId, Boolean status, String avatar ) {
-        this.userId  = null;
+        this.userName = userName;
+        this.password = password;
         this.fullname = fullname;
         this.address = address;
-        this.phone = phone;
         this.email = email;
-        this.username = username;
-        this.password = password;
+        this.phone = phone;
         this.dob = dob;
         this.balance = balance;
-        this.roleId = roleId;
         this.status = status;
+        this.gender = gender;
+        this.role = role;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFullname() {
@@ -84,14 +91,6 @@ public class User {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -100,65 +99,58 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getRole() {
+        return role;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(String dob) {
         this.dob = dob;
     }
 
-    public Integer getBalance() {
+    public float getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(float balance) {
         this.balance = balance;
     }
 
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    public Boolean getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(Boolean status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public boolean isGender() {
+        return gender;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
 
     @Override
     public String toString() {
-        return "User{" + "fullname=" + fullname + ", username=" + username + ", password=" + password + '}';
+        return "User{" + "userId=" + userId + ", avatar=" + avatar + ", userName=" + userName + ", password=" + password + ", fullname=" + fullname + ", address=" + address + ", email=" + email + ", phone=" + phone + ", dob=" + dob + ", balance=" + balance + ", status=" + status + ", gender=" + gender + ", role=" + role + '}';
     }
-  
+
+
 }
