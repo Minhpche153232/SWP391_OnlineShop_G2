@@ -46,31 +46,31 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label>Full Name: </label>
-                                    <input type="text" class="form-control" name="fullname" placeholder="Full Name" required>
+                                    <input type="text" class="form-control" name="fullname" placeholder="Full Name" required pattern="[a-zA-Z]+" title="Only letters allowed">
                                 </div>
                                 <div class="col-md-6">
                                     <label>User Name: </label>
-                                    <input type="text" class="form-control" name="username" placeholder="User name" required>
+                                    <input type="text" class="form-control" name="username" placeholder="User name" required pattern="^\S+$" title="No spaces allowed">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label>Password: </label>
-                                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                                    <input type="password" class="form-control" name="password" placeholder="Password" required pattern="^\S+$" title="No spaces allowed">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Re-password: </label>
-                                    <input type="password" class="form-control" name="repassword" placeholder="Re-password" required>
+                                    <input type="password" class="form-control" name="repassword" placeholder="Re-password" required pattern="^\S+$" title="No spaces allowed">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label>Email: </label>
-                                    <input type="email" class="form-control" name="email" placeholder="Email" required>
+                                    <input type="email" class="form-control" name="email" placeholder="Email" required pattern="^\S+$" title="No spaces allowed">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Phone number:</label>
-                                    <input type="text" class="form-control" name="phone" placeholder="Phone number" required>
+                                    <input type="text" class="form-control" name="phone" placeholder="Phone number" required pattern="^\S+$" title="No spaces allowed">
                                 </div>
                             </div>
                             <div class="row mb-3">
