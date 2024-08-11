@@ -47,5 +47,15 @@
     <servlet-mapping>
         <servlet-name>ChangeUserController</servlet-name>
         <url-pattern>/ChangeUserController</url-pattern>
+        </servlet-mapping>
+    <servlet>
+
+        <servlet-name>Dashboard</servlet-name>
+        <servlet-class>controller.admin.Dashboard</servlet-class>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Dashboard</servlet-name>
+        <url-pattern>/admin/dashboard</url-pattern>
     </servlet-mapping>
 </web-app>

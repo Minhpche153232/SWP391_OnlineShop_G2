@@ -14,15 +14,35 @@ public class ProductDetail {
     private int size;
     private String color;
     private int unitInStock;
+    private String image;
+    private int productId;
 
     public ProductDetail() {
     }
 
-    public ProductDetail(Product product, int size, String color, int unitInStock) {
+    public ProductDetail(Product product, int size, String color, int unitInStock, String image, int productId ) {
         this.product = product;
         this.size = size;
         this.color = color;
         this.unitInStock = unitInStock;
+        this.image = image;
+        this.productId = productId;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Product getProduct() {
@@ -59,7 +79,9 @@ public class ProductDetail {
 
     @Override
     public String toString() {
-        return "ProductDetail{" + "product=" + product + ", size=" + size + ", color=" + color + ", unitInStock=" + unitInStock + '}';
+        return "ProductDetail{" + "product=" + product + ", size=" + size + ", color=" + color + ", unitInStock=" + unitInStock + ", image=" + image + '}';
     }
+
+    
 
 }

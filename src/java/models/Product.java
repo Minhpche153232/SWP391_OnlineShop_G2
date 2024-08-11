@@ -4,6 +4,8 @@
  */
 package models;
 
+import java.util.List;
+
 /**
  *
  * @author catmi
@@ -16,13 +18,16 @@ public class Product {
     private float price;
     private Category category;
     private Brand brand;
-    private TypeProduct type;
-    private boolean status;
+    private Type type;
+    private boolean active;
+    private String productCode;
+    private List<ProductDetail> productDetails;
+    
 
     public Product() {
     }
 
-    public Product(int productId, String image, String productName, String description, float price, Category category, Brand brand, TypeProduct type, boolean status) {
+    public Product(int productId, String image, String productName, String description, float price, Category category, Brand brand, Type type, boolean active, String productCode, List<ProductDetail> productDetails) {
         this.productId = productId;
         this.image = image;
         this.productName = productName;
@@ -31,7 +36,25 @@ public class Product {
         this.category = category;
         this.brand = brand;
         this.type = type;
-        this.status = status;
+        this.active = active;
+        this.productCode = productCode;
+        this.productDetails = productDetails;
+    }
+
+    public List<ProductDetail> getProductDetails() {
+        return productDetails;
+    }
+
+    public void setProductDetails(List<ProductDetail> productDetails) {
+        this.productDetails = productDetails;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 
    
@@ -83,20 +106,20 @@ public class Product {
         this.brand = brand;
     }
 
-    public TypeProduct getType() {
+    public Type getType() {
         return type;
     }
 
-    public void setType(TypeProduct type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getImage() {
@@ -109,8 +132,10 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "productId=" + productId + ", productName=" + productName + ", description=" + description + ", price=" + price + ", category=" + category + ", brand=" + brand + ", type=" + type + ", status=" + status + '}';
+        return "Product{" + "productId=" + productId + ", image=" + image + ", productName=" + productName + ", description=" + description + ", price=" + price + ", category=" + category + ", brand=" + brand + ", type=" + type + ", active=" + active + ", productCode=" + productCode + '}';
     }
+
+    
     
     
 }
