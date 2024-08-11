@@ -78,7 +78,11 @@ public class ProductManagement extends HttpServlet {
                 String description = request.getParameter("description");
                 int categoryId = Integer.parseInt(request.getParameter("categoryId"));
                 int brandId = Integer.parseInt(request.getParameter("brandId"));
-                int typeId = Integer.parseInt(request.getParameter("typeId"));
+                int typeId = 0;
+                if(request.getParameter("typeId") != null){
+                                    typeId = Integer.parseInt(request.getParameter("typeId"));
+ 
+                }
                 float price = Float.parseFloat(request.getParameter("price"));
                 boolean status = request.getParameter("status").equals("1");
                 // Check if product name or code already exists
@@ -97,7 +101,9 @@ public class ProductManagement extends HttpServlet {
                 newProduct.setProductCode(productCode);
                 newProduct.setCategory(new CategoryDAO().getCategoryById(categoryId));
                 newProduct.setBrand(new BrandDAO().getBrandById(brandId));
-                newProduct.setType(new TypeDAO().getTypeById(typeId));
+                if(typeId != 0){
+                    newProduct.setType(new TypeDAO().getTypeById(typeId));
+                }
                 newProduct.setPrice(price);
                 newProduct.setActive(status);
                 newProduct.setDescription(description);
@@ -164,7 +170,6 @@ public class ProductManagement extends HttpServlet {
             default -> {
             }
         }
-
         response.sendRedirect(request.getContextPath() + "/admin/manage-product");
     }
 

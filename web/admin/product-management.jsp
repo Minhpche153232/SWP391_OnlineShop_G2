@@ -331,7 +331,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="typeId">Type</label>
-                                <select class="form-control" id="typeId" name="typeId" required>
+                                <select class="form-control" id="typeId" name="typeId" >
                                     <c:forEach var="type" items="${types}">
                                         <option value="${type.typeId}">${type.typeName}</option>
                                     </c:forEach>

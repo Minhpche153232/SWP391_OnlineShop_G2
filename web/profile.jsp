@@ -90,7 +90,7 @@
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
-                                                    <a class="nav-link" href="cart.html"><img src="images/icon-list.svg" width="24"/></a></h6>
+                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
                                                 <span class="text-secondary">Products manager</span>
                                             </li>
 
@@ -109,7 +109,7 @@
                                             </li>
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
-                                                    <a class="nav-link" href="cart.html"><img src="images/icon-list.svg" width="24"/></a></h6>
+                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
                                                 <span class="text-secondary">Products manager</span>
                                             </li>
 

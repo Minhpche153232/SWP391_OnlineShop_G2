@@ -29,6 +29,16 @@ public class ProductDetail {
         this.productId = productId;
     }
 
+     public ProductDetail(int productId ,int size, String color, int unitInStock, String image) {
+        this.size = size;
+        this.color = color;
+        this.unitInStock = unitInStock;
+        this.image = image;
+        this.productId = productId;
+    }
+
+    
+
     public int getProductId() {
         return productId;
     }

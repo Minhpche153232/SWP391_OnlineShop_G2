@@ -4,6 +4,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dao;
+
 import java.sql.Date;
 import java.sql.Timestamp;
 import com.sun.jdi.connect.spi.Connection;
@@ -18,14 +19,12 @@ import models.Product;
 import models.ProductDetail;
 import dao.DBContext;
 
-
 import java.util.List;
 import models.Brand;
 import models.Category;
 
 import models.ProductDetail;
 import models.Type;
-
 
 /**
  *
@@ -69,7 +68,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Product> getAllProductWithParam(String searchParam, Integer categoryId, Integer brandId, Integer typeId, Boolean isActive) {
         List<Product> products = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -209,7 +208,8 @@ public class ProductDAO extends DBContext {
 
     public void addProduct(Product product) {
         try {
-            String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+          if(product.getType() != null){
+                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setString(2, product.getProductCode());
@@ -219,8 +219,20 @@ public class ProductDAO extends DBContext {
             preparedStatement.setFloat(6, product.getPrice());
             preparedStatement.setBoolean(7, product.isActive());
             preparedStatement.setString(8, product.getDescription());
+            preparedStatement.executeUpdate();
+          }else{
+                 String query = "INSERT INTO Product (productName, productCode, categoryId, brandId, price, status, description) VALUES (?, ?, ?, ?, ?,?,?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, product.getProductName());
+            preparedStatement.setString(2, product.getProductCode());
+            preparedStatement.setInt(3, product.getCategory().getCategoryId());
+            preparedStatement.setInt(4, product.getBrand().getBrandId());
+            preparedStatement.setFloat(5, product.getPrice());
+            preparedStatement.setBoolean(6, product.isActive());
+            preparedStatement.setString(7, product.getDescription());
 
             preparedStatement.executeUpdate();
+          }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -421,9 +433,20 @@ public class ProductDAO extends DBContext {
 
     public static void main(String[] args) {
         ProductDAO dAO = new ProductDAO();
-        System.out.println(dAO.getTopCheapestProduct());
+        String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+        Product d = new Product();
+        d.setActive(true);
+        Brand b = new Brand();
+        b.setBrandId(1);
+        Category c = new Category();
+        c.setCategoryId(1);
+        d.setPrice(12);
+        d.setDescription("dess");
+        d.setProductCode("code");
+        d.setProductName("name");
+        d.setBrand(b);
+        d.setCategory(c);
+        dAO.addProduct(d);
     }
-
-
 
 }
