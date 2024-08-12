@@ -34,6 +34,10 @@ public class DashBoardController extends HttpServlet {
             String message = request.getParameter("message");
 
             String textSearch = request.getParameter("textSearch");
+            String roleSearch = request.getParameter("roleSearch");
+                        String activeSearch = request.getParameter("activeSearch");
+
+
             String pageIndexString = request.getParameter("pageIndex");
             int pageIndex = 1;
             if (textSearch == null) {
@@ -51,18 +55,21 @@ public class DashBoardController extends HttpServlet {
 
             int totalPage = accountDAO.countTotalPage(textSearch);
             List<User> listUser = accountDAO.searchUser(textSearch, pageIndex);
-
-            List<Integer> listPage = new ArrayList<>();
-            for (int i = 1; i <= totalPage; i++) {
-                listPage.add(i);
-            }
-            request.setAttribute("totalPage", listPage);
+            request.setAttribute("totalPage", totalPage);
             request.setAttribute("listUser", listUser);
             request.setAttribute("listRole", listRole);
             request.setAttribute("message", message);
             request.setAttribute("pageIndex", pageIndex);
+            if (roleSearch != null) {
+                request.setAttribute("roleSearch", roleSearch);
 
-            request.getRequestDispatcher("table.jsp").forward(request, response);
+            }
+              if (activeSearch != null) {
+                request.setAttribute("activeSearch", activeSearch);
+
+            }
+
+            request.getRequestDispatcher("user-management.jsp").forward(request, response);
         } else {
             response.sendRedirect("home");
         }
