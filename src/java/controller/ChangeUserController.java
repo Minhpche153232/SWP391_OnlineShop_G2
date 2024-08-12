@@ -33,13 +33,13 @@ public class ChangeUserController extends HttpServlet {
                 check = accountDAO.changeStatusUser(value.equals("true"), Integer.parseInt(userId));
             }
             if (check) {
-                response.sendRedirect("dashboard?message=Submit successfully");
+                response.sendRedirect("admin/user-manager?message=Submit successfully");
             } else {
-                response.sendRedirect("dashboard?message=Submit fail");
+                response.sendRedirect("admin/user-manager?message=Submit fail");
 
             }
         } catch (Exception e) {
-            response.sendRedirect("dashboard?message=Submit fail" + e);
+            response.sendRedirect("admin/user-manager?message=Submit fail" + e);
         }
 
     }
