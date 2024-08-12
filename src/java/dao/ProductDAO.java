@@ -31,7 +31,7 @@ import models.Type;
  * @author Admin
  */
 public class ProductDAO extends DBContext {
-
+    
     public List<ProductDetail> getTopCheapestProduct() {
         DBContext dBContext = new DBContext();
         List<ProductDetail> list = null;
@@ -68,7 +68,7 @@ public class ProductDAO extends DBContext {
         }
         return list;
     }
-
+    
     public List<Product> getAllProductWithParam(String searchParam, Integer categoryId, Integer brandId, Integer typeId, Boolean isActive) {
         List<Product> products = new ArrayList<>();
         List<Object> params = new ArrayList<>();
@@ -90,7 +90,7 @@ public class ProductDAO extends DBContext {
                     Type t ON p.typeId = t.typeId
                 WHERE 1 = 1
             """);
-
+            
             if (searchParam != null && !searchParam.trim().isEmpty()) {
                 query.append(" AND p.productName LIKE ? ");
                 params.add("%" + searchParam + "%");
@@ -111,10 +111,10 @@ public class ProductDAO extends DBContext {
                 query.append(" AND p.status = ? ");
                 params.add(isActive ? 1 : 0);
             }
-
+            
             PreparedStatement preparedStatement = conn.prepareStatement(query.toString());
             mapParams(preparedStatement, params);
-
+            
             try (ResultSet rs = preparedStatement.executeQuery()) {
                 while (rs.next()) {
                     Product product = new Product();
@@ -123,24 +123,24 @@ public class ProductDAO extends DBContext {
                     product.setProductCode(rs.getString("productCode"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getFloat("price"));
-
+                    
                     Category category = new Category();
                     category.setCategoryId(rs.getInt("categoryId"));
                     category.setCategoryName(rs.getString("categoryName"));
                     product.setCategory(category);
-
+                    
                     Brand brand = new Brand();
                     brand.setBrandId(rs.getInt("brandId"));
                     brand.setBrandName(rs.getString("brandName"));
                     product.setBrand(brand);
-
+                    
                     Type type = new Type();
                     type.setTypeId(rs.getInt("typeId"));
                     type.setTypeName(rs.getString("typeName"));
                     product.setType(type);
-
+                    
                     product.setActive(rs.getBoolean("status"));
-
+                    
                     products.add(product);
                 }
             }
@@ -149,7 +149,7 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
-
+    
     public Product getById(Integer productId) {
         Product p = null;
         BrandDAO bdao = new BrandDAO();
@@ -183,7 +183,7 @@ public class ProductDAO extends DBContext {
         }
         return p;
     }
-
+    
     private List<ProductDetail> getProductDetailsByProductId(int productId) {
         List<ProductDetail> details = new ArrayList<>();
         try {
@@ -205,39 +205,39 @@ public class ProductDAO extends DBContext {
         }
         return details;
     }
-
+    
     public void addProduct(Product product) {
         try {
-          if(product.getType() != null){
+            if (product.getType() != null) {
                 String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, product.getProductName());
-            preparedStatement.setString(2, product.getProductCode());
-            preparedStatement.setInt(3, product.getCategory().getCategoryId());
-            preparedStatement.setInt(4, product.getBrand().getBrandId());
-            preparedStatement.setInt(5, product.getType().getTypeId());
-            preparedStatement.setFloat(6, product.getPrice());
-            preparedStatement.setBoolean(7, product.isActive());
-            preparedStatement.setString(8, product.getDescription());
-            preparedStatement.executeUpdate();
-          }else{
-                 String query = "INSERT INTO Product (productName, productCode, categoryId, brandId, price, status, description) VALUES (?, ?, ?, ?, ?,?,?)";
-            PreparedStatement preparedStatement = conn.prepareStatement(query);
-            preparedStatement.setString(1, product.getProductName());
-            preparedStatement.setString(2, product.getProductCode());
-            preparedStatement.setInt(3, product.getCategory().getCategoryId());
-            preparedStatement.setInt(4, product.getBrand().getBrandId());
-            preparedStatement.setFloat(5, product.getPrice());
-            preparedStatement.setBoolean(6, product.isActive());
-            preparedStatement.setString(7, product.getDescription());
-
-            preparedStatement.executeUpdate();
-          }
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                preparedStatement.setString(1, product.getProductName());
+                preparedStatement.setString(2, product.getProductCode());
+                preparedStatement.setInt(3, product.getCategory().getCategoryId());
+                preparedStatement.setInt(4, product.getBrand().getBrandId());
+                preparedStatement.setInt(5, product.getType().getTypeId());
+                preparedStatement.setFloat(6, product.getPrice());
+                preparedStatement.setBoolean(7, product.isActive());
+                preparedStatement.setString(8, product.getDescription());
+                preparedStatement.executeUpdate();
+            } else {
+                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId, price, status, description) VALUES (?, ?, ?, ?, ?,?,?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(query);
+                preparedStatement.setString(1, product.getProductName());
+                preparedStatement.setString(2, product.getProductCode());
+                preparedStatement.setInt(3, product.getCategory().getCategoryId());
+                preparedStatement.setInt(4, product.getBrand().getBrandId());
+                preparedStatement.setFloat(5, product.getPrice());
+                preparedStatement.setBoolean(6, product.isActive());
+                preparedStatement.setString(7, product.getDescription());
+                
+                preparedStatement.executeUpdate();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
+    
     public boolean isProductNameExist(String productName) {
         boolean exists = false;
         try {
@@ -253,7 +253,7 @@ public class ProductDAO extends DBContext {
         }
         return exists;
     }
-
+    
     public boolean isProductCodeExist(String productCode) {
         boolean exists = false;
         try {
@@ -269,7 +269,7 @@ public class ProductDAO extends DBContext {
         }
         return exists;
     }
-
+    
     public void updateProductStatus(int productId, boolean status) {
         try {
             String query = "UPDATE Product SET status = ? WHERE productId = ?";
@@ -281,7 +281,7 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public void updateProduct(Product product) {
         try {
             String query = "UPDATE Product SET productName = ?, productCode = ?, categoryId = ?, brandId = ?, typeId = ?, price = ?, status = ?, description = ? WHERE productId = ?";
@@ -300,7 +300,7 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public boolean isProductNameExist(String productName, int productId) {
         try {
             String query = "SELECT COUNT(*) FROM Product WHERE productName = ? AND productId != ?";
@@ -316,7 +316,7 @@ public class ProductDAO extends DBContext {
         }
         return false;
     }
-
+    
     public boolean isProductCodeExist(String productCode, int productId) {
         try {
             String query = "SELECT COUNT(*) FROM Product WHERE productCode = ? AND productId != ?";
@@ -332,7 +332,7 @@ public class ProductDAO extends DBContext {
         }
         return false;
     }
-
+    
     public ProductDetail getProductDetailBySizeAndColor(int productId, int size, String color) {
         ProductDetail detail = null;
         try {
@@ -356,7 +356,7 @@ public class ProductDAO extends DBContext {
         }
         return detail;
     }
-
+    
     public void addProductDetail(ProductDetail detail) {
         try {
             String query = "INSERT INTO ProductDetails (productId, size, color, unitInStock, image) VALUES (?, ?, ?, ?, ?)";
@@ -371,7 +371,7 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public void updateProductDetail(ProductDetail detail) {
         try {
             String query = "UPDATE ProductDetails SET unitInStock = ? ,  image = ? WHERE productId = ? AND size = ? AND color = ? ";
@@ -386,7 +386,7 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public void deleteProductDetail(int productId, int size, String color) {
         try {
             String query = "DELETE FROM ProductDetails WHERE productId = ? AND size = ? AND color = ?";
@@ -399,7 +399,7 @@ public class ProductDAO extends DBContext {
             e.printStackTrace();
         }
     }
-
+    
     public void mapParams(PreparedStatement ps, List<Object> args) throws SQLException {
         int i = 1;
         for (Object arg : args) {
@@ -416,37 +416,41 @@ public class ProductDAO extends DBContext {
             } else {
                 ps.setString(i++, (String) arg);
             }
-
+            
         }
     }
-
+    
     public List<Product> Paging(List<Product> products, int page, int pageSize) {
         int fromIndex = (page - 1) * pageSize;
         int toIndex = Math.min(fromIndex + pageSize, products.size());
-
+        
         if (fromIndex > toIndex) {
             fromIndex = toIndex;
         }
-
+        
         return products.subList(fromIndex, toIndex);
     }
-
+    
     public static void main(String[] args) {
         ProductDAO dAO = new ProductDAO();
-        String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
-        Product d = new Product();
-        d.setActive(true);
-        Brand b = new Brand();
-        b.setBrandId(1);
-        Category c = new Category();
-        c.setCategoryId(1);
-        d.setPrice(12);
-        d.setDescription("dess");
-        d.setProductCode("code");
-        d.setProductName("name");
-        d.setBrand(b);
-        d.setCategory(c);
-        dAO.addProduct(d);
+//        String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+//        Product d = new Product();
+//        d.setActive(true);
+//        Brand b = new Brand();
+//        b.setBrandId(1);
+//        Category c = new Category();
+//        c.setCategoryId(1);
+//        d.setPrice(12);
+//        d.setDescription("dess");
+//        d.setProductCode("code");
+//        d.setProductName("name");
+//        d.setBrand(b);
+//        d.setCategory(c);
+//        dAO.addProduct(d);
+        List<Product> list = dAO.getAllProductWithParam("", null, null, null, true);
+        for (Product product : list) {
+            System.out.println(product);
+        }
     }
-
+    
 }

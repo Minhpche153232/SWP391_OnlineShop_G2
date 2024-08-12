@@ -82,7 +82,7 @@
                                     </div>
                                     <hr class="my-4">
                                     <ul class="list-group list-group-flush">
-                                        <c:if test="${sessionScope.currentUser.role eq 'admin'}">
+                                        <c:if test="${sessionScope.currentUser.role eq '1'}">
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
                                                     <a class="nav-link" href="cart.html"><img src="images/icon-cart.svg" width="24"/></a></h6>
@@ -91,9 +91,18 @@
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
                                                     <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
+                                                <span class="text-secondary">Brand manager</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                <h6 class="mb-0">
+                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
+                                                <span class="text-secondary">Category manager</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                <h6 class="mb-0">
+                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
                                                 <span class="text-secondary">Products manager</span>
                                             </li>
-
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
                                                     <a class="nav-link" href="dashboard"><img src="images/manager-user.svg" width="24"/></a></h6>
@@ -101,7 +110,7 @@
                                             </li>
 
                                         </c:if>
-                                             <c:if test="${sessionScope.currentUser.role eq 'staff'}">
+                                             <c:if test="${sessionScope.currentUser.role eq '3'}">
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
                                                     <a class="nav-link" href="cart.html"><img src="images/icon-cart.svg" width="24"/></a></h6>
@@ -110,11 +119,21 @@
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
                                                     <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
+                                                <span class="text-secondary">Brand manager</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                <h6 class="mb-0">
+                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
+                                                <span class="text-secondary">Category manager</span>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                <h6 class="mb-0">
+                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
                                                 <span class="text-secondary">Products manager</span>
                                             </li>
 
                                         </c:if>
-                                        <c:if test="${sessionScope.currentUser.role eq 'user'}">
+                                        <c:if test="${sessionScope.currentUser.role eq '2'}">
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
                                                     <a class="nav-link" href="cart.html"><img src="images/icon-cart.svg" width="24"/></a></h6>
@@ -139,7 +158,7 @@
                                             <h6 class="mb-0">User name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control"name="userName"  value=${sessionScope.currentUser.userName}>
+                                            <input type="text" class="form-control" readonly name="userName"  value=${sessionScope.currentUser.userName}>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -147,7 +166,7 @@
                                             <h6 class="mb-0">Full Name</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control"name="fullName"  value="${sessionScope.currentUser.fullname}">
+                                            <input type="text" class="form-control" name="fullName"  value="${sessionScope.currentUser.fullname}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -155,7 +174,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control"name="email"  value="${sessionScope.currentUser.email}">
+                                            <input type="text" class="form-control" readonly name="email"  value="${sessionScope.currentUser.email}">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -163,7 +182,7 @@
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" name="phone"  value=${sessionScope.currentUser.phone}>
+                                            <input type="text" class="form-control" readonly name="phone"  value=${sessionScope.currentUser.phone}>
                                         </div>
                                     </div>
 
@@ -216,14 +235,7 @@
 
                                     </div>
 
-                                    <div class="row mb-3">
-                                        <div class="col-sm-3">
-                                            <h6 class="mb-0">Role</h6>
-                                        </div>
-                                        <div class="col-sm-9 text-secondary">
-                                            <input type="text" class="form-control" value=${sessionScope.currentUser.role} readonly>
-                                        </div>
-                                    </div>
+                                  
                                     <div class="row">
                                         <div class="col-sm-3"></div>
                                         <div class="col-sm-9 text-secondary">
@@ -232,13 +244,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <%@include file="change-password.jsp" %>
+                            
 
                         </div>
-                    </div>
+                                                                  
+ </div>
                 </div>
             </div>
         </form>
+                                                 <%@include file="change-password.jsp" %>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
         <script type="text/javascript">

@@ -24,6 +24,14 @@
         <servlet-name>ChangeUserController</servlet-name>
         <servlet-class>controller.ChangeUserController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CategoryManage</servlet-name>
+        <servlet-class>controller.admin.CategoryManage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BrandManage</servlet-name>
+        <servlet-class>controller.admin.BrandManage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
         <url-pattern>/ChangePassword</url-pattern>
@@ -47,15 +55,21 @@
     <servlet-mapping>
         <servlet-name>ChangeUserController</servlet-name>
         <url-pattern>/ChangeUserController</url-pattern>
-        </servlet-mapping>
+    </servlet-mapping>
     <servlet>
-
         <servlet-name>Dashboard</servlet-name>
         <servlet-class>controller.admin.Dashboard</servlet-class>
-
     </servlet>
     <servlet-mapping>
         <servlet-name>Dashboard</servlet-name>
         <url-pattern>/admin/dashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CategoryManage</servlet-name>
+        <url-pattern>/admin/category</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BrandManage</servlet-name>
+        <url-pattern>/admin/brand</url-pattern>
     </servlet-mapping>
 </web-app>
