@@ -29,11 +29,11 @@ public class UserDAO extends DBContext {
                 user.setAddress(rs.getString("address"));
                 user.setPhone(rs.getString("phone"));
                 user.setEmail(rs.getString("email"));
-                user.setUsername(rs.getString("username"));
+                user.setUserName(rs.getString("username"));
                 user.setPassword(rs.getString("password"));
-                user.setDob(rs.getDate("dob"));
+                user.setDob(rs.getString("dob"));
                 user.setBalance(rs.getInt("balance"));
-                user.setRoleId(rs.getInt("roleId"));
+                user.setRole(rs.getString("roleId"));
                 user.setStatus(rs.getBoolean("status"));
                 user.setAvatar(rs.getString("avatar"));
                 user.setGender(rs.getBoolean("gender"));
@@ -49,16 +49,16 @@ public class UserDAO extends DBContext {
 
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, user.getFullname());
-            statement.setString(2, user.getUsername());
+            statement.setString(2, user.getUserName());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getPhone());
-            statement.setDate(6, new Date(user.getDob().getTime())); // Convert java.util.Date to java.sql.Date
+            statement.setString(6, user.getDob()); // Convert java.util.Date to java.sql.Date
             statement.setString(7, user.getAddress());
-            statement.setBoolean(8, user.getGender());
-            statement.setInt(9, user.getBalance());
-            statement.setInt(10, user.getRoleId());
-            statement.setBoolean(11, user.getStatus());
+            statement.setBoolean(8, user.isGender());
+            statement.setFloat(9, user.getBalance());
+            statement.setString(10, user.getRole());
+            statement.setBoolean(11, user.isStatus());
             statement.setString(12, user.getAvatar());
 
             int rowsInserted = statement.executeUpdate();

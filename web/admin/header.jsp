@@ -57,12 +57,12 @@
                         <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/manage-product">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/category">
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>Category Management</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/manage-product">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/brand">
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>Brand Management</span></a>
                 </li>

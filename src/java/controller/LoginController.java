@@ -48,7 +48,7 @@ public class LoginController extends HttpServlet {
         User user = userDAO.getUserByUsernameAndPassword(username, password);
         if (user != null) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("currentUser", user);
 
             if ("on".equals(rememberMe)) {
                 Cookie usernameCookie = new Cookie("username", username);
