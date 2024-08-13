@@ -12,7 +12,7 @@ function validateField(id, regex, errorMessage) {
 
 
 
-document.getElementById('lastname').addEventListener('blur', function () {
+document.getElementById('fullname').addEventListener('blur', function () {
     validateField('fullname', /^[A-Za-zÀ-ỹ\s]+$/, 'Full name should contain only alphabets and spaces.');
 });
 
@@ -45,8 +45,7 @@ document.getElementById('confirmpassword').addEventListener('blur', function () 
 
 function validateForm() {
     let isValid = true;
-    isValid &= validateField('firstname', /^[A-Za-zÀ-ỹ\s]+$/, 'First name should contain only alphabets and spaces.');
-    isValid &= validateField('lastname', /^[A-Za-zÀ-ỹ\s]+$/, 'Last name should contain only alphabets and spaces.');
+    isValid &= validateField('fullname', /^[A-Za-zÀ-ỹ\s]+$/, 'Full name should contain only alphabets and spaces.');
     isValid &= validateField('email', /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email format.');
     isValid &= validateField('phonenumber', /^[0-9]{7,11}$/, 'Phone number must be 7-11 digits long and contain only numbers.');
     isValid &= validateField('address', /^[A-Za-zÀ-ỹ0-9,.() \-]+$/, 'Address contains invalid characters.');

@@ -15,7 +15,7 @@
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
             body {
-                background-color: #CE4B40;
+                background-color: #EFF2F1;
             }
             .register-form {
                 background: #EFF2F1;
@@ -79,7 +79,7 @@
                                         <label class="form-check-label" for="female">Female</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" id="male" name="gender" value="Male" >
+                                        <input class="form-check-input" type="radio" id="male" name="gender" value="Male" checked >
                                         <label class="form-check-label" for="male">Male</label>
                                     </div>
                                     <div id="genderError" class="error"></div>
