@@ -10,12 +10,10 @@ function validateField(id, regex, errorMessage) {
     }
 }
 
-document.getElementById('firstname').addEventListener('blur', function () {
-    validateField('firstname', /^[A-Za-zÀ-ỹ\s]+$/, 'First name should contain only alphabets and spaces.');
-});
+
 
 document.getElementById('lastname').addEventListener('blur', function () {
-    validateField('lastname', /^[A-Za-zÀ-ỹ\s]+$/, 'Last name should contain only alphabets and spaces.');
+    validateField('fullname', /^[A-Za-zÀ-ỹ\s]+$/, 'Full name should contain only alphabets and spaces.');
 });
 
 document.getElementById('email').addEventListener('blur', function () {

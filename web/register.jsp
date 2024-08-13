@@ -9,99 +9,131 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Sign up</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
-            .register-container {
-                margin-top: 50px;
+            body {
+                background-color: #CE4B40;
             }
-            .register-card {
-                padding: 20px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            .register-form {
+                background: #EFF2F1;
+                padding: 10px;
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+                margin: 50px 0 50px;
             }
-            .register-card h3 {
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            .btn-register {
-                width: 100%;
-            }
-            .login-link {
-                text-align: center;
-                margin-top: 15px;
+            .error {
+                color: red;
+                font-size: 0.9em;
             }
         </style>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('dob').setAttribute('max', today);
+            });
+
+            document.getElementById('registerForm').addEventListener('submit', function (event) {
+                if (!validateForm()) {
+                    event.preventDefault();
+                }
+            });
+
+        </script>
     </head>
     <body>
-        <div class="container register-container">
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col-md-8">
-                    <div class="register-card">
-                        <h3>Register</h3>
-                        <form action="register" method="post">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Full Name: </label>
-                                    <input type="text" class="form-control" name="fullname" placeholder="Full Name" required pattern="[a-zA-Z]+" title="Only letters allowed">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>User Name: </label>
-                                    <input type="text" class="form-control" name="username" placeholder="User name" required pattern="^\S+$" title="No spaces allowed">
-                                </div>
+        <div class="container">
+            <div>
+               
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card mt-3 register-form">
+                        <div class="card-header text-center">
+                            <h2>Sign Up</h2>
+                            <div>
+                                Already have an account? <a href="login.jsp" style="color: #F9BF29">Log In</a>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Password: </label>
-                                    <input type="password" class="form-control" name="password" placeholder="Password" required pattern="^\S+$" title="No spaces allowed">
+                        </div>
+                        <div class="card-body">
+
+                            <c:if test="${not empty error}">
+                                <div class="alert alert-danger" role="alert">
+                                    ${error}
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Re-password: </label>
-                                    <input type="password" class="form-control" name="repassword" placeholder="Re-password" required pattern="^\S+$" title="No spaces allowed">
+                            </c:if>
+
+                            <form id="registerForm" action="register" method="POST">
+                               
+                                <div class="form-group">
+                                    <label for="lastname">Full Name</label>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full Name" required>
+                                    <div id="fullnameError" class="error"></div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Email: </label>
-                                    <input type="email" class="form-control" name="email" placeholder="Email" required pattern="^\S+$" title="No spaces allowed">
+
+                                <div class="form-group">
+                                    <label>Gender</label><br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="female" name="gender" value="Female" >
+                                        <label class="form-check-label" for="female">Female</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="male" name="gender" value="Male" >
+                                        <label class="form-check-label" for="male">Male</label>
+                                    </div>
+                                    <div id="genderError" class="error"></div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Phone number:</label>
-                                    <input type="text" class="form-control" name="phone" placeholder="Phone number" required pattern="^\S+$" title="No spaces allowed">
+
+                                <div class="form-group">
+                                    <label for="dob">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dob" name="dob" placeholder="mm/dd/yyyy" required>
+                                    <div id="dobError" class="error"></div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Address: </label>
-                                    <input type="text" class="form-control" name="address" placeholder="Address" required>
+
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                    <div id="emailError" class="error"></div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label>Date of birth: </label>
-                                    <input type="date" class="form-control" name="dob" placeholder="Date of birth" required>
+
+                                <div class="form-group">
+                                    <label for="phonenumber">Phone Number</label>
+                                    <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="Phone Number" required>
+                                    <div id="phonenumberError" class="error"></div>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    Gender: 
-                                    <input type="radio" name="gender" value="true" checked> Male
-                                    <input type="radio" name="gender" value="false"> FeMale
+
+                                <div class="form-group">
+                                    <label for="address">Address</label>
+                                    <input type="text" class="form-control" id="address" name="address" placeholder="Address" required>
+                                    <div id="addressError" class="error"></div>
                                 </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-register">REGISTER</button>
-                        </form>
-                        <c:if test="${not empty error}">
-                            <div class="alert alert-danger mt-3">${error}</div>
-                        </c:if>
-                        <div class="login-link">
-                            <span>Already had an account? </span><a href="login.jsp"><strong>Login now</strong></a>
+                                <div class="form-group">
+                                    <label for="username">User Name</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="User Name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                                    <div id="passwordError" class="error"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirmpassword">Confirm Password</label>
+                                    <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required>
+                                    <div id="confirmpasswordError" class="error"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-block" style="background-color: #F9BF29; border: none; color: #000; text-decoration: underline" onClick ="return validateForm()">Sign up</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Bootstrap JS and dependencies -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="js/validateSignUp.js"></script>
     </body>
 </html>
-
