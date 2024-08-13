@@ -85,15 +85,15 @@ public class RegisterController extends HttpServlet {
         // Create a User object
         User user = new User();
         user.setFullname(fullname);
-        user.setUsername(username);
+        user.setUserName(username);
         user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
-        user.setDob(dob);  // Set Date object
+        user.setDob(dob.toString());  // Set Date object
         user.setAddress(address);
         user.setGender(Boolean.getBoolean(gender));
         user.setBalance(0);
-        user.setRoleId(1);
+        user.setRole("1");
         user.setStatus(true);
         
 

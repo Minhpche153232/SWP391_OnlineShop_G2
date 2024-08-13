@@ -40,7 +40,7 @@
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
                 <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="dashboard">
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-laugh-wink"></i>
                     </div>
@@ -57,11 +57,26 @@
                         <span>Dashboard</span></a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/category">
+                        <i class="fas fa-tasks fa-fw"></i>
+                        <span>Category Management</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/brand">
+                        <i class="fas fa-tasks fa-fw"></i>
+                        <span>Brand Management</span></a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin/manage-product">
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>Product Management</span></a>
                 </li>
-
+                 <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/user-manager">
+                        <i class="fas fa-tasks fa-fw"></i>
+                        <span>User Management</span></a>
+                </li>
+                
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
