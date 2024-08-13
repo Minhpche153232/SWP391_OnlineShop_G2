@@ -24,6 +24,7 @@ public class CategoryDAO extends DBContext {
                 Category category = new Category();
                 category.setCategoryId(rs.getInt("categoryId"));
                 category.setCategoryName(rs.getString("categoryName"));
+                category.setStatus(rs.getBoolean("status"));
                 categories.add(category);
             }
         } catch (SQLException e) {
@@ -93,6 +94,22 @@ public class CategoryDAO extends DBContext {
             ps.setString(1, c.getCategoryName());
             ps.setString(2, c.getDescription());
             ps.setInt(3, c.getCategoryId());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean DeleteCategory(Category c){
+        try {
+            String query = """
+                           Update Category set status = ?
+                           where categoryId = ?
+                           """;
+            ps = conn.prepareStatement(query);
+            ps.setBoolean(1, c.isStatus());
+            ps.setInt(2, c.getCategoryId());
             ps.executeUpdate();
             return true;
         } catch (Exception e) {

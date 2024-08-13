@@ -37,11 +37,14 @@
         </header>
         <div class="container-fluid col-12 pt-3">
             <!-- Content -->
-            <div class="col-6">
-                <form class="d-flex" action="" method="post">
+            <div class="col-12 justify-content-between d-flex">
+                <form class="col-6 d-flex" action="" method="post">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                <a class="col-2 btn btn-success" href="add-brand.jsp">
+                    <i class=""></i>Add new brand
+                </a>
             </div>
             <div class="pt-3">
                 <h3>List/<span> Brand</span></h3>
@@ -52,6 +55,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Id</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Status</th>
                         <th scope="col" colspan="2">Action</th>
                     </tr>
                 </thead>
@@ -61,8 +65,10 @@
                             <th>${count.index+1}</th>
                             <td>${b.brandId}</td>
                             <td>${b.brandName}</td>
+                            <td>${b.status == true ? "Active" : "Inactive"}</td>
                             <td><a class="btn btn-success" href="brand?service=details&bId=${b.brandId}">Update</a></td>
-                            <td><a class="btn btn-danger" href="#">Delete</a></td>
+                            <td><a class="btn btn-danger" href="brand?service=delete&bId=${b.brandId}&status=${b.status}">
+                                    ${b.status == true ? "Inactive" : "Active"}</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>

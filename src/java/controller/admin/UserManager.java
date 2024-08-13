@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.admin;
 
 import dao.AccountDAO;
 import java.io.IOException;
@@ -20,9 +20,9 @@ import models.User;
 
 /**
  *
- * @author Admin
+ * @author ASUS
  */
-public class DashBoardController extends HttpServlet {
+public class UserManager extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -35,11 +35,13 @@ public class DashBoardController extends HttpServlet {
 
             String textSearch = request.getParameter("textSearch");
             String roleSearch = request.getParameter("roleSearch");
-                        String activeSearch = request.getParameter("activeSearch");
-
+            String activeSearch = request.getParameter("activeSearch");
 
             String pageIndexString = request.getParameter("pageIndex");
             int pageIndex = 1;
+            int roleId = 0;
+            int status = -1;
+
             if (textSearch == null) {
                 textSearch = "";
             }
@@ -50,28 +52,57 @@ public class DashBoardController extends HttpServlet {
                     response.getWriter().print("lỗi parse int");
                 }
             }
+            if (roleSearch != null) {
+                try {
+                    roleId = Integer.parseInt(roleSearch);
+                } catch (Exception e) {
+                    response.getWriter().print("lỗi parse int");
+                }
+            }
+            if (activeSearch != null) {
+                try {
+                    status = Integer.parseInt(activeSearch);
+                } catch (Exception e) {
+                    response.getWriter().print("lỗi parse int");
+                }
+            }
             AccountDAO accountDAO = new AccountDAO();
             List<Role> listRole = accountDAO.getAllRole();
 
             int totalPage = accountDAO.countTotalPage(textSearch);
-            List<User> listUser = accountDAO.searchUser(textSearch, pageIndex);
+            List<User> listUser = null;
+            if (roleId == 0 && status == -1) {
+                listUser = accountDAO.searchUser(textSearch, pageIndex);
+            } else if (roleId == 0 && status >= 0) {
+                listUser = accountDAO.searchUser(textSearch, pageIndex, status == 1);
+            } else if (roleId > 1 && status == -1) {
+                listUser = accountDAO.searchUser(textSearch, pageIndex, roleId);
+                response.getWriter().print(listUser);
+            } else if (roleId > 1 && status >= 0) {
+                listUser = accountDAO.searchUser(textSearch, pageIndex, roleId, status == 1);
+                response.getWriter().print(listUser);
+            }
             request.setAttribute("totalPage", totalPage);
             request.setAttribute("listUser", listUser);
             request.setAttribute("listRole", listRole);
             request.setAttribute("message", message);
             request.setAttribute("pageIndex", pageIndex);
             if (roleSearch != null) {
-                request.setAttribute("roleSearch", roleSearch);
+                request.setAttribute("roleSearch", roleId);
 
             }
-              if (activeSearch != null) {
+            if (activeSearch != null) {
                 request.setAttribute("activeSearch", activeSearch);
 
             }
 
+            request.setAttribute("textSearch", textSearch);
+
             request.getRequestDispatcher("user-management.jsp").forward(request, response);
+// listUser = accountDAO.searchUser(textSearch, pageIndex, roleId);
+//                response.getWriter().print(listUser);
         } else {
-            response.sendRedirect("home");
+            response.sendRedirect("../home");
         }
 
     }
