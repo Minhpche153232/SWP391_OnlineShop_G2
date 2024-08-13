@@ -97,4 +97,25 @@ public class BrandDAO extends DBContext {
         }
         return false;
     }
+    
+    public List<Brand> searchBrandByName(List<String> listSearch){
+        List<Brand> list = new ArrayList<>();
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT * FROM Brand");
+            if(listSearch != null && !listSearch.isEmpty()){
+                query.append(" where ");
+                for(int i = 0; i < listSearch.size(); i++){
+                    query.append("brandName like ? ");
+                    if(i < listSearch.size()){
+                        query.append(" or ");
+                    }
+                }
+                ps = conn.prepareStatement(query.toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
