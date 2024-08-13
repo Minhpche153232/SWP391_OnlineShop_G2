@@ -45,7 +45,8 @@ public class UserDAO extends DBContext {
     }
 
     public boolean createUser(User user) {
-        String sql = "INSERT INTO [User] (fullname, username, password, email, phone, dob, address, gender, balance, roleId, status, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User] (fullname, username, password, email, phone, dob, address, gender, balance, roleId, status, avatar)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, user.getFullname());
@@ -103,6 +104,9 @@ public class UserDAO extends DBContext {
             e.printStackTrace();
         }
         return false;
+    }
+    public static void main(String[] args) {
+        
     }
 }
 

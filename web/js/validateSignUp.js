@@ -67,6 +67,6 @@ function validateForm() {
     } else {
         document.getElementById('confirmpasswordError').innerText = '';
     }
-
+    
     return !!isValid;
 }
