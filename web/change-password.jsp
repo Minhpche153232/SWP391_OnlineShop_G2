@@ -12,7 +12,12 @@
         let oldPassword = document.getElementById("oldPassword");
         let newPassword = document.getElementById("newPassword");
         let confirmNewPassword = document.getElementById("confirmNewPassword");
-
+        if(newPassword.value.length >= 8 || oldPassword.value >=8){
+            btnChange.disabled = false;
+            newPassword.style.borderColor = "red";
+            oldPassword.style.borderColor = "red";
+        }
+        
         if (oldPassword.value && newPassword.value && oldPassword.value === newPassword.value) {
             btnChange.disabled = false;
             newPassword.style.borderColor = "red";
