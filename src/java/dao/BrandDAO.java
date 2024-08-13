@@ -131,4 +131,21 @@ public class BrandDAO extends DBContext {
         }
         return null;
     }
+    
+    public boolean DeleteBrand(Brand b){
+        try {
+            String query = """
+                           Update Brand set status = ?
+                           where brandId = ?
+                           """;
+            ps = conn.prepareStatement(query);
+            ps.setBoolean(1, b.isStatus());
+            ps.setInt(2, b.getBrandId());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

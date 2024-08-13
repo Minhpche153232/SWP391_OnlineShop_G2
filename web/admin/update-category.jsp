@@ -52,6 +52,7 @@
                 </div>
                 <input type="hidden" name="service" value="update">
                 <button class="btn btn-success" type="submit">Update</button>
+                <a class="btn btn-danger" href="category">Cancel</a>
             </form>
         </div>
     </body>

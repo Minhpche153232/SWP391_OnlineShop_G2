@@ -101,6 +101,22 @@ public class CategoryDAO extends DBContext {
         }
         return false;
     }
+    public boolean DeleteCategory(Category c){
+        try {
+            String query = """
+                           Update Category set status = ?
+                           where categoryId = ?
+                           """;
+            ps = conn.prepareStatement(query);
+            ps.setBoolean(1, c.isStatus());
+            ps.setInt(2, c.getCategoryId());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         CategoryDAO dao = new CategoryDAO();

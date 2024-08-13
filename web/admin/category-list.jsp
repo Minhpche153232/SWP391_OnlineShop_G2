@@ -37,11 +37,14 @@
         </header>
         <div class="container-fluid col-12 pt-3">
             <!-- Content -->
-            <div class="col-6">
-                <form class="d-flex" action="" method="post">
+            <div class="col-12 justify-content-between d-flex">
+                <form class="col-6 d-flex" action="" method="post">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                <a class="col-2 btn btn-success" href="add-category.jsp">
+                    <i class=""></i>Add new category
+                </a>
             </div>
             <div class="pt-3">
                 <h3>List/<span> Category</span></h3>
@@ -62,9 +65,10 @@
                             <th>${count.index+1}</th>
                             <td>${c.categoryId}</td>
                             <td>${c.categoryName}</td>
-                            <td>${c.status}</td>
+                            <td>${c.status == true ? "Active" : "Inactive"}</td>
                             <td><a class="btn btn-success" href="category?service=details&cateId=${c.categoryId}">Update</a></td>
-                            <td><a class="btn btn-danger" href="#">Delete</a></td>
+                            <td><a class="btn btn-danger" href="category?service=delete&cateId=${c.categoryId}&status=${c.status}">
+                                    ${c.status == true ? "Inactive" : "Active"}</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>
