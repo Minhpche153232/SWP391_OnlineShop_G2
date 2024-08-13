@@ -44,7 +44,7 @@ public class RegisterController extends HttpServlet {
         String fullname = request.getParameter("fullname");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String repassword = request.getParameter("repassword");
+        String repassword = request.getParameter("confirmpassword");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String dobStr = request.getParameter("dob");
@@ -56,6 +56,7 @@ public class RegisterController extends HttpServlet {
         Date dob = null;
         try {
             dob = dateFormat.parse(dobStr);
+            System.out.println(dob);
         } catch (ParseException e) {
             e.printStackTrace();
             request.setAttribute("error", "Invalid date format. Please use yyyy-MM-dd.");
@@ -93,7 +94,7 @@ public class RegisterController extends HttpServlet {
         user.setAddress(address);
         user.setGender(Boolean.getBoolean(gender));
         user.setBalance(0);
-        user.setRole("1");
+        user.setRole("3");
         user.setStatus(true);
         
 
