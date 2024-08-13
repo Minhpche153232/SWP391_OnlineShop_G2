@@ -107,35 +107,5 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        UserDAO dao = new UserDAO();
-        User user = new User();
-        String outputDate = null;
-        String inputDate = "20/10/2001";
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date dob = inputFormat.parse(inputDate);
-            outputDate = outputFormat.format(dob);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-                
-        user.setFullname("Pham Cat Minh");
-        user.setAddress("Quang Ninh");
-        user.setPhone("0826518299");
-        user.setEmail("hoangn321@gmail.com");
-        user.setUserName("minhpc1234");
-        user.setPassword("minhpc1234");
-        user.setDob(outputDate);
-        user.setBalance(0);
-        user.setRole("3");
-        user.setStatus(true);
-        user.setAvatar(null);
-        user.setGender(true);
-        boolean check = dao.createUser(user);
-        System.out.println(check);
-    }
+  
 }

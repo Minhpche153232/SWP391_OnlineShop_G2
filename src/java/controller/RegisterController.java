@@ -47,21 +47,9 @@ public class RegisterController extends HttpServlet {
         String repassword = request.getParameter("confirmpassword");
         String email = request.getParameter("email");
         String phone = request.getParameter("phonenumber");
-        String dobStr = request.getParameter("dob");
+        String dob = request.getParameter("dob");
         String address = request.getParameter("address");
         String gender = request.getParameter("gender");
-
-        // Convert the date from String to Date
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dob = null;
-        try {
-            Date date = inputFormat.parse(dobStr);
-            dob = outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            
-        }
 
         // Simple validation
         String errorMessage = null;
