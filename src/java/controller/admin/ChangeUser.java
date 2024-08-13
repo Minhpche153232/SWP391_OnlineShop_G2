@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.admin;
 
 import dao.AccountDAO;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class ChangeUserController extends HttpServlet {
+public class ChangeUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,13 +33,13 @@ public class ChangeUserController extends HttpServlet {
                 check = accountDAO.changeStatusUser(value.equals("true"), Integer.parseInt(userId));
             }
             if (check) {
-                response.sendRedirect("admin/user-manager?message=Submit successfully");
+                response.sendRedirect("user-manager?message=Change successfully");
             } else {
-                response.sendRedirect("admin/user-manager?message=Submit fail");
+                response.sendRedirect("user-manager?message=Change fail");
 
             }
         } catch (Exception e) {
-            response.sendRedirect("admin/user-manager?message=Submit fail" + e);
+            response.sendRedirect("user-manager?message=Change fail" + e);
         }
 
     }

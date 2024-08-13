@@ -199,6 +199,7 @@ public class AccountDAO {
                 + "ON \n"
                 + "    u.roleId = r.roleId\n"
                 + "WHERE \n"
+                + "    u.roleId != 1 \n"
                 + "    u.fullname LIKE '%' + ? + '%' \n"
                 + "    OR u.username LIKE '%' + ? + '%';";
         try {
@@ -223,6 +224,175 @@ public class AccountDAO {
         return total;
     }
 
+    public List<User> searchUser(String textSearch, int pageIndex, int roleId) {
+        List<User> list = null;
+        DBContext dBContext = new DBContext();
+        String sql
+                = """
+                  WITH SearchResults AS (
+                      SELECT u.*, r.rolename,
+                             ROW_NUMBER() OVER (ORDER BY u.userId) AS RowNum
+                      FROM [OnlineShop_SWP391].[dbo].[User] u
+                      JOIN [OnlineShop_SWP391].[dbo].[Role] r 
+                      ON u.roleId = r.roleId
+                      WHERE (u.fullname LIKE '%' + ? + '%' 
+                      OR u.username LIKE '%' + ? + '%' ) AND u.roleId != 1 AND u.roleId = ? 
+                  )
+                  SELECT *
+                  FROM SearchResults
+                  WHERE RowNum BETWEEN (?-1)*20 AND 20*? ;
+                  """;
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql);
+            statement.setString(1, textSearch);
+            statement.setString(2, textSearch);
+            statement.setInt(3, roleId);
+            statement.setInt(4, pageIndex);
+            statement.setInt(5, pageIndex);
+
+            ResultSet rs = statement.executeQuery();
+            list = new ArrayList<>();
+            while (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt("userId"));
+                u.setFullname(rs.getString("fullname"));
+                u.setAddress(rs.getString("address"));
+                u.setPhone(rs.getString("phone"));
+                u.setEmail(rs.getString("email"));
+                u.setUserName(rs.getString("username"));
+                u.setDob(rs.getString("dob"));
+                u.setBalance(rs.getFloat("balance"));
+                u.setRole(rs.getString("roleName").trim());
+                u.setStatus(rs.getBoolean("status"));
+                u.setAvatar(rs.getString("avatar"));
+                u.setGender(rs.getBoolean("gender"));
+                list.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                dBContext.conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return list;
+    }
+
+    public List<User> searchUser(String textSearch, int pageIndex, int roleId, boolean satus) {
+        List<User> list = null;
+        DBContext dBContext = new DBContext();
+        String sql
+                = """
+                  WITH SearchResults AS (
+                      SELECT u.*, r.rolename,
+                             ROW_NUMBER() OVER (ORDER BY u.userId) AS RowNum
+                      FROM [OnlineShop_SWP391].[dbo].[User] u
+                      JOIN [OnlineShop_SWP391].[dbo].[Role] r 
+                      ON u.roleId = r.roleId
+                      WHERE (u.fullname LIKE '%' + ? + '%' 
+                      OR u.username LIKE '%' + ? + '%' ) AND u.roleId != 1 AND u.roleId = ? AND u.status = ? 
+                  )
+                  SELECT *
+                  FROM SearchResults
+                  WHERE RowNum BETWEEN (?-1)*20 AND 20*? ;
+                  """;
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql);
+            statement.setString(1, textSearch);
+            statement.setString(2, textSearch);
+            statement.setInt(3, roleId);
+            statement.setBoolean(4, satus);
+            statement.setInt(5, pageIndex);
+            statement.setInt(6, pageIndex);
+
+            ResultSet rs = statement.executeQuery();
+            list = new ArrayList<>();
+            while (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt("userId"));
+                u.setFullname(rs.getString("fullname"));
+                u.setAddress(rs.getString("address"));
+                u.setPhone(rs.getString("phone"));
+                u.setEmail(rs.getString("email"));
+                u.setUserName(rs.getString("username"));
+                u.setDob(rs.getString("dob"));
+                u.setBalance(rs.getFloat("balance"));
+                u.setRole(rs.getString("roleName").trim());
+                u.setStatus(rs.getBoolean("status"));
+                u.setAvatar(rs.getString("avatar"));
+                u.setGender(rs.getBoolean("gender"));
+                list.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                dBContext.conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return list;
+    }
+
+    public List<User> searchUser(String textSearch, int pageIndex, boolean satus) {
+        List<User> list = null;
+        DBContext dBContext = new DBContext();
+        String sql
+                = """
+                  WITH SearchResults AS (
+                      SELECT u.*, r.rolename,
+                             ROW_NUMBER() OVER (ORDER BY u.userId) AS RowNum
+                      FROM [OnlineShop_SWP391].[dbo].[User] u
+                      JOIN [OnlineShop_SWP391].[dbo].[Role] r 
+                      ON u.roleId = r.roleId
+                      WHERE (u.fullname LIKE '%' + ? + '%' 
+                      OR u.username LIKE '%' + ? + '%' ) AND u.roleId != 1 AND u.status = ? 
+                  )
+                  SELECT *
+                  FROM SearchResults
+                  WHERE RowNum BETWEEN (?-1)*20 AND 20*? ;
+                  """;
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql);
+            statement.setString(1, textSearch);
+            statement.setString(2, textSearch);
+            statement.setBoolean(3, satus);
+            statement.setInt(4, pageIndex);
+            statement.setInt(5, pageIndex);
+
+            ResultSet rs = statement.executeQuery();
+            list = new ArrayList<>();
+            while (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt("userId"));
+                u.setFullname(rs.getString("fullname"));
+                u.setAddress(rs.getString("address"));
+                u.setPhone(rs.getString("phone"));
+                u.setEmail(rs.getString("email"));
+                u.setUserName(rs.getString("username"));
+                u.setDob(rs.getString("dob"));
+                u.setBalance(rs.getFloat("balance"));
+                u.setRole(rs.getString("roleName").trim());
+                u.setStatus(rs.getBoolean("status"));
+                u.setAvatar(rs.getString("avatar"));
+                u.setGender(rs.getBoolean("gender"));
+                list.add(u);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                dBContext.conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return list;
+    }
+
     public List<User> searchUser(String textSearch, int pageIndex) {
         List<User> list = null;
         DBContext dBContext = new DBContext();
@@ -234,12 +404,12 @@ public class AccountDAO {
                       FROM [OnlineShop_SWP391].[dbo].[User] u
                       JOIN [OnlineShop_SWP391].[dbo].[Role] r 
                       ON u.roleId = r.roleId
-                      WHERE u.fullname LIKE '%' + ? + '%' 
-                      OR u.username LIKE '%' + ? + '%'
+                      WHERE (u.fullname LIKE '%' + ? + '%' 
+                      OR u.username LIKE '%' + ? + '%' ) AND u.roleId != 1
                   )
                   SELECT *
                   FROM SearchResults
-                  WHERE RowNum BETWEEN (?-1)*20 AND 20*?;
+                  WHERE RowNum BETWEEN (?-1)*20 AND 20*? ;
                   """;
         try {
             PreparedStatement statement = dBContext.conn.prepareStatement(sql);
@@ -282,7 +452,7 @@ public class AccountDAO {
         List<Role> list = null;
         DBContext dBContext = new DBContext();
         String sql
-                = "SELECT * FROM [OnlineShop_SWP391].[dbo].[Role]";
+                = "SELECT * FROM [OnlineShop_SWP391].[dbo].[Role] as r WHERE r.roleId != 1";
         try {
             PreparedStatement statement = dBContext.conn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
@@ -362,6 +532,6 @@ public class AccountDAO {
 
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
-        System.out.println(accountDAO.getAllRole());
+        System.out.println(accountDAO.searchUser("", 1, 2));
     }
 }
