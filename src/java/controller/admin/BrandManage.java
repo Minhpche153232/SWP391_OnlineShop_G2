@@ -37,11 +37,11 @@ public class BrandManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1")) {
+        //if (user != null && user.getRole().equals("1")) {
             if (service == null) {
                 List<Brand> list = dao.getAllBrands();
                 request.setAttribute("listB", list);
-                request.getRequestDispatcher("brand-list.jsp").forward(request, response);
+                request.getRequestDispatcher("brand-management.jsp").forward(request, response);
             } else if (service.equals("details")) {
                 int id = Integer.parseInt(request.getParameter("bId"));
                 Brand b = dao.getBrandById(id);
@@ -60,9 +60,9 @@ public class BrandManage extends HttpServlet {
                 dao.DeleteBrand(b);
                 response.sendRedirect("brand");
             }
-        }else{
-            response.sendRedirect("home");
-        }
+        //}else{
+            //response.sendRedirect("home");
+        //}
 
     }
 
