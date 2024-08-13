@@ -46,22 +46,21 @@ public class RegisterController extends HttpServlet {
         String password = request.getParameter("password");
         String repassword = request.getParameter("confirmpassword");
         String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
+        String phone = request.getParameter("phonenumber");
         String dobStr = request.getParameter("dob");
         String address = request.getParameter("address");
         String gender = request.getParameter("gender");
 
         // Convert the date from String to Date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date dob = null;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dob = null;
         try {
-            dob = dateFormat.parse(dobStr);
-            System.out.println(dob);
+            Date date = inputFormat.parse(dobStr);
+            dob = outputFormat.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
-            request.setAttribute("error", "Invalid date format. Please use yyyy-MM-dd.");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-            return;
+            
         }
 
         // Simple validation
@@ -90,9 +89,13 @@ public class RegisterController extends HttpServlet {
         user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
-        user.setDob(dob.toString());  // Set Date object
+        user.setDob(dob);  // Set Date object
         user.setAddress(address);
-        user.setGender(Boolean.getBoolean(gender));
+        if(gender.equals("Female")){
+            user.setGender(false);
+        }else{
+            user.setGender(true);
+        }
         user.setBalance(0);
         user.setRole("3");
         user.setStatus(true);
