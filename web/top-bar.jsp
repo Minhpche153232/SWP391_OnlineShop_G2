@@ -4,6 +4,7 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!-- Start Header/Navigation -->
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
@@ -18,18 +19,23 @@
         <div class="collapse navbar-collapse" id="navbarsFurni">
             <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home</a>
+                    <a class="nav-link" href="home">Home</a>
                 </li>
-                <li><a class="nav-link" href="shop1.html">Shop</a></li>
+                <li><a class="nav-link" href="#">Shop</a></li>
                 <li><a class="nav-link" href="about.html">About us</a></li>
                 <li><a class="nav-link" href="services.html">Services</a></li>
                 <li><a class="nav-link" href="blog.html">Blog</a></li>
                 <li><a class="nav-link" href="contact.html">Contact us</a></li>
             </ul>
-
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
-                <li><a class="nav-link" href="profile"><img src="images/user.svg"></a></li>
-                <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                <c:if test="${sessionScope.currentUser != null}">
+                    <li><a class="nav-link" href="profile"><img src="images/user.svg"></a></li>
+                    <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.currentUser == null}">
+                    <li><a class="nav-link btn btn-secondary me-2" href="login">Login</a></li>
+                    <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                        </c:if>
             </ul>
         </div>
     </div>
