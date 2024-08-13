@@ -24,6 +24,7 @@ public class CategoryDAO extends DBContext {
                 Category category = new Category();
                 category.setCategoryId(rs.getInt("categoryId"));
                 category.setCategoryName(rs.getString("categoryName"));
+                category.setStatus(rs.getBoolean("status"));
                 categories.add(category);
             }
         } catch (SQLException e) {

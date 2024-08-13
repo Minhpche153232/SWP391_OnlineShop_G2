@@ -13,6 +13,7 @@ public class Category {
     private int categoryId;
     private String categoryName;
     private String description;
+    private boolean status;
 
     public Category() {
     }
@@ -45,6 +46,14 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override

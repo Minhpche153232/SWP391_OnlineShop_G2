@@ -24,6 +24,7 @@ public class BrandDAO extends DBContext {
                 Brand brand = new Brand();
                 brand.setBrandId(rs.getInt("brandId"));
                 brand.setBrandName(rs.getString("brandName"));
+                brand.setStatus(rs.getBoolean("status"));
                 brands.add(brand);
             }
         } catch (SQLException e) {
@@ -112,7 +113,19 @@ public class BrandDAO extends DBContext {
                     }
                 }
                 ps = conn.prepareStatement(query.toString());
+                for (int i = 0; i < listSearch.size(); i++) {
+                    ps.setString(i+1, "%"+listSearch.get(i)+"%");
+                }
             }
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Brand brand = new Brand();
+                brand.setBrandId(rs.getInt("brandId"));
+                brand.setBrandName(rs.getString("brandName"));
+                brand.setStatus(rs.getBoolean("status"));
+                list.add(brand);
+            }
+            return list;
         } catch (Exception e) {
             e.printStackTrace();
         }

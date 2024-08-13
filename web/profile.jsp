@@ -85,62 +85,11 @@
                                         <c:if test="${sessionScope.currentUser.role eq '1'}">
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
-                                                    <a class="nav-link" href="cart.html"><img src="images/icon-cart.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Orders manager</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
                                                     <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Brand manager</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Category manager</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Products manager</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="dashboard"><img src="images/manager-user.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Users manager</span>
-                                            </li>
-
-                                        </c:if>
-                                             <c:if test="${sessionScope.currentUser.role eq '3'}">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="cart.html"><img src="images/icon-cart.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Orders manager</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Brand manager</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Category manager</span>
-                                            </li>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Products manager</span>
-                                            </li>
-
-                                        </c:if>
-                                        <c:if test="${sessionScope.currentUser.role eq '2'}">
-                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                                <h6 class="mb-0">
-                                                    <a class="nav-link" href="cart.html"><img src="images/icon-cart.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">My orders</span>
+                                                <span class="text-secondary">Dashboard</span>
                                             </li>
                                         </c:if>
-
+                                            
                                     </ul>
                                 </div>
                             </div>

@@ -52,6 +52,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Id</th>
                         <th scope="col">Name</th>
+                        <th scope="col">Status</th>
                         <th scope="col" colspan="2">Action</th>
                     </tr>
                 </thead>
@@ -61,6 +62,7 @@
                             <th>${count.index+1}</th>
                             <td>${b.brandId}</td>
                             <td>${b.brandName}</td>
+                            <td>${b.status}</td>
                             <td><a class="btn btn-success" href="brand?service=details&bId=${b.brandId}">Update</a></td>
                             <td><a class="btn btn-danger" href="#">Delete</a></td>
                         </tr>

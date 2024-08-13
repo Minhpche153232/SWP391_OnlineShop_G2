@@ -76,7 +76,7 @@ public class BrandManage extends HttpServlet {
                 dao.UpdateBrand(b);
                 response.sendRedirect("brand");
             }
-        } else {
+        } else if("search".equals(service)){
 
         }
     }

@@ -9,8 +9,10 @@ package models;
  * @author Admin
  */
 public class Brand {
+
     private int brandId;
     private String brandName;
+    private boolean status;
 
     public Brand() {
     }
@@ -36,9 +38,17 @@ public class Brand {
         this.brandName = brandName;
     }
 
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Brand{" + "brandId=" + brandId + ", brandName=" + brandName + '}';
     }
-    
+
 }
