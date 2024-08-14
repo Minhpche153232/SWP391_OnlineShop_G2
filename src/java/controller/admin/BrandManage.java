@@ -38,30 +38,25 @@ public class BrandManage extends HttpServlet {
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
         //if (user != null && user.getRole().equals("1")) {
-            if (service == null) {
-                List<Brand> list = dao.getAllBrands();
-                request.setAttribute("listB", list);
-                request.getRequestDispatcher("brand-management.jsp").forward(request, response);
-            } else if (service.equals("details")) {
-                int id = Integer.parseInt(request.getParameter("bId"));
-                Brand b = dao.getBrandById(id);
-                request.setAttribute("brand", b);
-                request.getRequestDispatcher("update-brand.jsp").forward(request, response);
-            } else if ("delete".equals(service)) {
-                int id = Integer.parseInt(request.getParameter("bId"));
-                boolean status = Boolean.parseBoolean(request.getParameter("status"));
-                Brand b = new Brand();
-                b.setBrandId(id);
-                if (status == true) {
-                    b.setStatus(false);
-                } else {
-                    b.setStatus(true);
-                }
-                dao.DeleteBrand(b);
-                response.sendRedirect("brand");
+        if (service == null) {
+            List<Brand> list = dao.getAllBrands();
+            request.setAttribute("listB", list);
+            request.getRequestDispatcher("brand-management.jsp").forward(request, response);
+        } else if ("delete".equals(service)) {
+            int id = Integer.parseInt(request.getParameter("bId"));
+            boolean status = Boolean.parseBoolean(request.getParameter("status"));
+            Brand b = new Brand();
+            b.setBrandId(id);
+            if (status == true) {
+                b.setStatus(false);
+            } else {
+                b.setStatus(true);
             }
+            dao.DeleteBrand(b);
+            response.sendRedirect("brand");
+        }
         //}else{
-            //response.sendRedirect("home");
+        //response.sendRedirect("home");
         //}
 
     }
@@ -79,20 +74,20 @@ public class BrandManage extends HttpServlet {
             throws ServletException, IOException {
         BrandDAO dao = new BrandDAO();
         String service = request.getParameter("service");
+        HttpSession sess = request.getSession();
         if ("update".equals(service)) {
             int id = Integer.parseInt(request.getParameter("brandId"));
             String name = request.getParameter("brandName").trim().replace("\\s+", " ");
             Brand b = new Brand(id, name);
             if (name.isEmpty() || name == null || name.equals(" ")) {
-                request.setAttribute("mess", "Please fill all blank.");
-                request.setAttribute("brand", b);
-                request.getRequestDispatcher("update-brand.jsp").forward(request, response);
+                sess.setAttribute("notificationErr", "Please fill all blank.");
+                response.sendRedirect("brand");
             } else if (dao.checkBrandExist(name.trim()) == true) {
-                request.setAttribute("mess", "Brand is already exist");
-                request.setAttribute("brand", b);
-                request.getRequestDispatcher("update-brand.jsp").forward(request, response);
+                sess.setAttribute("notificationErr", "Brand is already exist");
+                response.sendRedirect("brand");
             } else {
                 dao.UpdateBrand(b);
+                sess.setAttribute("notification", "Brand updated successfully!");
                 response.sendRedirect("brand");
             }
         } else if ("add".equals(service)) {
@@ -100,17 +95,31 @@ public class BrandManage extends HttpServlet {
             Brand b = new Brand();
             b.setBrandName(name);
             if (name.isEmpty() || name == null || name.equals(" ")) {
-                request.setAttribute("mess", "Please fill all blank.");
-                request.setAttribute("brand", b);
-                request.getRequestDispatcher("add-brand.jsp").forward(request, response);
+                sess.setAttribute("notificationErr", "Please fill all blank.");
+                response.sendRedirect("brand");
             } else if (dao.checkBrandExist(name.trim()) == true) {
-                request.setAttribute("mess", "Brand is already exist");
-                request.setAttribute("brand", b);
-                request.getRequestDispatcher("add-brand.jsp").forward(request, response);
+                sess.setAttribute("notificationErr", "Brand is already exist");
+                response.sendRedirect("brand");
             } else {
                 dao.AddNewBrand(b);
+                sess.setAttribute("notification", "Brand add successfully!");
                 response.sendRedirect("brand");
             }
+        } else if ("search".equals(service)) {
+            String txtSearch = request.getParameter("txtSearch").trim();
+            String[] listSearch = txtSearch.split(" ");
+            if (listSearch.length > 0) {
+                List<Brand> list = dao.searchBrandByName(listSearch);
+                request.setAttribute("listB", list);
+                request.setAttribute("txtSearch", txtSearch);
+                request.getRequestDispatcher("brand-management.jsp").forward(request, response);
+            } else {
+                List<Brand> list = dao.getAllBrands();
+                request.setAttribute("listB", list);
+                request.setAttribute("txtSearch", txtSearch);
+                request.getRequestDispatcher("brand-management.jsp").forward(request, response);
+            }
+
         }
     }
 

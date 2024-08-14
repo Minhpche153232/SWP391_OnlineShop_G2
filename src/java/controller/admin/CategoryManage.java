@@ -27,17 +27,12 @@ public class CategoryManage extends HttpServlet {
         CategoryDAO dao = new CategoryDAO();
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
-        User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1")) {
+        //User user = (User) sess.getAttribute("currentUser");
+        //if (user != null && user.getRole().equals("1")) {
             if (service == null) {
                 List<Category> list = dao.getAllCategories();
                 request.setAttribute("listCate", list);
-                request.getRequestDispatcher("category-list.jsp").forward(request, response);
-            } else if (service.equals("details")) {
-                int id = Integer.parseInt(request.getParameter("cateId"));
-                Category c = dao.getCategoryById(id);
-                request.setAttribute("cate", c);
-                request.getRequestDispatcher("update-category.jsp").forward(request, response);
+                request.getRequestDispatcher("category-management.jsp").forward(request, response);
             } else if ("delete".equals(service)) {
                 int id = Integer.parseInt(request.getParameter("cateId"));
                 boolean status = Boolean.parseBoolean(request.getParameter("status"));
@@ -51,9 +46,9 @@ public class CategoryManage extends HttpServlet {
                 dao.DeleteCategory(c);
                 response.sendRedirect("category");
             }
-        }else{
-            response.sendRedirect("home");
-        }
+        //}else{
+        //    response.sendRedirect("home");
+        //}
     }
 
     @Override
@@ -71,11 +66,11 @@ public class CategoryManage extends HttpServlet {
                     || name.equals(" ") || description.equals(" ")) {
                 request.setAttribute("mess", "Please fill all blank.");
                 request.setAttribute("cate", c);
-                request.getRequestDispatcher("update-category.jsp").forward(request, response);
+                request.getRequestDispatcher("category").forward(request, response);
             } else if (dao.checkCategoryExist(name.trim()) == true) {
                 request.setAttribute("mess", "Category is already exist");
                 request.setAttribute("cate", c);
-                request.getRequestDispatcher("update-category.jsp").forward(request, response);
+                request.getRequestDispatcher("category").forward(request, response);
             } else {
                 dao.UpdateCategory(c);
                 response.sendRedirect("category");
@@ -91,11 +86,11 @@ public class CategoryManage extends HttpServlet {
                     || name.equals(" ") || description.equals(" ")) {
                 request.setAttribute("mess", "Please fill all blank.");
                 request.setAttribute("cate", c);
-                request.getRequestDispatcher("add-category.jsp").forward(request, response);
+                request.getRequestDispatcher("category").forward(request, response);
             } else if (dao.checkCategoryExist(name.trim()) == true) {
                 request.setAttribute("mess", "Category is already exist");
                 request.setAttribute("cate", c);
-                request.getRequestDispatcher("add-category.jsp").forward(request, response);
+                request.getRequestDispatcher("category").forward(request, response);
             } else {
                 dao.AddNewCategory(c);
                 response.sendRedirect("category");

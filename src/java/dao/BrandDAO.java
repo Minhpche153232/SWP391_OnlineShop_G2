@@ -99,22 +99,22 @@ public class BrandDAO extends DBContext {
         return false;
     }
     
-    public List<Brand> searchBrandByName(List<String> listSearch){
+    public List<Brand> searchBrandByName(String[] listSearch){
         List<Brand> list = new ArrayList<>();
         try {
             StringBuilder query = new StringBuilder();
             query.append("SELECT * FROM Brand");
-            if(listSearch != null && !listSearch.isEmpty()){
+            if(listSearch != null && listSearch.length > 0){
                 query.append(" where ");
-                for(int i = 0; i < listSearch.size(); i++){
+                for(int i = 0; i < listSearch.length; i++){
                     query.append("brandName like ? ");
-                    if(i < listSearch.size()){
+                    if(i < listSearch.length - i){
                         query.append(" or ");
                     }
                 }
                 ps = conn.prepareStatement(query.toString());
-                for (int i = 0; i < listSearch.size(); i++) {
-                    ps.setString(i+1, "%"+listSearch.get(i)+"%");
+                for (int i = 0; i < listSearch.length; i++) {
+                    ps.setString(i+1, "%"+listSearch[i]+"%");
                 }
             }
             rs = ps.executeQuery();
@@ -147,5 +147,15 @@ public class BrandDAO extends DBContext {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public static void main(String[] args) {
+        BrandDAO dao = new BrandDAO();
+        String txtSearch = "Nike Adidas Puma";
+        String[] listSearch = txtSearch.split(" ");
+        List<Brand> list = dao.searchBrandByName(listSearch);
+        for (Brand brand : list) {
+            System.out.println(brand);
+        }
     }
 }
