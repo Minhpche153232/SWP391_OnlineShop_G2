@@ -33,11 +33,6 @@ public class CategoryManage extends HttpServlet {
                 List<Category> list = dao.getAllCategories();
                 request.setAttribute("listCate", list);
                 request.getRequestDispatcher("category-list.jsp").forward(request, response);
-            } else if (service.equals("details")) {
-                int id = Integer.parseInt(request.getParameter("cateId"));
-                Category c = dao.getCategoryById(id);
-                request.setAttribute("cate", c);
-                request.getRequestDispatcher("update-category.jsp").forward(request, response);
             } else if ("delete".equals(service)) {
                 int id = Integer.parseInt(request.getParameter("cateId"));
                 boolean status = Boolean.parseBoolean(request.getParameter("status"));
@@ -52,7 +47,7 @@ public class CategoryManage extends HttpServlet {
                 response.sendRedirect("category");
             }
         }else{
-            response.sendRedirect("home");
+            response.sendRedirect("../login");
         }
     }
 

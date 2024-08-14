@@ -12,7 +12,8 @@
         let oldPassword = document.getElementById("oldPassword");
         let newPassword = document.getElementById("newPassword");
         let confirmNewPassword = document.getElementById("confirmNewPassword");
-
+        
+        
         if (oldPassword.value && newPassword.value && oldPassword.value === newPassword.value) {
             btnChange.disabled = false;
             newPassword.style.borderColor = "red";

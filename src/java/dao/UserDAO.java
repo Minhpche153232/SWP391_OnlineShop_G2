@@ -8,7 +8,9 @@ import models.User;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Admin
@@ -45,7 +47,8 @@ public class UserDAO extends DBContext {
     }
 
     public boolean createUser(User user) {
-        String sql = "INSERT INTO [User] (fullname, username, password, email, phone, dob, address, gender, balance, roleId, status, avatar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User] (fullname, username, password, email, phone, dob, address, gender, balance, roleId, status, avatar)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, user.getFullname());
@@ -64,7 +67,7 @@ public class UserDAO extends DBContext {
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
-            System.out.println("createUser: " + e.getMessage());;
+            System.out.println("createUser: " + e.getMessage());
         }
         return false;
     }
@@ -104,5 +107,5 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
+  
 }
-
