@@ -85,7 +85,7 @@ public class RegisterController extends HttpServlet {
             user.setGender(true);
         }
         user.setBalance(0);
-        user.setRole("3");
+        user.setRole("2");
         user.setStatus(true);
         
 

@@ -30,7 +30,7 @@ public class DashBoardController extends HttpServlet {
         HttpSession session = request.getSession();
         Object objUser = session.getAttribute("currentUser");
         User user = (User) objUser;
-        if (user != null && user.getRole().equals("1")) {
+        if (user != null && user.getRole().equals("1") || user != null && user.getRole().equals("3")) {
             String message = request.getParameter("message");
 
             String textSearch = request.getParameter("textSearch");

@@ -32,7 +32,7 @@
                 <form method="post" action="brand" class="search-form">
                     <input type="text" name="txtSearch" placeholder="Search by name" value="${txtSearch}" class="form-input">
                     <input type="hidden" name="service" value="search">
-                    <button class="form-button">Search</button>
+                    <button type="submit" class="form-button">Search</button>
                 </form>
                 <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addBrandModal">
                     Add new brand
