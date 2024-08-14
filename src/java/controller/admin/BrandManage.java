@@ -37,27 +37,27 @@ public class BrandManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        //if (user != null && user.getRole().equals("1")) {
-        if (service == null) {
-            List<Brand> list = dao.getAllBrands();
-            request.setAttribute("listB", list);
-            request.getRequestDispatcher("brand-management.jsp").forward(request, response);
-        } else if ("delete".equals(service)) {
-            int id = Integer.parseInt(request.getParameter("bId"));
-            boolean status = Boolean.parseBoolean(request.getParameter("status"));
-            Brand b = new Brand();
-            b.setBrandId(id);
-            if (status == true) {
-                b.setStatus(false);
-            } else {
-                b.setStatus(true);
+        if (user != null && user.getRole().equals("1")) {
+            if (service == null) {
+                List<Brand> list = dao.getAllBrands();
+                request.setAttribute("listB", list);
+                request.getRequestDispatcher("brand-management.jsp").forward(request, response);
+            } else if ("delete".equals(service)) {
+                int id = Integer.parseInt(request.getParameter("bId"));
+                boolean status = Boolean.parseBoolean(request.getParameter("status"));
+                Brand b = new Brand();
+                b.setBrandId(id);
+                if (status == true) {
+                    b.setStatus(false);
+                } else {
+                    b.setStatus(true);
+                }
+                dao.DeleteBrand(b);
+                response.sendRedirect("brand");
             }
-            dao.DeleteBrand(b);
-            response.sendRedirect("brand");
+        } else {
+            response.sendRedirect("../login");
         }
-        //}else{
-        //response.sendRedirect("home");
-        //}
 
     }
 

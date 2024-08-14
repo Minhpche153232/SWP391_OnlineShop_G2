@@ -4,7 +4,7 @@
     <div id="content">
         <jsp:include page="header-content.jsp"></jsp:include>
             <div class="container-fluid">
-                <h1 class="h3 mb-2 text-gray-800">Brand management</h1>
+                <h1 class="h3 mb-2 text-gray-800">Category management</h1>
 
                 <!-- Start Notification -->
             <c:if test="${not empty sessionScope.notification}">
@@ -51,7 +51,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${listCate}" var="c" varStatus="count">
+                        <c:forEach items="${listC}" var="c" varStatus="count">
                             <tr>
                                 <th>${count.index+1}</th>
                                 <td>${c.categoryId}</td>
@@ -129,7 +129,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="addCategoryModal">Edit Brand</h5>
+                                        <h5 class="modal-title" id="addCategoryModal">Add new Category</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--End Add new brand modal-->
+                        <!--End Add new category modal-->
 
                         <!--Activate Brand-->
                         <div class="modal fade" id="activateModal${b.brandId}" tabindex="-1" role="dialog" aria-labelledby="activateModalLabel${b.brandId}" aria-hidden="true">
