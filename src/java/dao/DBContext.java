@@ -21,6 +21,7 @@ public class DBContext {
     ResultSet rs;
     
     private final String serverName = "ADMIN";
+
     private final String dbName = "OnlineShop_SWP391";
     private final String portNumber = "1433";
     private final String userID = "sa";
