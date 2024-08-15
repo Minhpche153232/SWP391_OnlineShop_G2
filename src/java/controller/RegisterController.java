@@ -47,9 +47,11 @@ public class RegisterController extends HttpServlet {
         String repassword = request.getParameter("confirmpassword");
         String email = request.getParameter("email");
         String phone = request.getParameter("phonenumber");
-        String dob = request.getParameter("dob");
+        String dobStr = request.getParameter("dob");
         String address = request.getParameter("address");
         String gender = request.getParameter("gender");
+
+        
 
         // Simple validation
         String errorMessage = null;
@@ -77,7 +79,7 @@ public class RegisterController extends HttpServlet {
         user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
-        user.setDob(dob);  // Set Date object
+        user.setDob(dobStr);  // Set Date object
         user.setAddress(address);
         if(gender.equals("Female")){
             user.setGender(false);
@@ -85,8 +87,11 @@ public class RegisterController extends HttpServlet {
             user.setGender(true);
         }
         user.setBalance(0);
-        user.setRole("2");
+        user.setRole("3");
         user.setStatus(true);
+        
+        
+        
         
 
         // Save user to the database
