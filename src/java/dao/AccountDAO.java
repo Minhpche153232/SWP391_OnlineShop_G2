@@ -19,7 +19,7 @@ import models.User;
  * @author Admin
  */
 public class AccountDAO {
-
+    UserDAO userDAO = new UserDAO();
     public User login(String userName, String password) {
         DBContext dBContext = new DBContext();
         String sql = "SELECT userId ,[fullname],[address],[phone],[email],[username],[dob],[balance],r.rolename ,[status], [avatar], [gender] FROM [dbo].[User] as u \n"
@@ -28,7 +28,7 @@ public class AccountDAO {
         try {
             PreparedStatement statement = dBContext.conn.prepareStatement(sql);
             statement.setString(1, userName);
-            statement.setString(2, password);
+            statement.setString(2, userDAO.getMd5(password));
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 User u = new User();
@@ -139,9 +139,9 @@ public class AccountDAO {
                 + " WHERE userId = ? AND password = ?";
         try {
             PreparedStatement statement = dBContext.conn.prepareStatement(sql);
-            statement.setString(1, newPass);
+            statement.setString(1, userDAO.getMd5(newPass));
             statement.setInt(2, id);
-            statement.setString(3, oldPass);
+            statement.setString(3, userDAO.getMd5(oldPass));
 
             int rowsUpdated = statement.executeUpdate();
 

@@ -11,18 +11,22 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 /**
  *
  * @author Admin
  */
 public class UserDAO extends DBContext {
-
+    
     public User getUserByUsernameAndPassword(String username, String password) {
         User user = null;
         String sql = "SELECT * FROM [User] WHERE username = ? AND password = ? and status = 'true'";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, username);
-            stmt.setString(2, password);
+            stmt.setString(2, getMd5(password));
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 user = new User();
@@ -45,15 +49,15 @@ public class UserDAO extends DBContext {
         }
         return user;
     }
-
+    
     public boolean createUser(User user) {
         String sql = "INSERT INTO [User] (fullname, username, password, email, phone, dob, address, gender, balance, roleId, status, avatar)"
                 + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+        
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, user.getFullname());
             statement.setString(2, user.getUserName());
-            statement.setString(3, user.getPassword());
+            statement.setString(3, getMd5(user.getPassword())); /// ma hoa in here
             statement.setString(4, user.getEmail());
             statement.setString(5, user.getPhone());
             statement.setString(6, user.getDob()); // Convert java.util.Date to java.sql.Date
@@ -63,7 +67,7 @@ public class UserDAO extends DBContext {
             statement.setString(10, user.getRole());
             statement.setBoolean(11, user.isStatus());
             statement.setString(12, user.getAvatar());
-
+            
             int rowsInserted = statement.executeUpdate();
             return rowsInserted > 0;
         } catch (SQLException e) {
@@ -71,7 +75,7 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
+    
     public boolean usernameExists(String username) {
         String sql = "SELECT 1 FROM [User] WHERE username = ?";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -83,7 +87,7 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
+    
     public boolean emailExists(String email) {
         String sql = "SELECT 1 FROM [User] WHERE email = ?";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -95,7 +99,7 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
+    
     public boolean phoneExists(String phone) {
         String sql = "SELECT 1 FROM [User] WHERE phone = ?";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
@@ -107,35 +111,31 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        UserDAO dao = new UserDAO();
-        User user = new User();
-        String outputDate = null;
-        String inputDate = "20/10/2001";
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+    
+    public String getMd5(String input) // Mã hóa với MD5 - PARAM - PASSWORD
+    {
         try {
-            Date dob = inputFormat.parse(inputDate);
-            outputDate = outputFormat.format(dob);
-        } catch (Exception e) {
-            e.printStackTrace();
+            
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            // of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        } // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
-        
-                
-        user.setFullname("Pham Cat Minh");
-        user.setAddress("Quang Ninh");
-        user.setPhone("0826518299");
-        user.setEmail("hoangn321@gmail.com");
-        user.setUserName("minhpc1234");
-        user.setPassword("minhpc1234");
-        user.setDob(outputDate);
-        user.setBalance(0);
-        user.setRole("3");
-        user.setStatus(true);
-        user.setAvatar(null);
-        user.setGender(true);
-        boolean check = dao.createUser(user);
-        System.out.println(check);
     }
+    
 }

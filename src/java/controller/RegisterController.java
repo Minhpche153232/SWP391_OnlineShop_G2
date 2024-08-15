@@ -51,17 +51,7 @@ public class RegisterController extends HttpServlet {
         String address = request.getParameter("address");
         String gender = request.getParameter("gender");
 
-        // Convert the date from String to Date
-        SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dob = null;
-        try {
-            Date date = inputFormat.parse(dobStr);
-            dob = outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            
-        }
+        
 
         // Simple validation
         String errorMessage = null;
@@ -89,7 +79,7 @@ public class RegisterController extends HttpServlet {
         user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
-        user.setDob(dob);  // Set Date object
+        user.setDob(dobStr);  // Set Date object
         user.setAddress(address);
         if(gender.equals("Female")){
             user.setGender(false);
@@ -99,6 +89,9 @@ public class RegisterController extends HttpServlet {
         user.setBalance(0);
         user.setRole("3");
         user.setStatus(true);
+        
+        
+        
         
 
         // Save user to the database
