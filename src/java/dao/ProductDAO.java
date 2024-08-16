@@ -447,10 +447,11 @@ public class ProductDAO extends DBContext {
 //        d.setBrand(b);
 //        d.setCategory(c);
 //        dAO.addProduct(d);
-        List<Product> list = dAO.getAllProductWithParam("", null, null, null, true);
-        for (Product product : list) {
-            System.out.println(product);
-        }
+//        List<Product> list = dAO.getAllProductWithParam("", null, null, null, true);
+//        for (Product product : list) {
+//            System.out.println(product);
+//        }
+           System.out.println(dAO.getById(1).getProductDetails().get(1).getSize());
     }
     
 }
