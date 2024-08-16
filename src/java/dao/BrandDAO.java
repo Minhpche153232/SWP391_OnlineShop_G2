@@ -6,7 +6,8 @@ package dao;
 
 import java.util.*;
 import java.sql.*;
-import models.Brand;
+import models.*;
+
 /**
  *
  * @author ADMIN
@@ -23,6 +24,7 @@ public class BrandDAO extends DBContext {
                 Brand brand = new Brand();
                 brand.setBrandId(rs.getInt("brandId"));
                 brand.setBrandName(rs.getString("brandName"));
+                brand.setStatus(rs.getBoolean("status"));
                 brands.add(brand);
             }
         } catch (SQLException e) {
@@ -30,21 +32,103 @@ public class BrandDAO extends DBContext {
         }
         return brands;
     }
+
     public Brand getBrandById(int brandId) {
-    Brand brand = null;
-    try {
-        String query = "SELECT * FROM Brand WHERE brandId = ?";
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.setInt(1, brandId);
-        ResultSet rs = preparedStatement.executeQuery();
-        if (rs.next()) {
-            brand = new Brand();
-            brand.setBrandId(rs.getInt("brandId"));
-            brand.setBrandName(rs.getString("brandName"));
+        Brand brand = null;
+        try {
+            String query = "SELECT * FROM Brand WHERE brandId = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, brandId);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                brand = new Brand();
+                brand.setBrandId(rs.getInt("brandId"));
+                brand.setBrandName(rs.getString("brandName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return brand;
     }
-    return brand;
-}
+
+    public boolean checkBrandExist(String txtName) {
+        Category c = null;
+        try {
+            String query = "SELECT * FROM Brand WHERE brandName = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, txtName);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean AddNewBrand(Brand b) {
+        try {
+            String query = """
+                           insert into Brand(brandName)
+                           values(?)""";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, b.getBrandName());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean UpdateBrand(Brand b) {
+        try {
+            String query = """
+                           Update Brand set brandName = ?
+                           where brandId = ?
+                           """;
+            ps = conn.prepareStatement(query);
+            ps.setString(1, b.getBrandName());
+            ps.setInt(2, b.getBrandId());
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public List<Brand> searchBrandByName(List<String> listSearch){
+        List<Brand> list = new ArrayList<>();
+        try {
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT * FROM Brand");
+            if(listSearch != null && !listSearch.isEmpty()){
+                query.append(" where ");
+                for(int i = 0; i < listSearch.size(); i++){
+                    query.append("brandName like ? ");
+                    if(i < listSearch.size()){
+                        query.append(" or ");
+                    }
+                }
+                ps = conn.prepareStatement(query.toString());
+                for (int i = 0; i < listSearch.size(); i++) {
+                    ps.setString(i+1, "%"+listSearch.get(i)+"%");
+                }
+            }
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Brand brand = new Brand();
+                brand.setBrandId(rs.getInt("brandId"));
+                brand.setBrandName(rs.getString("brandName"));
+                brand.setStatus(rs.getBoolean("status"));
+                list.add(brand);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
