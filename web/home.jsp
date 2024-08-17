@@ -62,142 +62,62 @@
                                         </div> -->
                     <img src="https://file.hstatic.net/200000581855/file/banner__pc_duoi_0dd701b53370412e8c12b5e8c1fccc2f_2048x2048.png" style="width: 72vw; margin-bottom: 100px"/>
                     <!-- End Column 1 -->
-                    <form method="get" action="user-manager" class="search-form" style="display: flex; justify-content: flex-end; align-items: center">
+                    <form method="get" action="home" class="search-form" style="display: flex; justify-content: flex-end; align-items: center">
 
                         <div style="width: 150px; margin-left: 20px">
-                            <select name="roleSearch" class="form-select">
-                                <option value="">All</option>
+                            <select name="brandId" class="form-select">
+                                <option value="0" <c:if test="${ brandId eq '0'}"> selected</c:if>>All</option>
 
-                                <option  
-                                    selected>
-                                    Nike
-                                </option>
-                                <option 
-                                    >Bitis
-                                </option>
+                                <c:forEach items="${brands}" var="i">
+                                    <option value="${i.brandId}" 
+                                            <c:if test="${i.brandId eq brandId}"> selected</c:if>>${i.brandName}
+                                            </option>
+                                </c:forEach>
 
                             </select>
                         </div>  <div style="width: 150px; margin-left: 20px">
-                            <select name="roleSearch" class="form-select">
-                                <option value="">All</option>
+                            <select name="categoryId" class="form-select">
+                                <option value="0" <c:if test="${ categoryId eq '0'}"> selected</c:if>>All</option>
 
-                                <option  
-                                    selected>
-                                    Bitis 01
-                                </option>
-                                <option value="${r.roleId}" 
-                                        >Nike 01
-                                </option>
+                                <c:forEach items="${categories}" var="i">
+                                    <option value="${i.categoryId}" 
+                                            <c:if test="${i.categoryId eq categoryId}"> selected</c:if>>${i.categoryName}
+                                            </option>
+                                </c:forEach>
+
 
                             </select>
                         </div>
                         <div style="width: 150px; margin-left: 20px">
-                            <select name="roleSearch" class="form-select">
-                                <option value="">All</option>
+                            <select name="typeId" class="form-select">
+                                <option value="0" <c:if test="${ typeId eq '0'}"> selected</c:if>>All</option>
 
-                                <option  
-                                    selected>
-                                    Male
-                                </option>
-                                <option value="${r.roleId}" 
-                                        >Female
-                                </option>
+                                <c:forEach items="${types}" var="i">
+                                    <option value="${i.typeId}" 
+                                            <c:if test="${i.typeId eq typeId}"> selected</c:if>>${i.typeName}
+                                            </option>
+                                </c:forEach>
+
 
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary" style="margin-left: 20px">Search</button>
                     </form>
-                    <%--<c:forEach items="${listCheapest}" var="i">--%>
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
+                    <c:forEach items="${listCheapest}" var="i">
+                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                            <a class="product-item" href="cart.html">
+                                <img src="${i.product.image}" class="img-fluid product-thumbnail">
+                                <h3 class="product-title">${i.product.productName}</h3>
+                                <strong class="product-price">${i.product.price}</strong>
 
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
+                                <span class="icon-cross">
+                                    <img src="images/cross.svg" class="img-fluid">
+                                </span>
+                            </a>
+                        </div> 
 
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
 
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
-
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
-
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
-
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
-
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">Nike Air force 1</h3>
-                            <strong class="product-price">12.000</strong>
-
-                            <span class="icon-cross">
-                                <img src="images/cross.svg" class="img-fluid">
-                            </span>
-                        </a>
-                    </div> 
-
-                    <%--</c:forEach>--%>
+                    </c:forEach>
 
 
 
