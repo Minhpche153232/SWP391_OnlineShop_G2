@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
 
 <!doctype html>
 <html lang="en">
@@ -15,9 +15,14 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
+        <link href="css/input.css" rel="stylesheet">
+
         <link href="css/style.css" rel="stylesheet">
         <title>My shop</title>
+
+
     </head>
+
 
     <body>
         <%@include file="top-bar.jsp" %>
@@ -31,12 +36,12 @@
                         <div class="intro-excerpt">
                             <h1>Modern Interior <span clsas="d-block">Design Studio</span></h1>
                             <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-                            <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+                            <p><a href="shop" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
                         </div>
                     </div>
                     <div class="col-lg-7">
                         <div class="hero-img-wrap">
-                            <img src="images/image-home.png" class="img-fluid">
+                            <img src="images/mlb-bg.png" class="img-fluid"  style="width: 35vw"/>
                         </div>
                     </div>
                 </div>
@@ -50,30 +55,155 @@
                 <div class="row">
 
                     <!-- Start Column 1 -->
-                    <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
-                        <h2 class="mb-4 section-title">Nike Air Force 1 Scales will also be provided with its original white laces.</h2>
-                        <p class="mb-4">Nike Air Force 1 Scales is the custom sneaker for men and women, embellished and enriched by the python print fabric in shades of brown on the toe box, midfoot, and heel. </p>
-                        <p><a href="shop1.html" class="btn">Explore</a></p>
-                    </div> 
+                    <!--                    <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+                                            <h2 class="mb-4 section-title">Nike Air Force 1 Scales will also be provided with its original white laces.</h2>
+                                            <p class="mb-4">Nike Air Force 1 Scales is the custom sneaker for men and women, embellished and enriched by the python print fabric in shades of brown on the toe box, midfoot, and heel. </p>
+                                            <p><a href="shop1.html" class="btn">Explore</a></p>
+                                        </div> -->
+                    <img src="https://file.hstatic.net/200000581855/file/banner__pc_duoi_0dd701b53370412e8c12b5e8c1fccc2f_2048x2048.png" style="width: 72vw; margin-bottom: 100px"/>
                     <!-- End Column 1 -->
+                    <form method="get" action="user-manager" class="search-form" style="display: flex; justify-content: flex-end; align-items: center">
 
-                    <c:forEach items="${listCheapest}" var="i">
-                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                            <a class="product-item" href="cart.html">
-                                <img src="${i.product.image}" class="img-fluid product-thumbnail">
-                                <h3 class="product-title">${i.product.productName}</h3>
-                                <strong class="product-price">${i.product.price}</strong>
+                        <div style="width: 150px; margin-left: 20px">
+                            <select name="roleSearch" class="form-select">
+                                <option value="">All</option>
 
-                                <span class="icon-cross">
-                                    <img src="images/cross.svg" class="img-fluid">
-                                </span>
-                            </a>
-                        </div> 
-                    </c:forEach>
+                                <option  
+                                    selected>
+                                    Nike
+                                </option>
+                                <option 
+                                    >Bitis
+                                </option>
+
+                            </select>
+                        </div>  <div style="width: 150px; margin-left: 20px">
+                            <select name="roleSearch" class="form-select">
+                                <option value="">All</option>
+
+                                <option  
+                                    selected>
+                                    Bitis 01
+                                </option>
+                                <option value="${r.roleId}" 
+                                        >Nike 01
+                                </option>
+
+                            </select>
+                        </div>
+                        <div style="width: 150px; margin-left: 20px">
+                            <select name="roleSearch" class="form-select">
+                                <option value="">All</option>
+
+                                <option  
+                                    selected>
+                                    Male
+                                </option>
+                                <option value="${r.roleId}" 
+                                        >Female
+                                </option>
+
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 20px">Search</button>
+                    </form>
+                    <%--<c:forEach items="${listCheapest}" var="i">--%>
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="images/airf_white_01.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">Nike Air force 1</h3>
+                            <strong class="product-price">12.000</strong>
+
+                            <span class="icon-cross">
+                                <img src="images/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div> 
+
+                    <%--</c:forEach>--%>
 
 
 
                 </div>
+                <div style="width: 100%; display: flex; justify-content: center; margin-top: 50px" ><a href="shop" class="btn btn-secondary me-2">View all</a></div>
+
             </div>
         </div>
         <!-- End Product Section -->
@@ -353,6 +483,7 @@
 
 
 
+        <script src="js/shop.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/tiny-slider.js"></script>
         <script src="js/custom.js"></script>
