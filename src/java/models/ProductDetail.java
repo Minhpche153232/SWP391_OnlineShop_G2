@@ -16,7 +16,7 @@ public class ProductDetail {
     private int unitInStock;
     private String image;
     private int productId;
-
+    
     public ProductDetail() {
     }
 
