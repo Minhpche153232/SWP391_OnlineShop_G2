@@ -138,22 +138,4 @@ public class UserDAO extends DBContext {
         }
     }
     
-    public String getEmailForResetPW(String input){
-        try {
-            String query = "SELECT * FROM [User] WHERE email = ? or username = ?";
-            ps = conn.prepareStatement(query);
-            ps.setString(1, input);
-            ps.setString(2, input);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                return String.valueOf(rs.getString("email"));
-            }
-        } catch (Exception e) {
-        }
-        return null;
-    }
-    public static void main(String[] args) {
-        UserDAO dao = new UserDAO();
-        System.out.println(dao.getEmailForResetPW("minhpc1234"));
-    }
 }

@@ -43,6 +43,10 @@
     <servlet>
         <servlet-name>ResetPassword</servlet-name>
         <servlet-class>controller.ResetPassword</servlet-class>
+        </servlet>
+        <servlet>
+        <servlet-name>ShopController</servlet-name>
+        <servlet-class>controller.ShopController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
@@ -95,5 +99,9 @@
     <servlet-mapping>
         <servlet-name>ResetPassword</servlet-name>
         <url-pattern>/resetpw</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+        <servlet-name>ShopController</servlet-name>
+        <url-pattern>/shop</url-pattern>
     </servlet-mapping>
 </web-app>
