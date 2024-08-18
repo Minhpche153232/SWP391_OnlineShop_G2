@@ -54,7 +54,7 @@
                     <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
                         <h2 class="mb-6 section-title">${product.productName} (${product.productCode})</h2>
                         <p class="mb-4">${product.description}</p>
-                        <h3>${product.price} VND</h3> 
+                        <h3>${product.price} VND - <span style="color: red">(${discount}%)</span></h3> 
 
                         <c:set var="isLoggedIn" value="${not empty sessionScope.currentUser}" />
                         <c:set var="hasSizeAndColor" value="${not empty param.size and not empty param.color}" />

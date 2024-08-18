@@ -34,7 +34,7 @@ public class AddToCartController extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         ProductDetail productDetail = productDAO.getProductDetailBySizeAndColor(productId, size, color);
         if (user != null) {
-            if (productDetail != null) { 
+            if (productDetail != null) {
 
                 Map<ProductDetailKey, CartItem> cart = (Map<ProductDetailKey, CartItem>) session.getAttribute("cart");
 
@@ -47,13 +47,14 @@ public class AddToCartController extends HttpServlet {
                 if (cart.containsKey(key)) {
                     CartItem existingItem = cart.get(key);
                     existingItem.setQuantity(existingItem.getQuantity() + 1);
+                    session.setAttribute("cart", cart);
                 } else {
                     cart.put(key, new CartItem(productDetail, 1));
+                    session.setAttribute("cart", cart);
                 }
 
-                session.setAttribute("cart", cart);
             }
-             response.sendRedirect("cart.jsp");
+            response.sendRedirect("cart");
         } else {
             session.setAttribute("notification", "User must login first!");
             response.sendRedirect("login");

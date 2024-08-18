@@ -37,11 +37,14 @@ public class ProductDetailController extends HttpServlet {
         String size = request.getParameter("size");
         String color = request.getParameter("color");
         String image;
+        int discount;
         if (size != null && color != null) {
             int intSize = Integer.parseInt(size);
             ProductDetail pd = pdao.getProductDetailBySizeAndColor(productId, intSize, color);
             image = pd.getImage();
+            discount = pd.getDiscount();
             request.setAttribute("image", image);
+            request.setAttribute("discount", discount);
         } else {
             if (!product.getProductDetails().isEmpty()) {
                 image = product.getProductDetails().get(0).getImage();
