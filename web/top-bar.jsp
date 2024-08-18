@@ -21,7 +21,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="home">Home</a>
                 </li>
-                <li><a class="nav-link" href="#">Shop</a></li>
+                <li><a class="nav-link" href="home">Shop</a></li>
                 <li><a class="nav-link" href="about.html">About us</a></li>
                 <li><a class="nav-link" href="services.html">Services</a></li>
                 <li><a class="nav-link" href="blog.html">Blog</a></li>
@@ -33,7 +33,13 @@
                     <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
                         </c:if>
                         <c:if test="${sessionScope.currentUser == null}">
-                    <li><a class="nav-link btn btn-secondary me-2" href="login">Login</a></li>
+                    <li class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle dropdown-button">Join us</a>
+                        <div class="dropdown-content dropdown-content">
+                            <a class="" href="login">Login</a>
+                            <a class="" href="register">Register</a>
+                        </div>
+                    </li>
                     <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
                         </c:if>
             </ul>

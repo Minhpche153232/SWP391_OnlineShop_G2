@@ -12,17 +12,18 @@
         <meta name="keywords" content="bootstrap, bootstrap4" />
 
         <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/my-dropdown.css" rel="stylesheet">
         <title>My shop</title>
     </head>
 
     <body>
         <%@include file="top-bar.jsp" %>
-
-
         <!-- Start Hero Section -->
         <div class="hero">
             <div class="container">
@@ -349,10 +350,7 @@
         <!-- End Blog Section -->	
 
         <%@include file="footer.jsp" %>
-
-
-
-
+        
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/tiny-slider.js"></script>
         <script src="js/custom.js"></script>

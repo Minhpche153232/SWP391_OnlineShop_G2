@@ -29,6 +29,10 @@ public class HomeController extends HttpServlet {
         List<ProductDetail> listCheapest = productDAO.getTopCheapestProduct();
         request.setAttribute("listCheapest", listCheapest);
         request.getRequestDispatcher("home.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        if(action.equals("logout")){
+            
+        }
     }
 
    
