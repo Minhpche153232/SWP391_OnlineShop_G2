@@ -65,7 +65,7 @@ public class LoginController extends HttpServlet {
                 response.addCookie(passwordCookie);
             }
 
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("home");
         } else {
             request.setAttribute("errorMessage", "Invalid username or password");
             request.getRequestDispatcher("login.jsp").forward(request, response);
