@@ -33,6 +33,8 @@ if (cart != null && !cart.isEmpty()) {
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+                <link href="css/input.css" rel="stylesheet">
+
         <title>Furni Cart</title>
     </head>
 
