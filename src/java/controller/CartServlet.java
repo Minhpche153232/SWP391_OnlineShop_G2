@@ -4,6 +4,9 @@
  */
 package controller;
 
+import dao.BrandDAO;
+import dao.CategoryDAO;
+import dao.TypeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,9 +15,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import models.Brand;
 import models.CartItem;
+import models.Category;
 import models.ProductDetailKey;
+import models.Type;
 import models.User;
 
 @WebServlet(name = "CartServlet", urlPatterns = {"/cart"})
@@ -25,6 +32,18 @@ public class CartServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("currentUser");
+        
+        //get data filter
+        CategoryDAO categoryDAO = new CategoryDAO();
+        BrandDAO brandDAO = new BrandDAO();
+        TypeDAO typeDAO = new TypeDAO();
+        List<Category> categories = categoryDAO.getAllCategories();
+        List<Brand> brands = brandDAO.getAllBrands();
+        List<Type> types = typeDAO.getAllTypes();
+        request.setAttribute("categories", categories);
+        request.setAttribute("brands", brands);
+        request.setAttribute("types", types);
+        //
 
         if (user != null) {
             Map<ProductDetailKey, CartItem> cart = (Map<ProductDetailKey, CartItem>) session.getAttribute("cart");
