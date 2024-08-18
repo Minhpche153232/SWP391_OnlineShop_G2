@@ -51,7 +51,6 @@ public class RegisterController extends HttpServlet {
         String address = request.getParameter("address");
         String gender = request.getParameter("gender");
 
-
         // Simple validation
         String errorMessage = null;
         if (!password.equals(repassword)) {

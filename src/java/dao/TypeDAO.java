@@ -47,4 +47,8 @@ public class TypeDAO extends DBContext {
         }
         return types;
     }
+     public static void main(String[] args) {
+        TypeDAO dAO = new TypeDAO();
+         System.out.println(dAO.getAllTypes());
+    }
 }

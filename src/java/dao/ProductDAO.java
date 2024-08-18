@@ -32,38 +32,93 @@ import models.Type;
  */
 public class ProductDAO extends DBContext {
 
-    public List<ProductDetail> getTopCheapestProduct() {
+    public List<ProductDetail> getTopCheapestProduct(Integer[] rangePrice, String search, Integer size, String color, Integer typeId, Integer categoryId, Integer brandId) {
         DBContext dBContext = new DBContext();
-        List<ProductDetail> list = null;
-        String sql = "SELECT TOP (3) p.*, pd.color, pd.size\n"
-                + "FROM [OnlineShop_SWP391].[dbo].[Product] p\n"
-                + "JOIN [OnlineShop_SWP391].[dbo].[ProductDetails] pd \n"
-                + "ON p.productId = pd.productId\n"
-                + "ORDER BY p.price ASC;";
+        List<ProductDetail> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT p.*, pd.color, pd.size, pd.image as imagePD FROM [OnlineShop_SWP391].[dbo].[Product] p JOIN [OnlineShop_SWP391].[dbo].[ProductDetails] pd ON p.productId = pd.productId WHERE 1=1");
+
+        if (search != null && !search.trim().isEmpty()) {
+            sql.append(" AND p.productName LIKE ?");
+        }
+        if (size != null) {
+            sql.append(" AND pd.size = ?");
+        }
+        if (color != null) {
+            sql.append(" AND pd.color = ?");
+        }
+        if (typeId != null) {
+            sql.append(" AND p.typeId = ?");
+        }
+        if (categoryId != null) {
+            sql.append(" AND p.categoryId = ?");
+        }
+        if (brandId != null) {
+            sql.append(" AND p.brandId = ?");
+        }
+        if (rangePrice != null && rangePrice[0] != null) {
+            if (rangePrice.length > 1 && rangePrice[1] != null) {
+                sql.append(" AND p.price BETWEEN ? AND ?");
+            } else {
+                sql.append(" AND p.price >= ?");
+            }
+        }
+
+        sql.append(" ORDER BY p.price ASC");
+
         try {
-            PreparedStatement statement = dBContext.conn.prepareStatement(sql);
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql.toString());
+            int paramIndex = 1;
+
+            if (search != null && !search.trim().isEmpty()) {
+                statement.setString(paramIndex++, "%" + search + "%");
+            }
+            if (size != null) {
+                statement.setInt(paramIndex++, size);
+            }
+            if (color != null) {
+                statement.setString(paramIndex++, color);
+            }
+            if (typeId != null) {
+                statement.setInt(paramIndex++, typeId);
+            }
+            if (categoryId != null) {
+                statement.setInt(paramIndex++, categoryId);
+            }
+            if (brandId != null) {
+                statement.setInt(paramIndex++, brandId);
+            }
+            if (rangePrice != null && rangePrice[0] != null) {
+                statement.setInt(paramIndex++, rangePrice[0]);
+                if (rangePrice.length > 1 && rangePrice[1] != null) {
+                    statement.setInt(paramIndex++, rangePrice[1]);
+                }
+            }
+
             ResultSet rs = statement.executeQuery();
-            list = new ArrayList<>();
             while (rs.next()) {
                 Product p = new Product();
                 p.setProductId(rs.getInt("productId"));
                 p.setDescription(rs.getString("description"));
-                p.setImage(rs.getString("image"));
+                p.setImage(rs.getString("imagePD"));
                 p.setProductName(rs.getString("productName"));
                 p.setPrice(rs.getFloat("price"));
+
                 ProductDetail productDetail = new ProductDetail();
                 productDetail.setProduct(p);
                 productDetail.setColor(rs.getString("color"));
                 productDetail.setSize(rs.getInt("size"));
+
                 list.add(productDetail);
             }
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
-            try {
-                dBContext.conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            if (dBContext.conn != null) {
+                try {
+                    dBContext.conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         return list;
@@ -450,11 +505,8 @@ public class ProductDAO extends DBContext {
 //        d.setBrand(b);
 //        d.setCategory(c);
 //        dAO.addProduct(d);
-//        List<Product> list = dAO.getAllProductWithParam("", null, null, null, true);
-//        for (Product product : list) {
-//            System.out.println(product);
-//        }
-        System.out.println(dAO.getById(1).getProductDetails().get(1).getSize());
+        List<ProductDetail> list = dAO.getTopCheapestProduct(null, "", null, null, null, null, null);
+        System.out.println(list);
     }
 
 }

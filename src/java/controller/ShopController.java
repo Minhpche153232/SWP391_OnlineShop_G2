@@ -24,7 +24,7 @@ import models.Type;
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class ShopController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,11 +71,11 @@ public class HomeController extends HttpServlet {
             }
 
         }
-        if (rangePrice[0] == null) {
+        if(rangePrice[0] == null){
             rangePrice = null;
         }
 
-        List<ProductDetail> listCheapest = productDAO.getTopCheapestProduct(rangePrice, search, size, color, typeId, categoryId, brandId);
+        List<ProductDetail> listCheapest = productDAO.getTopCheapestProduct(rangePrice,search, size, color, typeId, categoryId, brandId);
         List<Category> categories = categoryDAO.getAllCategories();
         List<Brand> brands = brandDAO.getAllBrands();
         List<Type> types = typeDAO.getAllTypes();
@@ -90,14 +90,18 @@ public class HomeController extends HttpServlet {
         request.setAttribute("price", price);
         request.setAttribute("size", size);
 
-        if (listCheapest.size() > 12) {
-            listCheapest = listCheapest.subList(0, 11);
-        }
         request.setAttribute("listCheapest", listCheapest);
-
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

@@ -32,10 +32,6 @@ document.getElementById('address').addEventListener('blur', function () {
     validateField('password', /^.{8,15}$/, 'Password must be 8-15 characters long.');
 });--*/
 document.getElementById('password').addEventListener('blur', function () {
-
-    validateField('password', /^(?=.*\S).{8,15}$/, 'Password must be 8-15 characters long and must not contain any spaces.');
-
-
     const password = document.getElementById('password').value;
     const errorDiv = document.getElementById('passwordError');  // Lấy phần tử để hiển thị lỗi
     
@@ -62,7 +58,6 @@ document.getElementById('password').addEventListener('blur', function () {
         // Nếu không có lỗi, password hợp lệ
         errorDiv.innerText = '';  // Xóa thông báo lỗi nếu hợp lệ
     }
-
 });
 
 
@@ -84,11 +79,6 @@ function validateForm() {
     isValid &= validateField('email', /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Invalid email format.');
     isValid &= validateField('phonenumber', /^[0-9]{7,11}$/, 'Phone number must be 7-11 digits long and contain only numbers.');
     isValid &= validateField('address', /^[A-Za-zÀ-ỹ0-9,.() \-]+$/, 'Address contains invalid characters.');
-
-    isValid &= validateField('password', /^(?=.*\S).{8,15}$/, 'Password must be 8-15 characters long and must not contain any spaces.');
-
-    
-
     //isValid &= validateField('password', /^.{8,15}$/, 'Password must be 8-15 characters long.');
     const password = document.getElementById('password').value;
     const errorDiv = document.getElementById('passwordError');
