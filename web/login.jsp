@@ -23,6 +23,24 @@
                             <h3>Login</h3>
                         </div>
                         <div class="card-body">
+                            <c:if test="${not empty sessionScope.notification}">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
+                                    ${sessionScope.notification}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <%
+                                    session.removeAttribute("notification");
+                                %>
+                            </c:if>
+                            <c:if test="${not empty sessionScope.notificationErr}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center">
+                                    ${sessionScope.notificationErr}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <%
+                                    session.removeAttribute("notificationErr");
+                                %>
+                            </c:if>
                             <form action="login" method="post">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
@@ -34,10 +52,10 @@
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" <c:if test="${not empty cookie.username.value}">checked</c:if>>
-                                    <label class="form-check-label" for="rememberMe">Remember Me</label>
-                                </div>
-                                <button type="submit" class="btn btn-primary form-control">Login</button>
-                            </form>
+                                        <label class="form-check-label" for="rememberMe">Remember Me</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary form-control">Login</button>
+                                </form>
                             <c:if test="${not empty errorMessage}">
                                 <div class="alert alert-danger mt-3">${errorMessage}</div>
                             </c:if>

@@ -1,13 +1,9 @@
-<%-- 
-    Document   : top-bar
-    Created on : Aug 10, 2024, 7:54:00 PM
-    Author     : Admin
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!-- Start Header/Navigation -->
-<nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar">
+<nav class="custom-navbar navbar navbar-expand-md navbar-dark bg-dark" aria-label="Furni navigation bar">
 
     <div class="container">
         <a class="navbar-brand" href="home">Furni<span>.</span></a>
@@ -30,12 +26,26 @@
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <c:if test="${sessionScope.currentUser != null}">
                     <li><a class="nav-link" href="profile"><img src="images/user.svg"></a></li>
-                    <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
-                        </c:if>
-                        <c:if test="${sessionScope.currentUser == null}">
+                    <li>
+                        <a class="nav-link" href="cart">
+                            <img src="images/cart.svg">
+                            <c:if test="${not empty sessionScope.cart}">
+                                <span class="badge bg-secondary">${fn:length(sessionScope.cart)}</span>
+                            </c:if>
+                        </a>
+                    </li>
+                </c:if>
+                <c:if test="${sessionScope.currentUser == null}">
                     <li><a class="nav-link btn btn-secondary me-2" href="login">Login</a></li>
-                    <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
-                        </c:if>
+                    <li>
+                        <a class="nav-link" href="cart">
+                            <img src="images/cart.svg">
+                            <c:if test="${not empty sessionScope.cart}">
+                                <span class="badge bg-secondary">${fn:length(sessionScope.cart)}</span>
+                            </c:if>
+                        </a>
+                    </li>
+                </c:if>
             </ul>
         </div>
     </div>

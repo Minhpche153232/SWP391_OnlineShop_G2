@@ -15,6 +15,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+import models.CartItem;
+import models.ProductDetailKey;
 import models.User;
 
 /**
@@ -39,16 +43,18 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Get the data of submitted form
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String rememberMe = request.getParameter("rememberMe");
 
-        //Check if user existed in database
         User user = userDAO.getUserByUsernameAndPassword(username, password);
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("currentUser", user);
+
+            // Each user will have their own cart stored in the session
+            Map<ProductDetailKey, CartItem> userCart = new HashMap<>();
+            session.setAttribute("cart", userCart);
 
             if ("on".equals(rememberMe)) {
                 Cookie usernameCookie = new Cookie("username", username);
