@@ -350,7 +350,8 @@ public class ProductDAO extends DBContext {
                         rs.getString("color"),
                         rs.getInt("unitInStock"),
                         rs.getString("image"),
-                        rs.getInt("productId")
+                        rs.getInt("productId"),
+                        rs.getInt("discount")
                 );
             }
         } catch (SQLException e) {

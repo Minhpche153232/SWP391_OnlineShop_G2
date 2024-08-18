@@ -8,12 +8,16 @@
     // Retrieve the cart from the session
     Map<ProductDetailKey, CartItem> cart = (Map<ProductDetailKey, CartItem>) request.getAttribute("cart");
 
-    double subtotal = 0.0;
-    if (cart != null) {
-        for (CartItem item : cart.values()) {
-            subtotal += item.getQuantity() * item.getProductDetail().getProduct().getPrice();
-        }
+double subtotal = 0.0;
+if (cart != null && !cart.isEmpty()) {
+    for (CartItem item : cart.values()) {
+        double price = item.getProductDetail().getProduct().getPrice();
+        double discount = item.getProductDetail().getDiscount();
+        double discountedPrice = price - (price * discount / 100);
+        subtotal += item.getQuantity() * discountedPrice;
     }
+}
+
 %>
 
 <!doctype html>
@@ -81,6 +85,7 @@
                                     <th class="product-name">Product</th>
                                     <th class="product-price">Price</th>
                                     <th class="product-quantity">Quantity</th>
+                                    <th class="product-quantity">Discount</th>
                                     <th class="product-total">Total</th>
                                     <th class="product-remove">Remove</th>
                                 </tr>
@@ -111,7 +116,8 @@
                                                         <input type="number" name="quantity" value="${entry.value.quantity}" min="1" class="form-control">
                                                         <button type="submit" class="btn btn-sm btn-outline-black mt-2">Update</button>
                                                     </form> </td>
-                                                <td>${entry.value.quantity * entry.value.productDetail.product.price} VND</td>
+                                                <td>${ entry.value.productDetail.discount} %</td>
+                                                <td>${(entry.value.quantity * entry.value.productDetail.product.price) - (entry.value.quantity * entry.value.productDetail.product.price)* entry.value.productDetail.discount / 100} VND</td>
                                                 <td>
                                                     <form action="cart" method="post">
                                                         <input type="hidden" name="action" value="remove">
@@ -147,14 +153,7 @@
                                         <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <span class="text-black">Subtotal</span>
-                                    </div>
-                                    <div class="col-md-6 text-right">
-                                        <strong class="text-black"><%= subtotal %> VND</strong>
-                                    </div>
-                                </div>
+                                
                                 <div class="row mb-5">
                                     <div class="col-md-6">
                                         <span class="text-black">Total</span>
