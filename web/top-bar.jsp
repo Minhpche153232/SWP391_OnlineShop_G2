@@ -68,12 +68,23 @@
                 </ul>
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                     <c:if test="${sessionScope.currentUser != null}">
-                        <li><a class="nav-link" href="profile"><img src="images/user.svg"></a></li>
+                        <li>
+                            <div class="dropdown">
+                                    <a class="nav-link dropdown-toggle" href="profile" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0"><img src="images/user.svg"></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                                    <a class="dropdown-item" href="logout">Logout</a>
+                                    <a  class="dropdown-item"  href="profile">Profile</a>
+                                </div>
+
+                            </div>
+                        </li>
                         <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
                         </c:if>
                         <c:if test="${sessionScope.currentUser == null}">
-                        <li style="display: flex; align-items: end"><a class="nav-link btn btn-secondary" style="color: white; height: 35px;width:  75px; display: flex;
-                                                                       align-items: center;    justify-content: center;" href="login">Login</a></li>
+                        <li style="display: flex; align-items: end">
+                            <a class="nav-link btn btn-secondary" style="color: white; height: 35px;width:  75px; display: flex;
+                               align-items: center;    justify-content: center;" href="login">Login</a></li>
                         <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
                         </c:if>
                 </ul>
