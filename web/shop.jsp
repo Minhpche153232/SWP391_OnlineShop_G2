@@ -186,7 +186,7 @@
                                         </strong>
 
                                         <span class="icon-cross">
-                                            <img src="images/cross.svg" class="img-fluid">
+                                            <img src="images/cross.svg" class="img-fluid" >
                                         </span>
                                     </a>
                                 </div> 
