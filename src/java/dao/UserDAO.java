@@ -138,6 +138,8 @@ public class UserDAO extends DBContext {
             throw new RuntimeException(e);
         }
     }
-    
+    public static void main(String[] args) {
+        System.out.println(new UserDAO().getMd5("123"));
+    }
 
 }

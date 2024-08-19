@@ -19,20 +19,24 @@ import java.util.ArrayList;
 import java.util.List;
 import models.Brand;
 import models.Category;
+import models.Order;
 import models.OrderItem;
 import models.Type;
 import models.User;
 
 /**
  *
- * @author ASUS
+ * @author Admin
  */
-public class OrderController extends HttpServlet {
+public class LitsOrder extends HttpServlet {
 
+ 
+
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get data filter
+           //get data filter
         CategoryDAO categoryDAO = new CategoryDAO();
         BrandDAO brandDAO = new BrandDAO();
         TypeDAO typeDAO = new TypeDAO();
@@ -67,17 +71,11 @@ public class OrderController extends HttpServlet {
             }
         }
         OrderDAO orderDAO = new OrderDAO();
-        List<OrderItem> listOrderDetail = orderDAO.getMyOrder(userId);
-        List<OrderItem> listOrderDetail2 = new ArrayList<>();
+        List<Order> listOrderDetail = orderDAO.getListOrder();
 
-        for (OrderItem orderItem : listOrderDetail) {
-            if (orderItem.getOrder().getStatus().equals(status)) {
-                listOrderDetail2.add(orderItem);
-            }
-        }
-        request.setAttribute("status", status);
-        request.setAttribute("listOrderDetail", listOrderDetail2);
-        request.getRequestDispatcher("order.jsp").forward(request, response);
+       
+        request.setAttribute("listOrderDetail", listOrderDetail);
+        request.getRequestDispatcher("listOrder.jsp").forward(request, response);
     }
 
     /**
@@ -91,6 +89,15 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String order =request.getParameter("order");
+                String status =request.getParameter("status");
+                String statusChange = "";
+                if("pending".equals(status)){
+                    statusChange = "on-going";
+                }else if("pending".equals(status)){
+                    statusChange = "on-going";
+                }
+
     }
 
     /**

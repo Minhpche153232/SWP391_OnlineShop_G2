@@ -52,6 +52,10 @@
         <servlet-name>OrderController</servlet-name>
         <servlet-class>controller.OrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LitsOrder</servlet-name>
+        <servlet-class>controller.LitsOrder</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
         <url-pattern>/ChangePassword</url-pattern>
@@ -111,5 +115,9 @@
     <servlet-mapping>
         <servlet-name>OrderController</servlet-name>
         <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LitsOrder</servlet-name>
+        <url-pattern>/litsOrder</url-pattern>
     </servlet-mapping>
 </web-app>

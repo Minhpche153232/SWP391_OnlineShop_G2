@@ -11,21 +11,43 @@ import java.util.List;
  * @author ASUS
  */
 public class OrderItem {
-     private Product product;
+
+    private Product product;
     private int size;
     private String color;
     private String image;
     private Order order;
+    private float totalPrice;
+    private int quantity;
 
     public OrderItem() {
     }
 
-    public OrderItem(Product product, int size, String color, String image, Order order) {
+    public OrderItem(Product product, int size, String color, String image, Order order, float totalPrice, int quantity) {
         this.product = product;
         this.size = size;
         this.color = color;
         this.image = image;
         this.order = order;
+        this.totalPrice = totalPrice;
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+  
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Order getOrder() {
@@ -35,8 +57,6 @@ public class OrderItem {
     public void setOrder(Order order) {
         this.order = order;
     }
-
-   
 
     public Product getProduct() {
         return product;
@@ -72,7 +92,8 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return "OrderItem{" + "product=" + product + ", size=" + size + ", color=" + color + ", image=" + image + '}';
+        return "OrderItem{" + "product=" + product + ", size=" + size + ", color=" + color + ", image=" + image + ", order=" + order + ", totalPrice=" + totalPrice + '}';
     }
-    
+
+  
 }

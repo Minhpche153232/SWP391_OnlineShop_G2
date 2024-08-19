@@ -101,6 +101,11 @@ public class Order {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" + "orderId=" + orderId + ", user=" + user + ", totalPrice=" + totalPrice + ", orderDate=" + orderDate + ", shipDate=" + shipDate + ", toAddress=" + toAddress + ", staff=" + staff + ", status=" + status + '}';
+    }
+
 
 
 }

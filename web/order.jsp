@@ -19,7 +19,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
-                <link href="css/input.css" rel="stylesheet">
+        <link href="css/input.css" rel="stylesheet">
 
         <title>Furni Cart</title>
     </head>
@@ -62,22 +62,31 @@
                         session.removeAttribute("notificationErr");
                     %>
                 </c:if>
+                <div style="width: 100%; padding-bottom: 10px; display: flex; justify-content: space-around">
+                    <a class="nav-link" href="order?status=pending"> <div  style="font-size: 16px; font-weight: bold;
+                                                          <c:if test="${status eq 'pending'}"> border-bottom: 2px solid  red</c:if>; padding-bottom: 10px;">Pending</div></a>
+                    <a class="nav-link" href="order?status=on-going"><div style="font-size: 16px; font-weight: bold;<c:if test="${status eq 'on-going'}">border-bottom: 2px solid red</c:if>; padding-bottom: 10px; ">On-going</div>
+                        </a>
+                        <a class="nav-link" href="order?status=success"><div style="font-size: 16px; font-weight: bold;  <c:if test="${status eq 'success'}">border-bottom: 2px solid red</c:if>; padding-bottom: 10px;">Success</div>
+                        </a>
+                        <a class="nav-link" href="order?status=success"><div style="font-size: 16px; font-weight: bold; <c:if test="${status eq 'fail'}">border-bottom: 2px solid red</c:if>; padding-bottom: 10px;">Fail</div>
+                        </a>
+                    </div>
+                    <div class="row mb-5">
 
-                <div class="row mb-5">
-
-                    <div class="site-blocks-table">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="product-thumbnail">Image</th>
-                                    <th class="product-name">Product</th>
-                                    <th class="product-price">Price</th>
-                                    <th class="product-quantity">Quantity</th>
-                                    <th class="product-total">Total</th>
-                                    <th class="product-remove">Remove</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                        <div class="site-blocks-table">
+                            <table class="table">
+                                <!--<thead>-->
+                                <!--                                <tr>
+                                                                    <th class="product-thumbnail">Order</th>
+                                                                    <th class="product-thumbnail">Image</th>
+                                                                    <th class="product-name">Product</th>
+                                                                    <th class="product-price">Price</th>
+                                                                    <th class="product-quantity">Quantity</th>
+                                                                    <th class="product-total">Total</th>
+                                                                </tr>-->
+                                <!--</thead>-->
+                                <tbody>
                                 <c:choose>
                                     <c:when test="${empty listOrderDetail}">
                                         <tr>
@@ -87,6 +96,7 @@
                                     <c:otherwise>
                                         <c:forEach var="i" items="${listOrderDetail}">
                                             <tr>
+                                                <td>Order: ${(i.order.orderId)}</td>
                                                 <td class="product-thumbnail">
                                                     <img src="${i.product.image}" alt="Image" class="img-fluid">
                                                 </td>
@@ -95,9 +105,10 @@
                                                     <p>Size: ${i.size}, Color: ${i.color}</p>
                                                 </td>
                                                 <td>${i.product.price} VND</td>
-                                            
-                                                <td>${(i.product.quantity * i.product.price)} VND</td>
-                                                
+                                                <td>${i.quantity}</td>
+
+                                                <td>${(i.totalPrice)} VND</td>
+
                                             </tr>
                                         </c:forEach>
                                     </c:otherwise>
@@ -108,40 +119,7 @@
 
                 </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row mb-5">
-                            <div class="col-md-6">
-                                <a href="" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 pl-5">
-                        <div class="row justify-content-end">
-                            <div class="col-md-7">
-                                <div class="row">
-                                    <div class="col-md-12 text-right border-bottom mb-5">
-                                        <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
-                                    </div>
-                                </div>
-                                
-                                <div class="row mb-5">
-                                    <div class="col-md-6">
-                                        <span class="text-black">Total</span>
-                                    </div>
-                                    <div class="col-md-6 text-right">
-                                        <strong class="text-black">0 VND</strong>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location = 'checkout.html'">Proceed To Checkout</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
 
