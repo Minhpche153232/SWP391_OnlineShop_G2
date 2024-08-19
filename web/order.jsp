@@ -73,12 +73,12 @@
                             <div class="div-input-custom-no-outline">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                                 <input class="input-custom-no-outline" value="${search}" name="search" id="search" type="text" placeholder="Search Order ID" onkeypress="checkEnter(event)"/>
-                            </div>  
-                        </form>
-                    </div>
-                    <div class="row mb-5">
+                        </div>  
+                    </form>
+                </div>
+                <div class="row mb-5">
 
-                        <div class="site-blocks-table">
+                    <div class="site-blocks-table">
 
                         <c:choose>
                             <c:when test="${empty listOrderDetail}">
@@ -122,8 +122,14 @@
                                             <div style="font-size: 18px; margin-bottom: 10px">
                                                 <i class="fa-solid fa-circle-dollar-to-slot" style="color: #A00000"></i> Total Price: <span style="color: #A00000"><fmt:formatNumber value="${(i.totalPrice)}" type="number" groupingUsed="true" /> VND</span>
                                             </div>
-                                                <div  <c:if test="${sessionScope.currentUser.role eq '1'}">hidden</c:if>>
-                                                <button class="btn-custom" >Re-order</button>
+                                            <div  <c:if test="${sessionScope.currentUser.role eq '1'}">hidden</c:if>>
+
+                                                    <form action="add-cart" method="POST" onsubmit="return validateForm()">
+                                                        <input type="hidden" name="productId" value="${i.product.productId}">
+                                                    <input type="hidden" name="size" value="${i.size}">
+                                                    <input type="hidden" name="color" value="${i.color}">
+                                                    <button class="btn-custom" >Re-order</button>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

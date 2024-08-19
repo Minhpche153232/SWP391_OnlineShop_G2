@@ -89,13 +89,13 @@
 
                             </div>
                         </li>
-                        <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                        <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
                         </c:if>
                         <c:if test="${sessionScope.currentUser == null}">
                         <li style="display: flex; align-items: end">
                             <a class="nav-link btn btn-secondary" style="color: white; height: 35px;width:  75px; display: flex;
                                align-items: center;    justify-content: center;" href="login">Login</a></li>
-                        <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                        <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
                         </c:if>
                 </ul>
             </div>

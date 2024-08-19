@@ -31,18 +31,19 @@
                 <h1 class="h3 mb-2 text-gray-800">Product management</h1>
 
                 <!-- Display Notifications -->
-            <c:if test="${not empty sessionScope.notification}">
+            <c:if test="${message eq true}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
-                    ${sessionScope.notification}
+                    Change successfully
                     <button type="button" class="btn-danger" data-dismiss="alert" aria-label="Close">x</button>
                 </div>
                 <%
                     session.removeAttribute("notification");
                 %>
             </c:if>
-            <c:if test="${not empty sessionScope.notificationErr}">
+            <c:if test="${message eq false}">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center">
-                    ${sessionScope.notificationErr}
+                    Change fail
+
                     <button type="button" class="btn-danger" data-dismiss="alert" aria-label="Close">x</button>
                 </div>
                 <%
@@ -50,9 +51,7 @@
                 %>
             </c:if>
 
-            <c:if test="${message ne null}">
-                <i style="color: blue">${message}</i>
-            </c:if>
+
 
             <div class="card-body">
 
