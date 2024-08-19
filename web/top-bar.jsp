@@ -68,7 +68,7 @@
                     <li class="dropdown">
                         <a class="btn btn-secondary dropdown-toggle dropdown-button">${sessionScope.currentUser.balance} VND</a>
                         <div class="dropdown-content dropdown-content">
-                            <a class="" href="#">Deposit money</a>
+                            <a class="" href="add-money.jsp">Deposit money</a>
                             <a class="" href="#">Withdraw money</a>
                             <a class="" href="#">Transfer history</a>
                         </div>
