@@ -76,6 +76,11 @@
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>User Management</span></a>
                 </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/order-manager">
+                        <i class="fas fa-tasks fa-fw"></i>
+                        <span>Order Management</span></a>
+                </li>
                 
 
                 <!-- Divider -->

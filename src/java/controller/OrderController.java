@@ -32,7 +32,8 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //get data filter
+        try {
+             //get data filter
         CategoryDAO categoryDAO = new CategoryDAO();
         BrandDAO brandDAO = new BrandDAO();
         TypeDAO typeDAO = new TypeDAO();
@@ -43,6 +44,7 @@ public class OrderController extends HttpServlet {
         request.setAttribute("brands", brands);
         request.setAttribute("types", types);
         //
+        String search = request.getParameter("search");
         String userIdStr = request.getParameter("userId");
         String status = request.getParameter("status");
         if (status == null) {
@@ -67,7 +69,7 @@ public class OrderController extends HttpServlet {
             }
         }
         OrderDAO orderDAO = new OrderDAO();
-        List<OrderItem> listOrderDetail = orderDAO.getMyOrder(userId);
+        List<OrderItem> listOrderDetail = orderDAO.getMyOrder(userId, search);
         List<OrderItem> listOrderDetail2 = new ArrayList<>();
 
         for (OrderItem orderItem : listOrderDetail) {
@@ -76,8 +78,14 @@ public class OrderController extends HttpServlet {
             }
         }
         request.setAttribute("status", status);
+                request.setAttribute("search", search);
+
         request.setAttribute("listOrderDetail", listOrderDetail2);
         request.getRequestDispatcher("order.jsp").forward(request, response);
+        } catch (Exception e) {
+                            response.sendRedirect("home");
+
+        }
     }
 
     /**

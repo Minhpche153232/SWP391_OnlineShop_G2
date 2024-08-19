@@ -114,9 +114,9 @@
 
                             <c:forEach items="${listCheapest}" var="i">
                                 <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                                    <a class="product-item" href="cart.html">
-                                        <!--<img src="${i.product.image}" class="img-fluid product-thumbnail">-->
-                                        <img src="images/air_gray_03.png" class="img-fluid product-thumbnail">
+                                    <a class="product-item" href="product-detail?id=${i.product.productId}">
+                                        <img src="${i.product.image}" class="img-fluid product-thumbnail">
+                                        <!--<img src="images/air_gray_03.png" class="img-fluid product-thumbnail">-->
                                         <h3 class="product-title">${i.product.productName}</h3>
                                         <strong class="product-price">
                                             <fmt:formatNumber value="${i.product.price}" type="number" groupingUsed="true" /> VND
