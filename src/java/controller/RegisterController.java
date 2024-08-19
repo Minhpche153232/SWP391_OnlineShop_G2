@@ -77,7 +77,7 @@ public class RegisterController extends HttpServlet {
         user.setPassword(password);
         user.setEmail(email);
         user.setPhone(phone);
-        user.setDob(dobStr);  // Set Date object
+        user.setDob(dob);  // Set Date object
         user.setAddress(address);
         if(gender.equals("Female")){
             user.setGender(false);

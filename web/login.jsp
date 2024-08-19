@@ -39,15 +39,18 @@
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" <c:if test="${not empty cookie.username.value}">checked</c:if>>
-                                    <label class="form-check-label" for="rememberMe">Remember Me</label>
-                                </div>
-                                <button type="submit" class="btn btn-primary form-control">Login</button>
-                            </form>
+                                        <label class="form-check-label" for="rememberMe">Remember Me</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary form-control">Login</button>
+                                </form>
                             <c:if test="${not empty errorMessage}">
                                 <div class="alert alert-danger mt-3">${errorMessage}</div>
                             </c:if>
                             <div class="mt-3" style="text-align: right">
                                 Don't have an account? <a href="register">Register here</a>
+                            </div>
+                            <div class="mt-3" style="text-align: right">
+                                Forgot your password? <a href="reset-password.jsp">Click here</a>
                             </div>
                         </div>
                     </div>

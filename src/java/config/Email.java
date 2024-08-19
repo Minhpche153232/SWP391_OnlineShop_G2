@@ -53,7 +53,7 @@ public class Email {
             //QUy dinh ngay gui
             msg.setSentDate(new Date());
             //Noi dung
-            msg.setText("Code for activate your account:\n" +  code, "UTF-8");
+            msg.setText("Code for reset your password:\n" +  code, "UTF-8");
             // Gui email
             Transport.send(msg);
             return true;

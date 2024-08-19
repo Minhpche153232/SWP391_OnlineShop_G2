@@ -42,6 +42,7 @@
                                         <c:if test="${not empty errorMessage}">
                                             <div class="alert alert-danger mt-3">${errorMessage}</div>
                                         </c:if>
+                                        <label class="form-label" for="txtInput">Email or Username:</label>
                                         <input type="text" class="form-control" id="txtInput" name="txtInput" value="${txtInput}" required>
                                     </div>
                                     <input type="hidden" name="action" value="checkUser">
@@ -54,7 +55,7 @@
                         </c:if>
                         <c:if test="${getEmail == 'true'}">
                             <div class="card-header">
-                                <h3>Enter the code send to ${email}</h3>
+                                <h3>Enter the code send to ${sessionScope.emailView}</h3>
                             </div>
                             <div class="card-body">
                                 <form action="resetpw" method="post">
@@ -62,10 +63,14 @@
                                         <c:if test="${not empty errorMessage}">
                                             <div class="alert alert-danger mt-3">${errorMessage}</div>
                                         </c:if>
-                                        <input type="text" class="form-control" id="codeInput" name="codeInput" required>
+                                        <label class="form-label" for="codeInput">Code:</label>
+                                        <input type="text" class="form-control" id="codeInput" name="codeInput">
                                     </div>
                                     <input type="hidden" name="action" value="checkCode">
-                                    <button type="submit" class="btn btn-primary form-control">Send</button>
+                                    <div class="d-flex justify-content-around">
+                                        <button type="submit" class="btn btn-primary form-control" name="btnSubmit" value="send">Send</button>
+                                        <button type="submit" class="btn btn-primary form-control" name="btnSubmit" value="resend">Re-send code</button>
+                                    </div>
                                 </form>
                                 <div class="mt-3" style="text-align: center">
                                     <a class="text-decoration-none" href="login">Back to login</a>
