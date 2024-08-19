@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.admin;
 
 import dao.BrandDAO;
 import dao.CategoryDAO;
@@ -15,12 +15,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 import models.Brand;
 import models.Category;
 import models.Order;
-import models.OrderItem;
 import models.Type;
 import models.User;
 
@@ -28,15 +26,12 @@ import models.User;
  *
  * @author Admin
  */
-public class LitsOrder extends HttpServlet {
+public class OrderManager extends HttpServlet {
 
- 
-
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           //get data filter
+        //get data filter
         CategoryDAO categoryDAO = new CategoryDAO();
         BrandDAO brandDAO = new BrandDAO();
         TypeDAO typeDAO = new TypeDAO();
@@ -47,8 +42,12 @@ public class LitsOrder extends HttpServlet {
         request.setAttribute("brands", brands);
         request.setAttribute("types", types);
         //
+        String message = request.getParameter("message");
         String userIdStr = request.getParameter("userId");
         String status = request.getParameter("status");
+        String search = request.getParameter("search");
+        String page = request.getParameter("page");
+        int pageIndex = 1;
         if (status == null) {
             status = "pending";
         }
@@ -65,17 +64,22 @@ public class LitsOrder extends HttpServlet {
         } else {
             try {
                 userId = Integer.parseInt(userIdStr);
+                pageIndex = Integer.parseInt(page);
+
             } catch (Exception e) {
 
                 response.sendRedirect("home");
             }
         }
         OrderDAO orderDAO = new OrderDAO();
-        List<Order> listOrderDetail = orderDAO.getListOrder();
+        List<Order> listOrderDetail = orderDAO.getListOrder(search, status, pageIndex);
 
-       
+        request.setAttribute("page", pageIndex);
+        request.setAttribute("search", search);
+        request.setAttribute("status", status);
+        request.setAttribute("message", message);
         request.setAttribute("listOrderDetail", listOrderDetail);
-        request.getRequestDispatcher("listOrder.jsp").forward(request, response);
+        request.getRequestDispatcher("order-management.jsp").forward(request, response);
     }
 
     /**
@@ -89,22 +93,9 @@ public class LitsOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String order =request.getParameter("order");
-                String status =request.getParameter("status");
-                String statusChange = "";
-                if("pending".equals(status)){
-                    statusChange = "on-going";
-                }else if("pending".equals(status)){
-                    statusChange = "on-going";
-                }
 
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";

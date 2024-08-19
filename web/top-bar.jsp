@@ -70,11 +70,21 @@
                     <c:if test="${sessionScope.currentUser != null}">
                         <li>
                             <div class="dropdown">
-                                    <a class="nav-link dropdown-toggle" href="profile" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0"><img src="images/user.svg"></a>
+                                <a class="nav-link dropdown-toggle" href="profile" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0"><img src="images/user.svg"></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
-                                    <a class="dropdown-item" href="logout">Logout</a>
+
+                                    <c:if test="${sessionScope.currentUser !=  null}">
+                                        <c:if test="${sessionScope.currentUser.role == 3}">
+                                            <a  class="dropdown-item"  href="order">My order</a>
+                                        </c:if>
+                                        <c:if test="${sessionScope.currentUser.role == 1}">
+                                            <a  class="dropdown-item"  href="admin/dashboard">Dashboard</a>
+                                        </c:if>
+                                    </c:if>
                                     <a  class="dropdown-item"  href="profile">Profile</a>
+                                    <a class="dropdown-item" href="logout">Logout</a>
+
                                 </div>
 
                             </div>
