@@ -13,7 +13,6 @@
         <title>Sign up</title>
         <!-- Bootstrap CSS -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/my-dropdown.css" rel="stylesheet">
         <style>
             body {
                 background-color: #EFF2F1;

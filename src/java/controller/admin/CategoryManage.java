@@ -28,7 +28,7 @@ public class CategoryManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1") || user != null && user.getRole().equals("3")) {
+        if (user != null && user.getRole().equals("1")) {
             if (service == null) {
                 List<Category> list = dao.getAllCategories();
                 request.setAttribute("listCate", list);

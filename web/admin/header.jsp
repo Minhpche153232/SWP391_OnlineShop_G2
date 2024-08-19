@@ -28,6 +28,7 @@
 
         <!-- Custom styles for this page -->
         <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
     </head>
 
     <body id="page-top">
@@ -70,12 +71,12 @@
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>Product Management</span></a>
                 </li>
-                <li class="nav-item">
+                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin/user-manager">
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>User Management</span></a>
                 </li>
-
+                
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

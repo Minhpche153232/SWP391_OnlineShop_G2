@@ -37,7 +37,7 @@ public class BrandManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1") || user != null && user.getRole().equals("3")) {
+        if (user != null && user.getRole().equals("1")) {
             if (service == null) {
                 List<Brand> list = dao.getAllBrands();
                 request.setAttribute("listB", list);
@@ -106,7 +106,7 @@ public class BrandManage extends HttpServlet {
                 response.sendRedirect("brand");
             }
         } else if ("search".equals(service)) {
-            String txtSearch = request.getParameter("txtSearch").trim().replace("\\s+", " ");
+            String txtSearch = request.getParameter("txtSearch").trim();
             String[] listSearch = txtSearch.split(" ");
             if (listSearch.length > 0) {
                 List<Brand> list = dao.searchBrandByName(listSearch);
@@ -114,7 +114,10 @@ public class BrandManage extends HttpServlet {
                 request.setAttribute("txtSearch", txtSearch);
                 request.getRequestDispatcher("brand-management.jsp").forward(request, response);
             } else {
-                request.getRequestDispatcher("brand").forward(request, response);
+                List<Brand> list = dao.getAllBrands();
+                request.setAttribute("listB", list);
+                request.setAttribute("txtSearch", txtSearch);
+                request.getRequestDispatcher("brand-management.jsp").forward(request, response);
             }
 
         }
