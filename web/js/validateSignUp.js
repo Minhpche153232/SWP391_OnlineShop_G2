@@ -101,7 +101,6 @@ function validateForm() {
         errorDiv.innerText = 'Password cannot contain spaces.';
         isValid = false;
     }
-
     const gender = document.querySelector('input[name="gender"]:checked');
     if (!gender) {
         document.getElementById('genderError').innerText = 'Please select a gender.';

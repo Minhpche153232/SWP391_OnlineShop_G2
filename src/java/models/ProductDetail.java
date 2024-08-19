@@ -16,19 +16,17 @@ public class ProductDetail {
     private int unitInStock;
     private String image;
     private int productId;
-    private int discount;
-    
+
     public ProductDetail() {
     }
 
-    public ProductDetail(Product product, int size, String color, int unitInStock, String image, int productId, int discount ) {
+    public ProductDetail(Product product, int size, String color, int unitInStock, String image, int productId ) {
         this.product = product;
         this.size = size;
         this.color = color;
         this.unitInStock = unitInStock;
         this.image = image;
         this.productId = productId;
-        this.discount = discount;
     }
 
      public ProductDetail(int productId ,int size, String color, int unitInStock, String image) {
@@ -63,14 +61,6 @@ public class ProductDetail {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    public int getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(int discount) {
-        this.discount = discount;
     }
 
     public int getSize() {

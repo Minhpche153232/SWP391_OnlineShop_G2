@@ -4,7 +4,6 @@
     gap: 10px;
     margin-bottom: 20px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .form-input, .form-select, .form-button {

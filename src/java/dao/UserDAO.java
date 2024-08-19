@@ -111,7 +111,6 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
     
     public String getMd5(String input) // Mã hóa với MD5 - PARAM - PASSWORD
     {

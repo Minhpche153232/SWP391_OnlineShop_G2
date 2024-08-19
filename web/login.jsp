@@ -28,24 +28,6 @@
                             <h3>Login</h3>
                         </div>
                         <div class="card-body">
-                            <c:if test="${not empty sessionScope.notification}">
-                                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
-                                    ${sessionScope.notification}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                                <%
-                                    session.removeAttribute("notification");
-                                %>
-                            </c:if>
-                            <c:if test="${not empty sessionScope.notificationErr}">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center">
-                                    ${sessionScope.notificationErr}
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                                <%
-                                    session.removeAttribute("notificationErr");
-                                %>
-                            </c:if>
                             <form action="login" method="post">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
