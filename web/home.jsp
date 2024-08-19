@@ -1,5 +1,4 @@
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>--%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!doctype html>
 <html lang="en">
@@ -16,14 +15,9 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
-        <link href="css/input.css" rel="stylesheet">
-
         <link href="css/style.css" rel="stylesheet">
         <title>My shop</title>
-
-
     </head>
-
 
     <body>
         <%@include file="top-bar.jsp" %>
@@ -37,12 +31,12 @@
                         <div class="intro-excerpt">
                             <h1>Modern Interior <span clsas="d-block">Design Studio</span></h1>
                             <p class="mb-4">Donec vitae odio quis nisl dapibus malesuada. Nullam ac aliquet velit. Aliquam vulputate velit imperdiet dolor tempor tristique.</p>
-                            <p><a href="shop" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
+                            <p><a href="" class="btn btn-secondary me-2">Shop Now</a><a href="#" class="btn btn-white-outline">Explore</a></p>
                         </div>
                     </div>
                     <div class="col-lg-7">
                         <div class="hero-img-wrap">
-                            <img src="images/mlb-bg.png" class="img-fluid"  style="width: 35vw"/>
+                            <img src="images/image-home.png" class="img-fluid">
                         </div>
                     </div>
                 </div>
@@ -56,88 +50,30 @@
                 <div class="row">
 
                     <!-- Start Column 1 -->
-                    <div class="col-3">
-                        <div class="row">
-
-                            <div class="col-12">
-                                <h2 class="mb-4 section-title">Nike Air Force 1 Scales will also be provided with its original white laces.</h2>
-                                <p class="mb-4">Nike Air Force 1 Scales is the custom sneaker for men and women, embellished and enriched by the python print fabric in shades of brown on the toe box, midfoot, and heel. </p>
-                                <p><a href="shop" class="btn">Explore</a></p>
-                            </div> 
-                        </div> 
-
-                    </div>
+                    <div class="col-md-12 col-lg-3 mb-5 mb-lg-0">
+                        <h2 class="mb-4 section-title">Nike Air Force 1 Scales will also be provided with its original white laces.</h2>
+                        <p class="mb-4">Nike Air Force 1 Scales is the custom sneaker for men and women, embellished and enriched by the python print fabric in shades of brown on the toe box, midfoot, and heel. </p>
+                        <p><a href="shop1.html" class="btn">Explore</a></p>
+                    </div> 
                     <!-- End Column 1 -->
-                    <!--                    <form method="get" action="home" class="search-form" style="display: flex; justify-content: flex-end; align-items: center">
-                    
-                                            <div style="width: 150px; margin-left: 20px">
-                                                <select name="brandId" class="form-select">
-                                                    <option value="0" <c:if test="${ brandId eq '0'}"> selected</c:if>>All</option>
-                    
-                    <c:forEach items="${brands}" var="i">
-                        <option value="${i.brandId}" 
-                        <c:if test="${i.brandId eq brandId}"> selected</c:if>>${i.brandName}
-                        </option>
-                    </c:forEach>
 
-                </select>
-            </div>  <div style="width: 150px; margin-left: 20px">
-                <select name="categoryId" class="form-select">
-                    <option value="0" <c:if test="${ categoryId eq '0'}"> selected</c:if>>All</option>
+                    <c:forEach items="${listCheapest}" var="i">
+                        <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                            <a class="product-item" href="cart.html">
+                                <img src="${i.product.image}" class="img-fluid product-thumbnail">
+                                <h3 class="product-title">${i.product.productName}</h3>
+                                <strong class="product-price">${i.product.price}</strong>
 
-                    <c:forEach items="${categories}" var="i">
-                        <option value="${i.categoryId}" 
-                        <c:if test="${i.categoryId eq categoryId}"> selected</c:if>>${i.categoryName}
-                        </option>
+                                <span class="icon-cross">
+                                    <img src="images/cross.svg" class="img-fluid">
+                                </span>
+                            </a>
+                        </div> 
                     </c:forEach>
 
 
-                </select>
-            </div>
-            <div style="width: 150px; margin-left: 20px">
-                <select name="typeId" class="form-select">
-                    <option value="0" <c:if test="${ typeId eq '0'}"> selected</c:if>>All</option>
-
-                    <c:forEach items="${types}" var="i">
-                        <option value="${i.typeId}" 
-                        <c:if test="${i.typeId eq typeId}"> selected</c:if>>${i.typeName}
-                        </option>
-                    </c:forEach>
-
-
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary" style="margin-left: 20px">Search</button>
-        </form>-->
-                        <div class="col-8" style="margin-left: 20px">
-                        <div class="row">
-
-                            <c:forEach items="${listCheapest}" var="i">
-                                <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                                    <a class="product-item" href="cart.html">
-                                        <!--<img src="${i.product.image}" class="img-fluid product-thumbnail">-->
-                                        <img src="images/air_gray_03.png" class="img-fluid product-thumbnail">
-                                        <h3 class="product-title">${i.product.productName}</h3>
-                                        <strong class="product-price">
-                                            <fmt:formatNumber value="${i.product.price}" type="number" groupingUsed="true" /> VND
-                                        </strong>
-
-                                        <span class="icon-cross">
-                                            <img src="images/cross.svg" class="img-fluid">
-                                        </span>
-                                    </a>
-                                </div> 
-
-
-                            </c:forEach>
-
-                        </div>
-
-                    </div>
 
                 </div>
-                <div style="width: 100%; display: flex; justify-content: center; margin-top: 50px" ><a href="shop" class="btn btn-secondary me-2">View all</a></div>
-
             </div>
         </div>
         <!-- End Product Section -->
@@ -417,7 +353,6 @@
 
 
 
-        <script src="js/shop.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
         <script src="js/tiny-slider.js"></script>
         <script src="js/custom.js"></script>
