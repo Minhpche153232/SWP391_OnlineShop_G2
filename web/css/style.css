@@ -5,17 +5,6 @@
 * License: https://creativecommons.org/licenses/by/3.0/
 */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
-  .p-click{
-      color: black;
-      font-weight: bold;
-      font-size: 14px;
-  }
-  .p-click:hover{
-      color: #A00000;
-  }
-  .dropdown{
-      margin: 0 30px;
-  }
 body {
   overflow-x: hidden;
   position: relative; }
@@ -42,7 +31,7 @@ a {
     font-weight: 600; }
 
 .custom-navbar {
-  background: #202020 !important;
+  background: #3b5d50 !important;
   padding-top: 20px;
   padding-bottom: 20px; }
   .custom-navbar .navbar-brand {
@@ -107,7 +96,7 @@ a {
         margin-right: 20px; }
 
 .hero {
-    background: #202020;
+  background: #3b5d50;
   padding: calc(4rem - 30px) 0 0rem 0; }
   @media (min-width: 768px) {
     .hero {
@@ -185,8 +174,8 @@ a {
     -webkit-box-shadow: none;
     box-shadow: none; }
   .btn.btn-primary {
-    background: #202020;
-    border-color: #202020; }
+    background: #3b5d50;
+    border-color: #3b5d50; }
     .btn.btn-primary:hover {
       background: #314d43;
       border-color: #314d43; }
@@ -385,7 +374,7 @@ a {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      border: 2px solid #202020;
+      border: 2px solid #3b5d50;
       position: absolute;
       left: 0;
       top: 8px; }
@@ -473,7 +462,7 @@ a {
       -o-transition: .3s all ease;
       transition: .3s all ease; }
       .testimonial-slider-wrap #testimonial-nav > span:hover {
-        background: #202020;
+        background: #3b5d50;
         color: #ffffff; }
     .testimonial-slider-wrap #testimonial-nav .prev {
       left: -10px; }
@@ -513,7 +502,7 @@ a {
         transition: .3s all ease;
         background-color: #d6d6d6; }
       .testimonial-slider-wrap .tns-nav button:hover:before, .testimonial-slider-wrap .tns-nav button.tns-nav-active:before {
-        background-color: #202020; }
+        background-color: #3b5d50; }
 
 .before-footer-section {
   padding: 7rem 0 12rem 0 !important; }
@@ -570,7 +559,7 @@ a {
     .footer-section .subscription-form h3 {
       font-size: 18px;
       font-weight: 500;
-      color: #202020; }
+      color: #3b5d50; }
     .footer-section .subscription-form .form-control {
       height: 50px;
       border-radius: 10px;
@@ -579,7 +568,7 @@ a {
         outline: none;
         -webkit-box-shadow: none;
         box-shadow: none;
-        border-color: #202020;
+        border-color: #3b5d50;
         -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
         box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2); }
       .footer-section .subscription-form .form-control::-webkit-input-placeholder {
@@ -610,7 +599,7 @@ a {
     font-size: 32px;
     font-weight: 500;
     text-decoration: none;
-    color: #202020; }
+    color: #3b5d50; }
   .footer-section .custom-social li {
     margin: 2px;
     display: inline-block; }
@@ -621,10 +610,10 @@ a {
       line-height: 40px;
       display: inline-block;
       background: #dce5e4;
-      color: #202020;
+      color: #3b5d50;
       border-radius: 50%; }
       .footer-section .custom-social li a:hover {
-        background: #202020;
+        background: #3b5d50;
         color: #ffffff; }
   .footer-section .border-top {
     border-color: #dce5e4; }
@@ -642,7 +631,7 @@ a {
     outline: none;
     -webkit-box-shadow: none;
     box-shadow: none;
-    border-color: #202020;
+    border-color: #3b5d50;
     -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2); }
   .form-control::-webkit-input-placeholder {
@@ -664,7 +653,7 @@ a {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    background: #202020;
+    background: #3b5d50;
     margin-right: 20px;
     color: #ffffff; }
 
@@ -690,7 +679,7 @@ textarea {
     vertical-align: middle;
     color: rgba(0, 0, 0, 0.8); }
   .site-blocks-table tbody tr:first-child td {
-    border-top: 1px solid #202020 !important; }
+    border-top: 1px solid #3b5d50 !important; }
   .site-blocks-table .btn {
     background: none !important;
     color: #000000;
@@ -708,11 +697,11 @@ textarea {
   border-radius: 10px !important; }
 
 .text-primary {
-  color: #202020 !important; }
+  color: #3b5d50 !important; }
 
 .thankyou-icon {
   position: relative;
-  color: #202020; }
+  color: #3b5d50; }
   .thankyou-icon:before {
     position: absolute;
     content: "";
@@ -720,4 +709,3 @@ textarea {
     height: 50px;
     border-radius: 50%;
     background: rgba(59, 93, 80, 0.2); }
-

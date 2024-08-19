@@ -46,7 +46,7 @@
 
                 <!-- Add/Edit Product Detail Button -->
                 <button class="btn btn-primary" data-toggle="modal" data-target="#productDetailModal" style="margin-bottom: 20px">
-                    Add Product Detail
+                    Add/Edit Product Detail
                 </button>
 
                 <table class="table" id="dataTable">

@@ -41,20 +41,20 @@
         <servlet-class>controller.admin.ChangeUser</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ResetPassword</servlet-name>
+        <servlet-class>controller.ResetPassword</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ShopController</servlet-name>
         <servlet-class>controller.ShopController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LogoutController</servlet-name>
-        <servlet-class>controller.LogoutController</servlet-class>
+        <servlet-name>LogoutControll</servlet-name>
+        <servlet-class>controller.LogoutControll</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>OrderController</servlet-name>
-        <servlet-class>controller.OrderController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LitsOrder</servlet-name>
-        <servlet-class>controller.LitsOrder</servlet-class>
+        <servlet-name>Payment</servlet-name>
+        <servlet-class>controller.Payment</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
@@ -105,19 +105,19 @@
         <url-pattern>/admin/ChangeUserController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ResetPassword</servlet-name>
+        <url-pattern>/resetpw</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ShopController</servlet-name>
         <url-pattern>/shop</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LogoutController</servlet-name>
+        <servlet-name>LogoutControll</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>OrderController</servlet-name>
-        <url-pattern>/order</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LitsOrder</servlet-name>
-        <url-pattern>/litsOrder</url-pattern>
+        <servlet-name>Payment</servlet-name>
+        <url-pattern>/pay/*</url-pattern>
     </servlet-mapping>
 </web-app>

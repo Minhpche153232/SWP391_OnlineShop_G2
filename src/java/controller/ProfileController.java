@@ -5,19 +5,12 @@
 package controller;
 
 import dao.AccountDAO;
-import dao.BrandDAO;
-import dao.CategoryDAO;
-import dao.TypeDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.List;
-import models.Brand;
-import models.Category;
-import models.Type;
 import models.User;
 
 /**
@@ -29,17 +22,6 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           //get data filter
-        CategoryDAO categoryDAO = new CategoryDAO();
-        BrandDAO brandDAO = new BrandDAO();
-        TypeDAO typeDAO = new TypeDAO();
-        List<Category> categories = categoryDAO.getAllCategories();
-        List<Brand> brands = brandDAO.getAllBrands();
-        List<Type> types = typeDAO.getAllTypes();
-        request.setAttribute("categories", categories);
-        request.setAttribute("brands", brands);
-        request.setAttribute("types", types);
-        //
         HttpSession session = request.getSession();
         Object objectUser = session.getAttribute("currentUser");
         String message = request.getParameter("message");

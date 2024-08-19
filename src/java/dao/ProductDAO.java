@@ -32,7 +32,7 @@ import models.Type;
  */
 public class ProductDAO extends DBContext {
 
-    public List<ProductDetail> getTopCheapestProduct(Integer[] rangePrice, String search, Integer size, String color, Integer typeId, Integer categoryId, Integer brandId) {
+    public List<ProductDetail> getTopCheapestProduct(String search, Integer size, String color, Integer typeId, Integer categoryId, Integer brandId) {
         DBContext dBContext = new DBContext();
         List<ProductDetail> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT p.*, pd.color, pd.size, pd.image as imagePD FROM [OnlineShop_SWP391].[dbo].[Product] p JOIN [OnlineShop_SWP391].[dbo].[ProductDetails] pd ON p.productId = pd.productId WHERE 1=1");
@@ -54,13 +54,6 @@ public class ProductDAO extends DBContext {
         }
         if (brandId != null) {
             sql.append(" AND p.brandId = ?");
-        }
-        if (rangePrice != null && rangePrice[0] != null) {
-            if (rangePrice.length > 1 && rangePrice[1] != null) {
-                sql.append(" AND p.price BETWEEN ? AND ?");
-            } else {
-                sql.append(" AND p.price >= ?");
-            }
         }
 
         sql.append(" ORDER BY p.price ASC");
@@ -87,12 +80,6 @@ public class ProductDAO extends DBContext {
             if (brandId != null) {
                 statement.setInt(paramIndex++, brandId);
             }
-            if (rangePrice != null && rangePrice[0] != null) {
-                statement.setInt(paramIndex++, rangePrice[0]);
-                if (rangePrice.length > 1 && rangePrice[1] != null) {
-                    statement.setInt(paramIndex++, rangePrice[1]);
-                }
-            }
 
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -113,7 +100,7 @@ public class ProductDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         } finally {
-            if (dBContext.conn != null) {
+            if (dBContext.conn != null) { // Kiểm tra kết nối không null trước khi đóng
                 try {
                     dBContext.conn.close();
                 } catch (SQLException ex) {
@@ -397,16 +384,13 @@ public class ProductDAO extends DBContext {
             ps.setInt(2, size);
             ps.setString(3, color);
             ResultSet rs = ps.executeQuery();
-            ProductDAO productDAO = new ProductDAO();
             if (rs.next()) {
                 detail = new ProductDetail(
-                        productDAO.getById(rs.getInt("productId")),
+                        rs.getInt("productId"),
                         rs.getInt("size"),
                         rs.getString("color"),
                         rs.getInt("unitInStock"),
-                        rs.getString("image"),
-                        rs.getInt("productId"),
-                        rs.getInt("discount")
+                        rs.getString("image")
                 );
             }
         } catch (SQLException e) {
@@ -505,7 +489,7 @@ public class ProductDAO extends DBContext {
 //        d.setBrand(b);
 //        d.setCategory(c);
 //        dAO.addProduct(d);
-        List<ProductDetail> list = dAO.getTopCheapestProduct(null, "", null, null, null, null, null);
+        List<ProductDetail> list = dAO.getTopCheapestProduct("dff",null, null, null, null, null);
         System.out.println(list);
     }
 

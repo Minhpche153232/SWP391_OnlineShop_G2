@@ -34,7 +34,6 @@ public class HomeController extends HttpServlet {
         BrandDAO brandDAO = new BrandDAO();
         TypeDAO typeDAO = new TypeDAO();
 
-        String price = request.getParameter("price");
         String search = request.getParameter("search");
         String sizePR = request.getParameter("size");
         String color = request.getParameter("color");
@@ -45,37 +44,22 @@ public class HomeController extends HttpServlet {
         Integer categoryId = null;
         Integer brandId = null;
         Integer size = null;
-        Integer[] rangePrice = {null, null};
-        if (typeIdPR != null && !typeIdPR.equals("0") && !typeIdPR.equals("")) {
+
+        if (typeIdPR != null && !typeIdPR.equals("0")) {
             typeId = Integer.valueOf(typeIdPR);
         }
-        if (categoryIdPR != null && !categoryIdPR.equals("0") && !categoryIdPR.equals("")) {
+        if (categoryIdPR != null && !categoryIdPR.equals("0")) {
             categoryId = Integer.valueOf(categoryIdPR);
         }
-        if (brandIdPR != null && !brandIdPR.equals("") && !brandIdPR.equals("0")) {
+        if (brandIdPR != null && !brandIdPR.equals("0")) {
             brandId = Integer.valueOf(brandIdPR);
         }
 
-        if (sizePR != null && !sizePR.equals("0") && !sizePR.equals("")) {
+        if (sizePR != null && !sizePR.equals("0")) {
             size = Integer.valueOf(sizePR);
         }
-        if (price != null && !price.equals("0") && !price.equals("")) {
-            try {
-                String[] range = price.split("-");
-                rangePrice[0] = Integer.valueOf(range[0]);
-                if (range[1] != null) {
-                    rangePrice[1] = Integer.valueOf(range[1]);
 
-                }
-            } catch (Exception e) {
-            }
-
-        }
-        if (rangePrice[0] == null) {
-            rangePrice = null;
-        }
-
-        List<ProductDetail> listCheapest = productDAO.getTopCheapestProduct(rangePrice, search, size, color, typeId, categoryId, brandId);
+        List<ProductDetail> listCheapest = productDAO.getTopCheapestProduct(search,size, color, typeId, categoryId, brandId);
         List<Category> categories = categoryDAO.getAllCategories();
         List<Brand> brands = brandDAO.getAllBrands();
         List<Type> types = typeDAO.getAllTypes();
@@ -86,16 +70,11 @@ public class HomeController extends HttpServlet {
         request.setAttribute("categoryId", categoryIdPR);
         request.setAttribute("brandId", brandIdPR);
         request.setAttribute("typeId", typeIdPR);
-        request.setAttribute("search", search);
-        request.setAttribute("price", price);
-        request.setAttribute("size", size);
+                request.setAttribute("search", search);
 
-        if (listCheapest.size() > 12) {
-            listCheapest = listCheapest.subList(0, 11);
-        }
         request.setAttribute("listCheapest", listCheapest);
-
         request.getRequestDispatcher("home.jsp").forward(request, response);
+        
     }
 
     @Override

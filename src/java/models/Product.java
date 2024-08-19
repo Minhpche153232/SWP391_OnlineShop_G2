@@ -6,10 +6,13 @@ package models;
 
 import java.util.List;
 
-
+/**
+ *
+ * @author catmi
+ */
 public class Product {
     private int productId;
-    private String image;
+     private String image;
     private String productName;
     private String description;
     private float price;
@@ -129,7 +132,10 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "productId=" + productId + ", image=" + image + ", productName=" + productName + ", description=" + description + ", price=" + price + ", category=" + category + ", brand=" + brand + ", type=" + type + ", active=" + active + ", productCode=" + productCode + ", productDetails=" + productDetails + '}';
+        return "Product{" + "productId=" + productId + ", image=" + image + ", productName=" + productName + ", description=" + description + ", price=" + price + ", category=" + category + ", brand=" + brand + ", type=" + type + ", active=" + active + ", productCode=" + productCode + '}';
     }
 
+    
+    
+    
 }
