@@ -62,10 +62,19 @@
             </ul>
             <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                 <c:if test="${sessionScope.currentUser != null}">
-                    <li><a class="nav-link" href="profile"><img src="images/user.svg"></a></li>
+                    <a class="nav-link" href="profile"><img src="images/user.svg"></a>
                     <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
-                        </c:if>
-                        <c:if test="${sessionScope.currentUser == null}">
+                    <a class="nav-link" href="logout">Log out</a>
+                    <li class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle dropdown-button">${sessionScope.currentUser.balance} VND</a>
+                        <div class="dropdown-content dropdown-content">
+                            <a class="" href="#">Deposit money</a>
+                            <a class="" href="#">Withdraw money</a>
+                            <a class="" href="#">Transfer history</a>
+                        </div>
+                    </li>
+                </c:if>
+                <c:if test="${sessionScope.currentUser == null}">
                     <li class="dropdown">
                         <a class="btn btn-secondary dropdown-toggle dropdown-button">Join us</a>
                         <div class="dropdown-content dropdown-content">
