@@ -53,8 +53,12 @@
         <servlet-class>controller.OrderController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LitsOrder</servlet-name>
-        <servlet-class>controller.LitsOrder</servlet-class>
+        <servlet-name>OrderManager</servlet-name>
+        <servlet-class>controller.admin.OrderManager</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>changeStatusOrder</servlet-name>
+        <servlet-class>controller.admin.changeStatusOrder</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
@@ -117,7 +121,11 @@
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LitsOrder</servlet-name>
-        <url-pattern>/litsOrder</url-pattern>
+        <servlet-name>OrderManager</servlet-name>
+        <url-pattern>/admin/order-manager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>changeStatusOrder</servlet-name>
+        <url-pattern>/changeStatusOrder</url-pattern>
     </servlet-mapping>
 </web-app>
