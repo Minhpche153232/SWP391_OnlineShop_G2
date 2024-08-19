@@ -9,11 +9,17 @@ window.onload = function () {
     if (currentURI.includes("/shop")) {
         shopDiv.classList.add("nav-item", "active");
         homeDiv.classList.remove("nav-item", "active");
+<<<<<<< HEAD
         shopInputDiv.classList.add("hidden");
     } else {
         homeDiv.classList.add("nav-item", "active");
         shopDiv.classList.remove("nav-item", "active");
         shopInputDiv.classList.remove("hidden");
+=======
+    } else {
+        homeDiv.classList.add("nav-item", "active");
+        shopDiv.classList.remove("nav-item", "active");
+>>>>>>> SonNH
 
     }
 };
