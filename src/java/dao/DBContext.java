@@ -20,12 +20,12 @@ public class DBContext {
     PreparedStatement ps;
     ResultSet rs;
     
-    private final String serverName = "ADMIN";
+    private final String serverName = "localhost";
 
     private final String dbName = "OnlineShop_SWP391";
     private final String portNumber = "1433";
     private final String userID = "sa";
-    private final String password = "sa";
+    private final String password = "123";
 
     public DBContext() {
         try {
