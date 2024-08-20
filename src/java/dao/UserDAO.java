@@ -111,7 +111,6 @@ public class UserDAO extends DBContext {
         }
         return false;
     }
-
     
     public String getMd5(String input) // Mã hóa với MD5 - PARAM - PASSWORD
     {
@@ -138,8 +137,39 @@ public class UserDAO extends DBContext {
             throw new RuntimeException(e);
         }
     }
-    public static void main(String[] args) {
-        System.out.println(new UserDAO().getMd5("123"));
-    }
 
+    public String getEmailForResetPW(String txtInput) {
+        try {
+            String query = "select email from [User] where email = ? or username = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, txtInput);
+            ps.setString(2, txtInput);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getString("email");
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public boolean updatePassword(String password, String email){
+        try {
+            String query = "update [User] set [password] = ? where email = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, getMd5(password));
+            ps.setString(2, email);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
+    public static void main(String[] args) {
+        UserDAO dao = new UserDAO();
+        System.out.println(dao.getMd5("12345678"));
+    }
 }

@@ -154,8 +154,7 @@ public class BrandDAO extends DBContext {
         String txtSearch = "Nike Adidas Puma";
         String[] listSearch = txtSearch.split(" ");
         List<Brand> list = dao.getAllBrands();
-        for (Brand brand : list) {
-            System.out.println(brand);
-        }
+        Brand brand = new Brand();
+        System.out.println(brand);
     }
 }
