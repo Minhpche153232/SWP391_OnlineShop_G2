@@ -72,8 +72,6 @@
                             <div class="dropdown">
                                 <a class="nav-link dropdown-toggle" href="profile" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0"><img src="images/user.svg"></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-
-
                                     <c:if test="${sessionScope.currentUser !=  null}">
                                         <c:if test="${sessionScope.currentUser.role == 3}">
                                             <a  class="dropdown-item"  href="order">My order</a>
@@ -84,9 +82,13 @@
                                     </c:if>
                                     <a  class="dropdown-item"  href="profile">Profile</a>
                                     <a class="dropdown-item" href="logout">Logout</a>
-
                                 </div>
-
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" type="button"
+                                   id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">${sessionScope.currentUser.balance} VND</a>
                             </div>
                         </li>
                         <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
@@ -110,7 +112,12 @@
 
         <div class="dropdown">
             <p class="p-click dropdown-toggle" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">
-                ${brands[0].brandName}
+                <c:if test="${brand.brandName != null}">
+                    ${brand.brandName}
+                </c:if>
+                <c:if test="${brand.brandName == null}">
+                    All Brand
+                </c:if>
             </p>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <c:forEach items="${brands}" var="i">
@@ -121,7 +128,7 @@
         </div>
         <div class="dropdown">
             <p class="p-click dropdown-toggle" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">
-                ${categories[0].categoryName}
+                All categories
             </p>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <c:forEach items="${categories}" var="i">

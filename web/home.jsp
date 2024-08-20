@@ -122,10 +122,6 @@
                                         <strong class="product-price">
                                             <fmt:formatNumber value="${i.product.price}" type="number" groupingUsed="true" /> VND
                                         </strong>
-
-                                        <span class="icon-cross">
-                                            <img src="images/cross.svg" class="img-fluid">
-                                        </span>
                                     </a>
                                 </div> 
 
