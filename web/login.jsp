@@ -9,13 +9,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Untree.co">
+        <link rel="shortcut icon" href="https://cdn.printgo.vn/uploads/media/774255/logo-giay-1_1586510617.jpg">
+
+        <meta name="description" content="" />
+        <meta name="keywords" content="bootstrap, bootstrap4" />
+
+        <!-- Bootstrap CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="css/tiny-slider.css" rel="stylesheet">
+        <link href="css/input.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
         <title>Login</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
+        <%@include file="navbar-without-brand.jsp" %>
         <div class="container">
             <div class="row justify-content-center mt-5">
                 <div class="col-md-6">
@@ -62,6 +75,9 @@
                             </c:if>
                             <div class="mt-3" style="text-align: right">
                                 Don't have an account? <a href="register">Register here</a>
+                            </div>
+                            <div class="mt-3" style="text-align: right">
+                                Forget your password? <a href="resetpw">Click here</a>
                             </div>
                         </div>
                     </div>
