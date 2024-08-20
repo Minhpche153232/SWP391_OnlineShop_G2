@@ -8,7 +8,6 @@
             <web-module-libraries>
                 <library dirs="200">
 <<<<<<< HEAD
-<<<<<<< HEAD
                     <file>${file.reference.gson-2.3.1.jar}</file>
 =======
                     <file>${file.reference.jstl-1.2_66bc0a52ae954eebb6cc189a81a45cb6.jar}</file>
@@ -16,8 +15,6 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-=======
->>>>>>> parent of 9e08af5 (Config payment)
                     <file>${file.reference.jakarta.servlet.jsp.jstl-2.0.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -27,21 +24,10 @@
                 </library>
                 <library dirs="200">
 <<<<<<< HEAD
-<<<<<<< HEAD
                     <file>${file.reference.javax.activation-1.2.0.jar}</file>
 =======
                     <file>${file.reference.sqljdbc42.jar}</file>
 >>>>>>> parent of 10f9cf5 (Config wallet)
-=======
-                    <file>${file.reference.jaxb-api-2.1.jar}</file>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.jstl-1.2_66bc0a52ae954eebb6cc189a81a45cb6.jar}</file>
-                    <path-in-war>WEB-INF/lib</path-in-war>
-                </library>
-                <library dirs="200">
-                    <file>${file.reference.sqljdbc42.jar}</file>
->>>>>>> parent of 9e08af5 (Config payment)
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
@@ -49,12 +35,12 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.javax.activation-1.2.0.jar}</file>
+                    <file>${file.reference.jaxb-api-2.1.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
 <<<<<<< HEAD
                 <library dirs="200">
-                    <file>${file.reference.gson-2.3.1.jar}</file>
+                    <file>${file.reference.sqljdbc42.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
 =======
