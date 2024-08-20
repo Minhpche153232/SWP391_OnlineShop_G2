@@ -140,6 +140,26 @@
                 </c:forEach>
             </div>
 
+<<<<<<< HEAD
+=======
+            </ul>
+            <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                <c:if test="${sessionScope.currentUser != null}">
+                    <li><a class="nav-link" href="profile"><img src="images/user.svg"></a></li>
+                    <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.currentUser == null}">
+                    <li class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle dropdown-button">Join us</a>
+                        <div class="dropdown-content dropdown-content">
+                            <a class="" href="login">Login</a>
+                            <a class="" href="register">Register</a>
+                        </div>
+                    </li>
+                    <li><a class="nav-link" href="cart.html"><img src="images/cart.svg"></a></li>
+                    </c:if>
+            </ul>
+>>>>>>> parent of 10f9cf5 (Config wallet)
         </div>
     </div>
 
