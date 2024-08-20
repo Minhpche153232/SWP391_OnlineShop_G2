@@ -20,6 +20,7 @@ public class Validate {
         }
         return code;
     }
+    
     public static void main(String[] args) {
         Validate v = new Validate();
         System.out.println(v.RandomCode());

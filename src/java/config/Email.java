@@ -22,6 +22,7 @@ public class Email {
     private static final String from = "minhpche153232@fpt.edu.vn";
     private static final String password = "nclo vran edqf vcdu";
 
+    
     public static boolean sendEmail(String to, String code) {
         // Properties: khai bao cac thuoc tinh
         Properties props = new Properties();

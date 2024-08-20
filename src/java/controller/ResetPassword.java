@@ -39,6 +39,7 @@ public class ResetPassword extends HttpServlet {
         String action = request.getParameter("action");
         String txtInput = request.getParameter("txtInput");
         HttpSession currentCode = request.getSession();
+        
         if (action.equals("checkUser")) {
             String email = daoU.getEmailForResetPW(txtInput);
             if (email == null) {
