@@ -38,12 +38,12 @@
                             <h3>Input amount:</h3>
                         </div>
                         <div class="card-body">
-                            <form id="frmCreateOrder" action="#" method="post">
+                            <form id="frmCreateOrder" action="pay" method="post">
                                 <div class="mb-3">
                                     <label class="form-label" for="amount">Amount:</label>
                                     <input class="form-control" type="number" id="amount" name="amount" min="10000" value="10000">
                                 </div>
-                                <button type="button" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                                 <a href="home" class="btn btn-warning">Cancel</a>
                             </form>
                         </div>

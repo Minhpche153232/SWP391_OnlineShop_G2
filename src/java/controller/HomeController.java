@@ -96,13 +96,11 @@ public class HomeController extends HttpServlet {
         request.setAttribute("listCheapest", listCheapest);
 
         request.getRequestDispatcher("home.jsp").forward(request, response);
-<<<<<<< HEAD
-=======
+
         String action = request.getParameter("action");
         if(action.equals("logout")){
             
         }
->>>>>>> parent of 10f9cf5 (Config wallet)
     }
 
     @Override
