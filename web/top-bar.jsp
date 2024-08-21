@@ -28,7 +28,7 @@
 
             <div class="collapse navbar-collapse" id="navbarsFurni">
                 <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">                               
-                    <form action="home">
+                    <form action="shop">
 
                         <li style="display: flex; align-items: end; justify-items: center"> <div class="col-auto">
 
