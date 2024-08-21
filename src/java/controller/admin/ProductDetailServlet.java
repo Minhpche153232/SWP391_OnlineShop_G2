@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.Product;
 import models.ProductDetail;
+import models.User;
 
 /**
  *
@@ -21,20 +22,26 @@ public class ProductDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String productIdStr = request.getParameter("productId");
-        if (productIdStr != null) {
-            int productId = Integer.parseInt(productIdStr);
-            ProductDAO productDAO = new ProductDAO();
-            Product product = productDAO.getById(productId);
-            if (product != null) {
-                request.setAttribute("product", product);
-                request.getRequestDispatcher("product-detail.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Object objUser = session.getAttribute("currentUser");
+        User user = (User) objUser;
+        if (user == null || user.getRole().equals("3")) {
+            response.sendRedirect("/online_shop/home");
+        } else {
+            String productIdStr = request.getParameter("productId");
+            if (productIdStr != null) {
+                int productId = Integer.parseInt(productIdStr);
+                ProductDAO productDAO = new ProductDAO();
+                Product product = productDAO.getById(productId);
+                if (product != null) {
+                    request.setAttribute("product", product);
+                    request.getRequestDispatcher("product-detail.jsp").forward(request, response);
+                } else {
+                    response.sendRedirect("404.jsp");
+                }
             } else {
                 response.sendRedirect("404.jsp");
             }
-        } else {
-            response.sendRedirect("404.jsp");
         }
     }
 
