@@ -11,6 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import models.User;
 
 /**
  *
@@ -21,27 +23,36 @@ public class ChangeUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String value = request.getParameter("value");
-        String userId = request.getParameter("userId");
-        String type = request.getParameter("type");
-        AccountDAO accountDAO = new AccountDAO();
-        try {
-            boolean check = false;
-            if (type.equals("role")) {
-                check = accountDAO.changeRoleUser(Integer.parseInt(value), Integer.parseInt(userId));
-            } else {
-                check = accountDAO.changeStatusUser(value.equals("true"), Integer.parseInt(userId));
-            }
-            if (check) {
-                response.sendRedirect("user-manager?message=Change successfully");
-            } else {
-                response.sendRedirect("user-manager?message=Change fail");
+        HttpSession session = request.getSession();
+        Object objUser = session.getAttribute("currentUser");
+        User user = (User) objUser;
+        if (user != null && user.getRole().equals("1")) {
 
+            String value = request.getParameter("value");
+            String userId = request.getParameter("userId");
+            String type = request.getParameter("type");
+            AccountDAO accountDAO = new AccountDAO();
+            try {
+                boolean check = false;
+                if (type.equals("role")) {
+                    check = accountDAO.changeRoleUser(Integer.parseInt(value), Integer.parseInt(userId));
+                } else {
+                    check = accountDAO.changeStatusUser(value.equals("true"), Integer.parseInt(userId));
+                }
+                if (check) {
+                    response.sendRedirect("user-manager?message=Change successfully");
+                } else {
+                    response.sendRedirect("user-manager?message=Change fail");
+
+                }
+            } catch (Exception e) {
+                response.sendRedirect("user-manager?message=Change fail" + e);
             }
-        } catch (Exception e) {
-            response.sendRedirect("user-manager?message=Change fail" + e);
+
+        } else {
+            response.sendRedirect("/online_shop/home");
+
         }
-
     }
 
     /**
