@@ -24,6 +24,7 @@
                 display: flex;
                 flex-wrap: wrap;
                 gap: 10px; /* Adds space between buttons */
+                margin-top: 20px;
             }
 
             .button-container form {
@@ -59,17 +60,7 @@
                         <c:set var="isLoggedIn" value="${not empty sessionScope.currentUser}" />
                         <c:set var="hasSizeAndColor" value="${not empty param.size and not empty param.color}" />
 
-                        <form action="add-cart" method="POST" onsubmit="return validateForm()">
-                            <input type="hidden" name="productId" value="${product.productId}">
-                            <input type="hidden" name="size" value="${param.size}">
-                            <input type="hidden" name="color" value="${param.color}">
-                            <button type="submit" class="btn">Add to cart</button>
-                        </form>
-                    </div> 
-
-                    <!-- Image and Selection Buttons Section -->
-                    <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
-                        <img src="${image}" width="600" height="450" alt="alt" style="margin-bottom: 10px"/>
+                        <!-- Size and Color Selection Buttons -->
                         <div class="button-container">
                             <c:forEach items="${product.productDetails}" var="pd">
                                 <form action="product-detail">
@@ -86,6 +77,19 @@
                                 </form>
                             </c:forEach>
                         </div>
+
+                        <!-- Add to Cart Button -->
+                        <form action="add-cart" method="POST" onsubmit="return validateForm()" style="margin-top: 20px;">
+                            <input type="hidden" name="productId" value="${product.productId}">
+                            <input type="hidden" name="size" value="${param.size}">
+                            <input type="hidden" name="color" value="${param.color}">
+                            <button type="submit" class="btn">Add to cart</button>
+                        </form>
+                    </div> 
+
+                    <!-- Image Section -->
+                    <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="${image}" width="600" height="450" alt="alt" style="margin-bottom: 10px"/>
                     </div>
                 </div>
             </div>
@@ -138,20 +142,19 @@
     </body>
 
     <script>
-                            function validateForm() {
-                                var isLoggedIn = ${not empty sessionScope.currentUser ? 'true' : 'false'};
-                                var hasSizeAndColor = ${not empty param.size && not empty param.color ? 'true' : 'false'};
+        function validateForm() {
+            var isLoggedIn = ${not empty sessionScope.currentUser ? 'true' : 'false'};
+            var hasSizeAndColor = ${not empty param.size && not empty param.color ? 'true' : 'false'};
 
-                                if (!isLoggedIn) {
-                                    $('#loginModal').modal('show');
-                                    return false; // Prevent form submission
-                                } else if (!hasSizeAndColor) {
-                                    $('#sizeColorModal').modal('show');
-                                    return false; // Prevent form submission
-                                }
-                                return true; // Allow form submission
-                            }
-
+            if (!isLoggedIn) {
+                $('#loginModal').modal('show');
+                return false; // Prevent form submission
+            } else if (!hasSizeAndColor) {
+                $('#sizeColorModal').modal('show');
+                return false; // Prevent form submission
+            }
+            return true; // Allow form submission
+        }
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
