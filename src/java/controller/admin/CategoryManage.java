@@ -28,7 +28,9 @@ public class CategoryManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1")) {
+        if (user == null || user.getRole().equals("3")) {
+            response.sendRedirect("/online_shop/home");
+        } else {
             if (service == null) {
                 List<Category> list = dao.getAllCategories();
                 request.setAttribute("listCate", list);
@@ -46,8 +48,6 @@ public class CategoryManage extends HttpServlet {
                 dao.DeleteCategory(c);
                 response.sendRedirect("category");
             }
-        }else{
-            response.sendRedirect("../login");
         }
     }
 
