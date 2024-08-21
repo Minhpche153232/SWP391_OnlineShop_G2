@@ -33,7 +33,8 @@ public class ShopController extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         BrandDAO brandDAO = new BrandDAO();
         TypeDAO typeDAO = new TypeDAO();
-
+        Brand brand = new Brand();
+        
         String price = request.getParameter("price");
         String search = request.getParameter("search");
         String sizePR = request.getParameter("size");
@@ -54,6 +55,7 @@ public class ShopController extends HttpServlet {
         }
         if (brandIdPR != null && !brandIdPR.equals("") && !brandIdPR.equals("0")) {
             brandId = Integer.valueOf(brandIdPR);
+            brand = brandDAO.getBrandById(brandId);
         }
 
         if (sizePR != null && !sizePR.equals("0") && !sizePR.equals("")) {
@@ -79,7 +81,10 @@ public class ShopController extends HttpServlet {
         List<Category> categories = categoryDAO.getAllCategories();
         List<Brand> brands = brandDAO.getAllBrands();
         List<Type> types = typeDAO.getAllTypes();
-
+        
+        
+        
+        
         request.setAttribute("categories", categories);
         request.setAttribute("brands", brands);
         request.setAttribute("types", types);
@@ -89,7 +94,7 @@ public class ShopController extends HttpServlet {
         request.setAttribute("search", search);
         request.setAttribute("price", price);
         request.setAttribute("size", size);
-
+        request.setAttribute("brand", brand);
         request.setAttribute("listCheapest", listCheapest);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
