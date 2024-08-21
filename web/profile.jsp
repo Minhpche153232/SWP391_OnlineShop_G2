@@ -13,6 +13,9 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/my-dropdown.css" rel="stylesheet">
+        <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+
         <style type="text/css">
             body{
                 background: #f7f7ff;
@@ -85,11 +88,17 @@
                                         <c:if test="${sessionScope.currentUser.role eq '1'}">
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                                 <h6 class="mb-0">
-                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/></a></h6>
-                                                <span class="text-secondary">Dashboard</span>
+                                                    <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/>
+                                                        <span class="text-secondary">Dashboard</span></a></h6>
                                             </li>
                                         </c:if>
-                                            
+                                        <c:if test="${sessionScope.currentUser.role eq '3'}">
+                                            <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                                <h6 class="mb-0" ><a class="nav-link" href="order" style="color: #A00000">
+                                                        <i class="fa-solid fa-cart-shopping"></i>
+                                                        <span class="text-secondary"> My order</span></a></h6>
+                                            </li>
+                                        </c:if>
                                     </ul>
                                 </div>
                             </div>
@@ -184,7 +193,7 @@
 
                                     </div>
 
-                                  
+
                                     <div class="row">
                                         <div class="col-sm-3"></div>
                                         <div class="col-sm-9 text-secondary">
@@ -193,15 +202,15 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                         </div>
-                                                                  
- </div>
+
+                    </div>
                 </div>
             </div>
         </form>
-                                                 <%@include file="change-password.jsp" %>
+        <%@include file="change-password.jsp" %>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
         <script type="text/javascript">

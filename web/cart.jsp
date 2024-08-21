@@ -33,6 +33,8 @@ if (cart != null && !cart.isEmpty()) {
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+                <link href="css/input.css" rel="stylesheet">
+
         <title>Furni Cart</title>
     </head>
 
@@ -141,7 +143,7 @@ if (cart != null && !cart.isEmpty()) {
                     <div class="col-md-6">
                         <div class="row mb-5">
                             <div class="col-md-6">
-                                <a href="" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
+                                <a href="shop" class="btn btn-outline-black btn-sm btn-block">Continue Shopping</a>
                             </div>
                         </div>
                     </div>

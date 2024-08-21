@@ -88,6 +88,9 @@ public class RegisterController extends HttpServlet {
         user.setRole("3");
         user.setStatus(true);
         
+        
+        
+        
 
         // Save user to the database
         boolean userCreated = userDAO.createUser(user);
