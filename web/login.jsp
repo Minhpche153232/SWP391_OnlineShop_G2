@@ -11,10 +11,24 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Untree.co">
+        <link rel="shortcut icon" href="https://cdn.printgo.vn/uploads/media/774255/logo-giay-1_1586510617.jpg">
+
+        <meta name="description" content="" />
+        <meta name="keywords" content="bootstrap, bootstrap4" />
+
+        <!-- Bootstrap CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="css/tiny-slider.css" rel="stylesheet">
+        <link href="css/input.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
         <title>Login</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
+        <%@include file="navbar-without-brand.jsp" %>
         <div class="container">
             <div class="row justify-content-center mt-5">
                 <div class="col-md-6">
@@ -23,6 +37,24 @@
                             <h3>Login</h3>
                         </div>
                         <div class="card-body">
+                            <c:if test="${not empty sessionScope.notification}">
+                                <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
+                                    ${sessionScope.notification}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <%
+                                    session.removeAttribute("notification");
+                                %>
+                            </c:if>
+                            <c:if test="${not empty sessionScope.notificationErr}">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center">
+                                    ${sessionScope.notificationErr}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                <%
+                                    session.removeAttribute("notificationErr");
+                                %>
+                            </c:if>
                             <form action="login" method="post">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Username</label>
@@ -34,15 +66,18 @@
                                 </div>
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe" <c:if test="${not empty cookie.username.value}">checked</c:if>>
-                                    <label class="form-check-label" for="rememberMe">Remember Me</label>
-                                </div>
-                                <button type="submit" class="btn btn-primary form-control">Login</button>
-                            </form>
+                                        <label class="form-check-label" for="rememberMe">Remember Me</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary form-control">Login</button>
+                                </form>
                             <c:if test="${not empty errorMessage}">
                                 <div class="alert alert-danger mt-3">${errorMessage}</div>
                             </c:if>
                             <div class="mt-3" style="text-align: right">
                                 Don't have an account? <a href="register">Register here</a>
+                            </div>
+                            <div class="mt-3" style="text-align: right">
+                                Forget your password? <a href="resetpw">Click here</a>
                             </div>
                         </div>
                     </div>
@@ -51,4 +86,3 @@
         </div>
     </body>
 </html>
-
