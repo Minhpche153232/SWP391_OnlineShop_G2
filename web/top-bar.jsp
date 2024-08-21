@@ -1,6 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <style>
     .dropdown:hover .dropdown-menu {
         display: block;
@@ -76,7 +78,7 @@
                                         <c:if test="${sessionScope.currentUser.role == 3}">
                                             <a  class="dropdown-item"  href="order">My order</a>
                                         </c:if>
-                                        <c:if test="${sessionScope.currentUser.role == 1}">
+                                        <c:if test="${sessionScope.currentUser.role == 1 or sessionScope.currentUser.role == 2}">
                                             <a  class="dropdown-item"  href="admin/dashboard">Dashboard</a>
                                         </c:if>
                                     </c:if>
@@ -85,12 +87,12 @@
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" type="button"
-                                   id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">${sessionScope.currentUser.balance} VND</a>
-                            </div>
-                        </li>
+                        <c:if test="${sessionScope.currentUser.role == 3}">
+                            <li>
+                                <a class="nav-link " href="#" type="button"
+                                   style="margin-bottom: 0"><fmt:formatNumber value="${sessionScope.currentUser.balance}" type="number" groupingUsed="true" /> VND</a>
+                            </li>
+                        </c:if>
                         <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
                         </c:if>
                         <c:if test="${sessionScope.currentUser == null}">

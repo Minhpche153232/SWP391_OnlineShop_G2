@@ -15,6 +15,7 @@
         <link href="css/style.css" rel="stylesheet">
         <link href="css/my-dropdown.css" rel="stylesheet">
         <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+        <link href="css/input.css" rel="stylesheet">
 
         <style type="text/css">
             body{
@@ -91,6 +92,7 @@
                                                     <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/>
                                                         <span class="text-secondary">Dashboard</span></a></h6>
                                             </li>
+                                           
                                         </c:if>
                                         <c:if test="${sessionScope.currentUser.role eq '3'}">
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
