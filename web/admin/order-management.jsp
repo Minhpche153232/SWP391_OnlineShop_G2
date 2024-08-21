@@ -19,7 +19,9 @@
         }
 
         function sendDataStatus(value, orderId) {
-
+            if(value === 'success'){
+                value = 'fail';
+            }
             window.location.href = "/online_shop/changeStatusOrder?status=" + value + "&orderId=" + orderId;
         }
     </script>
@@ -103,7 +105,7 @@
 
                                     <td><fmt:formatNumber value="${(i.totalPrice)}" type="number" groupingUsed="true" /> VND</td>
                                     <td><!-- Button trigger modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  onclick="sendData('${i.status}')">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="<c:if test="${i.status ne 'success' and i.status ne 'fail'}">#exampleModal</c:if>"  onclick="sendData('${i.status}')">
 
                                             <c:choose>
                                                 <c:when test="${i.status eq 'pending'}">
@@ -120,6 +122,11 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </button>
+                                        <c:if test="${i.status ne 'success' and i.status ne 'fail'}">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2"  onclick="sendData('fail')">
+                                                <span class="text-danger" style="cursor: pointer">Fail</span>
+                                            </button>
+                                        </c:if>
                                     </td>
 
 
@@ -141,6 +148,27 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                             <button type="button" class="btn btn-primary" onclick="sendDataStatus('${i.status}', '${i.orderId}')">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                                               <!-- Modal -->
+                            <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel2">Change order status</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Do you want change this status order is fail
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" onclick="sendDataStatus('fail', '${i.orderId}')">Save changes</button>
                                         </div>
                                     </div>
                                 </div>

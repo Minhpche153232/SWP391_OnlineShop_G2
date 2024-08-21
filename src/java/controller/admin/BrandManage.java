@@ -21,15 +21,6 @@ import models.*;
  */
 public class BrandManage extends HttpServlet {
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -37,7 +28,9 @@ public class BrandManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1")) {
+        if (user == null || user.getRole().equals("3")) {
+            response.sendRedirect("/online_shop/home");
+        } else {
             if (service == null) {
                 List<Brand> list = dao.getAllBrands();
                 request.setAttribute("listB", list);
@@ -55,8 +48,6 @@ public class BrandManage extends HttpServlet {
                 dao.DeleteBrand(b);
                 response.sendRedirect("brand");
             }
-        } else {
-            response.sendRedirect("../login");
         }
 
     }

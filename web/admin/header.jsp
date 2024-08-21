@@ -71,11 +71,13 @@
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>Product Management</span></a>
                 </li>
-                 <li class="nav-item">
+                <c:if test="${sessionScope.currentUser.role eq 1}">
+                    <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin/user-manager">
                         <i class="fas fa-tasks fa-fw"></i>
                         <span>User Management</span></a>
                 </li>
+                </c:if>
                  <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin/order-manager">
                         <i class="fas fa-tasks fa-fw"></i>
