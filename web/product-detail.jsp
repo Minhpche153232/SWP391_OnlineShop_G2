@@ -52,6 +52,15 @@
             <div class="container">
                 <div class="row">
                     <!-- Product Details Section -->
+                     <c:if test="${not empty sessionScope.notification}">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
+                        ${sessionScope.notification}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <%
+                        session.removeAttribute("notification");
+                    %>
+                </c:if>
                     <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
                         <h2 class="mb-6 section-title">${product.productName} (${product.productCode})</h2>
                         <p class="mb-4">${product.description}</p>
@@ -60,18 +69,7 @@
                         <c:set var="isLoggedIn" value="${not empty sessionScope.currentUser}" />
                         <c:set var="hasSizeAndColor" value="${not empty param.size and not empty param.color}" />
 
-                        <form action="add-cart" method="POST" onsubmit="return validateForm()">
-                            <input type="hidden" name="productId" value="${product.productId}">
-                            <input type="hidden" name="size" value="${param.size}">
-                            <input type="hidden" name="color" value="${param.color}">
-                            <button type="submit" class="btn">Add to cart</button>
-                        </form>
-                    </div> 
-
-                    <!-- Image and Selection Buttons Section -->
-                    <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
-                        <img src="${image}" width="600" height="450" alt="alt" style="margin-bottom: 10px"/>
-                        <div class="button-container">
+                        <div class="button-container" style="margin-bottom:  30px">
                             <c:forEach items="${product.productDetails}" var="pd">
                                 <form action="product-detail">
                                     <input type="hidden" value="${pd.productId}" name="id">
@@ -87,6 +85,18 @@
                                 </form>
                             </c:forEach>
                         </div>
+                        <form action="add-cart" method="POST" onsubmit="return validateForm()">
+                            <input type="hidden" name="productId" value="${product.productId}">
+                            <input type="hidden" name="size" value="${param.size}">
+                            <input type="hidden" name="color" value="${param.color}">
+                            <button type="submit" class="btn">Add to cart</button>
+                        </form>
+                    </div> 
+
+                    <!-- Image and Selection Buttons Section -->
+                    <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="${image}" width="600" height="450" alt="alt" style="margin-bottom: 10px"/>
+                        
                     </div>
                 </div>
             </div>
