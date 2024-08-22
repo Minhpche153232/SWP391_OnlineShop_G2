@@ -54,7 +54,8 @@ public class AddToCartController extends HttpServlet {
                 }
 
             }
-            response.sendRedirect("cart");
+            session.setAttribute("notification", "Product successfully add to cart");
+            response.sendRedirect("product-detail?id="+productId+"&color="+color+"&size="+size);
         } else {
             session.setAttribute("notification", "User must login first!");
             response.sendRedirect("login");
