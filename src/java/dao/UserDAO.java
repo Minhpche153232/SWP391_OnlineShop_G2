@@ -20,7 +20,50 @@ import java.security.NoSuchAlgorithmException;
  * @author Admin
  */
 public class UserDAO extends DBContext {
-    
+     public boolean deleteAccount( String email){
+         boolean check = false;
+        try {
+            String query = "DELETE FROM [User] where email = ?";
+            ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+            int rowsUpdated = ps.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                check = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+     public User getUserByMailAndPassword(String mail) {
+        User user = null;
+        String sql = "SELECT * FROM [User] WHERE email = ?  and status = 'false'";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, mail);
+          
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setUserId(rs.getInt("userId"));
+                user.setFullname(rs.getString("fullname"));
+                user.setAddress(rs.getString("address"));
+                user.setPhone(rs.getString("phone"));
+                user.setEmail(rs.getString("email"));
+                user.setUserName(rs.getString("username"));
+                user.setPassword(rs.getString("password"));
+                user.setDob(rs.getString("dob"));
+                user.setBalance(rs.getInt("balance"));
+                user.setRole(rs.getString("roleId"));
+                user.setStatus(rs.getBoolean("status"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setGender(rs.getBoolean("gender"));
+            }
+        } catch (SQLException e) {
+            System.out.println("getUserByUsernameAndPassword: " + e.getMessage());
+        }
+        return user;
+    }
     public User getUserByUsernameAndPassword(String username, String password) {
         User user = null;
         String sql = "SELECT * FROM [User] WHERE username = ? AND password = ? and status = 'true'";

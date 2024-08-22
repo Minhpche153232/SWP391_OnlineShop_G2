@@ -7,6 +7,22 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="css/changePassword.css">
 <script>
+    function checkMail(oldEmail) {
+        let btnChange = document.getElementById("changeMail");
+        let newMail = document.getElementById("newMail");
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        console.log("oldEmail",oldEmail)
+        if (String(newMail.value).match(emailPattern) && newMail.value !== oldEmail) {
+            newMail.style.borderColor = "";
+            btnChange.disabled = false;
+
+
+        } else {
+            newMail.style.borderColor = "red";
+            btnChange.disabled = true;
+
+        }
+    }
     function check() {
         let btnChange = document.getElementById("change");
         let oldPassword = document.getElementById("oldPassword");
@@ -18,7 +34,7 @@
         // Xóa thông báo lỗi trước khi kiểm tra
         passwordError.innerText = '';
         confirmPasswordError.innerText = '';
-        
+
         // Điều kiện kiểm tra mật khẩu mới
         const passwordIsValid = validateNewPassword(newPassword.value);
 
@@ -82,10 +98,13 @@
 </script>
 
 <!-- Button trigger modal -->
-<div style="width: 100%; display: flex; justify-content: center; align-items: center; padding: 10px; margin-left:-50px; margin-top: -70px">
+<div style="width: 100%; display: flex; justify-content: center; align-items: center; padding: 10px; margin-left:5vw; margin-top: -30px">
     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="width: 250px">
-    Change password
-</button>
+        Change password
+    </button>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="width: 250px; margin-left: 20px">
+        Change email
+    </button>
 </div>
 
 <!-- Modal -->
@@ -115,6 +134,33 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" disabled id="change">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="ChangeMail" method="post" onchange="checkMail('${sessionScope.currentUser.email}')">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel2">Change email</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="display: flex; justify-content: center">
+                    <div class="form">
+                        <div class="input-container">
+                            <input type="email" name="newMail" id="newMail" placeholder="Enter new email" onchange="checkMail('${sessionScope.currentUser.email}')">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" disabled id="changeMail">Save changes</button>
                 </div>
             </div>
         </form>

@@ -86,7 +86,7 @@ public class RegisterController extends HttpServlet {
         }
         user.setBalance(0);
         user.setRole("3");
-        user.setStatus(true);
+        user.setStatus(false);
         
         
         
@@ -96,7 +96,7 @@ public class RegisterController extends HttpServlet {
         boolean userCreated = userDAO.createUser(user);
 
         if (userCreated) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("SendMail?to="+email+"&subject=Verify mail register");
         } else {
             errorMessage = "Failed to register the user. Please try again.";
             request.setAttribute("error", errorMessage);
