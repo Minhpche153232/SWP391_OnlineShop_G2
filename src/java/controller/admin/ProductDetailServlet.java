@@ -3,11 +3,15 @@ package controller.admin;
 import dao.ProductDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import models.Product;
 import models.ProductDetail;
 import models.User;
@@ -16,6 +20,7 @@ import models.User;
  *
  * @author ADMIN
  */
+@MultipartConfig
 @WebServlet(name = "ProductDetailServlet", urlPatterns = {"/admin/product-detail"})
 public class ProductDetailServlet extends HttpServlet {
 
@@ -56,7 +61,16 @@ public class ProductDetailServlet extends HttpServlet {
             int size = Integer.parseInt(request.getParameter("size"));
             String color = request.getParameter("color");
             int unitInStock = Integer.parseInt(request.getParameter("unitInStock"));
-            String image = request.getParameter("image");
+            int discount = Integer.parseInt(request.getParameter("discount"));
+            Part filePart = request.getPart("image"); // Retrieves <input type="file" name="image">
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "images" + File.separator + fileName;
+            
+            File file = new File(uploadPath);
+            
+            filePart.write(uploadPath);
+
+            String imagePath = "images/" + fileName;
             ProductDetail existingDetail = productDAO.getProductDetailBySizeAndColor(productId, size, color);
 
             if (existingDetail != null) {
@@ -64,8 +78,8 @@ public class ProductDetailServlet extends HttpServlet {
                 existingDetail.setUnitInStock(existingDetail.getUnitInStock() + unitInStock);
 
                 // Update the image only if a new image link is provided
-                if (image != null && !image.trim().isEmpty()) {
-                    existingDetail.setImage(image);
+                if (imagePath != null && !imagePath.trim().isEmpty()) {
+                    existingDetail.setImage(imagePath);
                 } else {
                     existingDetail.setImage(existingDetail.getImage());
                 }
@@ -80,7 +94,7 @@ public class ProductDetailServlet extends HttpServlet {
 
             } else {
                 // Create a new product detail
-                ProductDetail newDetail = new ProductDetail(productId, size, color, unitInStock, image);
+                ProductDetail newDetail = new ProductDetail(productId, size, color, unitInStock, imagePath, discount);
                 productDAO.addProductDetail(newDetail);
                 session.setAttribute("notification", "Create successfully!");
             }
@@ -94,6 +108,25 @@ public class ProductDetailServlet extends HttpServlet {
             try {
                 productDAO.deleteProductDetail(productId, size, color);
                 session.setAttribute("notification", "Product detail deleted successfully!");
+            } catch (Exception e) {
+                session.setAttribute("notificationErr", "Failed to delete product detail.");
+            }
+
+            response.sendRedirect(request.getContextPath() + "/admin/product-detail?productId=" + productId);
+
+        } else if (action.equals("update-discount")) {
+            int productId = Integer.parseInt(request.getParameter("productId"));
+            int size = Integer.parseInt(request.getParameter("size"));
+            int discount = Integer.parseInt(request.getParameter("discount"));
+            String color = request.getParameter("color");
+            if (discount < 0 || discount > 100) {
+                session.setAttribute("notificationErr", "Discount must in range 0 - 100!");
+                response.sendRedirect(request.getContextPath() + "/admin/product-detail?productId=" + productId);
+                return;
+            }
+            try {
+                productDAO.updateProductDiscount(productId, size, color, discount);
+                session.setAttribute("notification", "Product discount update successfully!");
             } catch (Exception e) {
                 session.setAttribute("notificationErr", "Failed to delete product detail.");
             }
