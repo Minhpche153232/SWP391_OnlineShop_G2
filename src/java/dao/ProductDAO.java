@@ -254,6 +254,7 @@ public class ProductDAO extends DBContext {
                 detail.setColor(rs.getString("color"));
                 detail.setUnitInStock(rs.getInt("unitInStock"));
                 detail.setImage(rs.getString("image"));
+                detail.setDiscount(rs.getInt("discount"));
                 details.add(detail);
             }
         } catch (SQLException e) {
@@ -421,13 +422,14 @@ public class ProductDAO extends DBContext {
 
     public void addProductDetail(ProductDetail detail) {
         try {
-            String query = "INSERT INTO ProductDetails (productId, size, color, unitInStock, image) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO ProductDetails (productId, size, color, unitInStock, image, discount) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, detail.getProductId());
             ps.setInt(2, detail.getSize());
             ps.setString(3, detail.getColor());
             ps.setInt(4, detail.getUnitInStock());
             ps.setString(5, detail.getImage());
+            ps.setInt(6, detail.getDiscount());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -436,13 +438,14 @@ public class ProductDAO extends DBContext {
 
     public void updateProductDetail(ProductDetail detail) {
         try {
-            String query = "UPDATE ProductDetails SET unitInStock = ? ,  image = ? WHERE productId = ? AND size = ? AND color = ? ";
+            String query = "UPDATE ProductDetails SET unitInStock = ? ,  image = ?, discount = ? WHERE productId = ? AND size = ? AND color = ? ";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, detail.getUnitInStock());
             ps.setString(2, detail.getImage());
-            ps.setInt(3, detail.getProductId());
-            ps.setInt(4, detail.getSize());
-            ps.setString(5, detail.getColor());
+            ps.setInt(3, detail.getDiscount());
+            ps.setInt(4, detail.getProductId());
+            ps.setInt(5, detail.getSize());
+            ps.setString(6, detail.getColor());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -456,6 +459,19 @@ public class ProductDAO extends DBContext {
             ps.setInt(1, productId);
             ps.setInt(2, size);
             ps.setString(3, color);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateProductDiscount(int productId, int size, String color, int discount) {
+        try {
+            String query = "Update ProductDetails set discount = ?  WHERE productId = ? AND size = ? AND color = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, discount);
+            ps.setInt(2, productId);
+            ps.setInt(3, size);
+            ps.setString(4, color);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
