@@ -24,6 +24,7 @@ public class CategoryDAO extends DBContext {
                 Category category = new Category();
                 category.setCategoryId(rs.getInt("categoryId"));
                 category.setCategoryName(rs.getString("categoryName"));
+                category.setDescription(rs.getString("description"));
                 category.setStatus(rs.getBoolean("status"));
                 categories.add(category);
             }
@@ -45,6 +46,7 @@ public class CategoryDAO extends DBContext {
                 category.setCategoryId(rs.getInt("categoryId"));
                 category.setCategoryName(rs.getString("categoryName"));
                 category.setDescription(rs.getString("description"));
+                category.setStatus(rs.getBoolean("status"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,7 +54,7 @@ public class CategoryDAO extends DBContext {
         return category;
     }
 
-    public boolean checkCategoryExist(String txtName) {
+    public Category checkCategoryExist(String txtName) {
         Category c = null;
         try {
             String query = "SELECT * FROM Category WHERE categoryName = ?";
@@ -60,12 +62,16 @@ public class CategoryDAO extends DBContext {
             ps.setString(1, txtName);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return true;
+                c.setCategoryId(rs.getInt("categoryId"));
+                c.setCategoryName(rs.getString("categoryName"));
+                c.setDescription(rs.getString("description"));
+                c.setStatus(rs.getBoolean("status"));
+                return c;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     public boolean AddNewCategory(Category c) {
@@ -117,11 +123,11 @@ public class CategoryDAO extends DBContext {
         }
         return false;
     }
-
+    
     public static void main(String[] args) {
         CategoryDAO dao = new CategoryDAO();
         Category c = new Category(3, "Forum", "Adidas Forum");
-        if (dao.checkCategoryExist(c.getCategoryName()) == false) {
+        if (dao.checkCategoryExist(c.getCategoryName()) == null) {
             boolean check = dao.UpdateCategory(c);
             System.out.println(check);
         } else {

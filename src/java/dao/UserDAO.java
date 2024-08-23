@@ -170,6 +170,6 @@ public class UserDAO extends DBContext {
     
     public static void main(String[] args) {
         UserDAO dao = new UserDAO();
-        System.out.println(dao.getMd5("12345678"));
+        System.out.println(dao.getUserByUsernameAndPassword("catminh2k1","12345678"));
     }
 }
