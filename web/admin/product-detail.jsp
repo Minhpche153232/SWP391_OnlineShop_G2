@@ -70,14 +70,14 @@
                                 <td>${detail.unitInStock}</td>
                                 <td>${detail.discount}%
 
-                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#deleteModal${detail.size}${detail.color}">
+                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#discountModal${detail.size}${detail.color}">
                                         <i class="fas fa-pen fa-fw"></i>
                                     </button>
-                                    <div class="modal fade" id="deleteModal${detail.size}${detail.color}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel${detail.size}${detail.color}" aria-hidden="true">
+                                    <div class="modal fade" id="discountModal${detail.size}${detail.color}" tabindex="-1" role="dialog" aria-labelledby="discountModalLabel${detail.size}${detail.color}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="deleteModalLabel${detail.size}${detail.color}">Delete Product Detail</h5>
+                                                    <h5 class="modal-title" id="deleteModalLabel${detail.size}${detail.color}">Update Discount</h5>
                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
@@ -160,7 +160,7 @@
                                 <!-- Existing form fields -->
                                 <div class="form-group">
                                     <label for="size">Size</label>
-                                    <input type="number" class="form-control" id="size" name="size" required>
+                                    <input type="number" class="form-control" id="size" name="size" min="35" max="50" required>
                                     <input type="hidden" class="form-control" name="action" value="add" >
                                     <div id="sizeError" class="text-danger"></div>
                                 </div>
@@ -176,7 +176,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="discount">Discount</label>
-                                    <input type="number" class="form-control" id="discount" name="discount" required>
+                                    <input type="number" class="form-control" id="discount" name="discount" min="0" max="100" required>
                                     <div id="discountError" class="text-danger"></div>
                                 </div>
                                 <div class="form-group">
@@ -213,12 +213,12 @@
         document.getElementById("discountError").innerText = "";
 
         // Validate size > 0
-        if (size <= 0) {
-            document.getElementById("sizeError").innerText = "Size must be greater than 0.";
+        if (size < 35 || size > 50) {
+            document.getElementById("sizeError").innerText = "Size must be in range 35-50.";
             isValid = false;
         }
-        if (discount < 0) {
-            document.getElementById("discountError").innerText = "Discount must be greater or equal 0.";
+        if (discount < 0 || discount > 100) {
+            document.getElementById("discountError").innerText = "Discount must be in range 0-100.";
             isValid = false;
         }
 
