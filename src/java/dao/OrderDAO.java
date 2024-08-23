@@ -6,6 +6,7 @@ package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +130,7 @@ public class OrderDAO {
 
             while (rs.next()) {
                 Order order = new Order();
-              
+
                 order.setOrderDate(rs.getString("orderDate"));
                 order.setOrderId(rs.getInt("orderId"));
                 order.setShipDate(rs.getString("shipDate"));
@@ -157,7 +158,7 @@ public class OrderDAO {
         return orderItems;
     }
 
-     public boolean changeStatus(String value, String orderId) {
+    public boolean changeStatus(String value, String orderId) {
         boolean check = false;
         DBContext dBContext = new DBContext();
         String sql = "UPDATE [dbo].[Order] SET status = ? "
@@ -183,8 +184,75 @@ public class OrderDAO {
         }
         return check;
     }
+
+    public boolean saveOrder(Order order, List<OrderItem> orderItems) {
+        DBContext dBContext = new DBContext();
+        try {
+            // Start a transaction
+            dBContext.conn.setAutoCommit(false);
+
+            // Insert into Order table
+            String orderSql = "INSERT INTO [Order] (customerId, totalPrice, orderDate, shipAddress, toAddress, staffId, status) VALUES (?, ?, GETDATE(),?, ?, ?, ?)";
+            PreparedStatement orderStmt = dBContext.conn.prepareStatement(orderSql, Statement.RETURN_GENERATED_KEYS);
+            orderStmt.setInt(1, order.getUser().getUserId());
+            orderStmt.setFloat(2, order.getTotalPrice());
+            orderStmt.setString(3, "HN");
+            orderStmt.setString(4, order.getToAddress());
+            orderStmt.setInt(5, 1);
+            orderStmt.setString(6, order.getStatus());
+            int affectedRows = orderStmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Failed to create order.");
+            }
+
+            ResultSet generatedKeys = orderStmt.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                int orderId = generatedKeys.getInt(1);
+                order.setOrderId(orderId);
+            } else {
+                throw new SQLException("Failed to obtain order ID.");
+            }
+
+            // Insert into OrderItems table
+            String orderItemSql = "INSERT INTO OrderDetails (orderId, productId, quantity, size, color, image) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement orderItemStmt = dBContext.conn.prepareStatement(orderItemSql);
+
+            for (OrderItem orderItem : orderItems) {
+                orderItemStmt.setInt(1, order.getOrderId());
+                orderItemStmt.setInt(2, orderItem.getProduct().getProductId());
+                orderItemStmt.setInt(3, orderItem.getQuantity());
+                orderItemStmt.setInt(4, orderItem.getSize());
+                orderItemStmt.setString(5, orderItem.getColor());
+                orderItemStmt.setString(6, orderItem.getImage());
+                orderItemStmt.addBatch();
+            }
+
+            orderItemStmt.executeBatch();
+
+            // Commit the transaction
+            dBContext.conn.commit();
+            return true;
+        } catch (SQLException ex) {
+            try {
+                dBContext.conn.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            ex.printStackTrace();
+            return false;
+        } finally {
+            try {
+                dBContext.conn.setAutoCommit(true);
+                dBContext.conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void main(String[] args) {
         OrderDAO orderDAO = new OrderDAO();
-        System.out.println(orderDAO.getListOrder(null,"pending", 1));
+        System.out.println(orderDAO.getListOrder(null, "pending", 1));
     }
 }
