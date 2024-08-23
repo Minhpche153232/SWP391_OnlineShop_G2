@@ -9,13 +9,21 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import models.User;
 
 public class Dashboard extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Object objUser = session.getAttribute("currentUser");
+        User user = (User) objUser;
+        if (user == null || user.getRole().equals("3")) {
+            response.sendRedirect("/online_shop/home");
+        }else{
         request.getRequestDispatcher("dashboard.jsp").forward(request, response);
-        
+        }
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

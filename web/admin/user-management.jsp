@@ -47,7 +47,9 @@
             </c:if>
 
             <div class="card-body">
-
+                                                <h6 class="mb-3">
+                                                    <a class="" href="addStaff">
+                                                        <span class="text-secondary">Add staff</span></a></h6>
                 <!-- Search and Filter Form -->
                 <form method="get" action="user-manager" class="search-form">
                     <input type="text" name="textSearch" placeholder="Search by name" value="${textSearch}" class="form-input">

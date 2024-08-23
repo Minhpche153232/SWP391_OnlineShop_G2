@@ -17,6 +17,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
         <link href="css/tiny-slider.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/input.css" rel="stylesheet">
         <title>Product detail</title>
 
         <style>
@@ -51,6 +52,15 @@
             <div class="container">
                 <div class="row">
                     <!-- Product Details Section -->
+                     <c:if test="${not empty sessionScope.notification}">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
+                        ${sessionScope.notification}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <%
+                        session.removeAttribute("notification");
+                    %>
+                </c:if>
                     <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
                         <h2 class="mb-6 section-title">${product.productName} (${product.productCode})</h2>
                         <p class="mb-4">${product.description}</p>
@@ -59,18 +69,7 @@
                         <c:set var="isLoggedIn" value="${not empty sessionScope.currentUser}" />
                         <c:set var="hasSizeAndColor" value="${not empty param.size and not empty param.color}" />
 
-                        <form action="add-cart" method="POST" onsubmit="return validateForm()">
-                            <input type="hidden" name="productId" value="${product.productId}">
-                            <input type="hidden" name="size" value="${param.size}">
-                            <input type="hidden" name="color" value="${param.color}">
-                            <button type="submit" class="btn">Add to cart</button>
-                        </form>
-                    </div> 
-
-                    <!-- Image and Selection Buttons Section -->
-                    <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
-                        <img src="${image}" width="600" height="450" alt="alt" style="margin-bottom: 10px"/>
-                        <div class="button-container">
+                        <div class="button-container" style="margin-bottom:  30px">
                             <c:forEach items="${product.productDetails}" var="pd">
                                 <form action="product-detail">
                                     <input type="hidden" value="${pd.productId}" name="id">
@@ -86,11 +85,41 @@
                                 </form>
                             </c:forEach>
                         </div>
+                        <form action="add-cart" method="POST" onsubmit="return validateForm()">
+                            <input type="hidden" name="productId" value="${product.productId}">
+                            <input type="hidden" name="size" value="${param.size}">
+                            <input type="hidden" name="color" value="${param.color}">
+                            <button type="submit" class="btn">Add to cart</button>
+                        </form>
+                    </div> 
+
+                    <!-- Image and Selection Buttons Section -->
+                    <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
+                        <img src="${image}" width="600" height="450" alt="alt" style="margin-bottom: 10px"/>
+                        
                     </div>
                 </div>
             </div>
         </div>
-
+        <!-- Modal for Not customer -->
+        <div class="modal" id="notCustomer" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Customer Required</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>You must be customer role to add to cart. Please log in to continue.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal for Not Logged In -->
         <div class="modal" id="loginModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
@@ -141,9 +170,13 @@
                             function validateForm() {
                                 var isLoggedIn = ${not empty sessionScope.currentUser ? 'true' : 'false'};
                                 var hasSizeAndColor = ${not empty param.size && not empty param.color ? 'true' : 'false'};
+                                var isNotCustomer = ${ sessionScope.currentUser.role ne 3 ? true : false};
 
                                 if (!isLoggedIn) {
                                     $('#loginModal').modal('show');
+                                    return false; // Prevent form submission
+                                } else if (isNotCustomer) {
+                                    $('#notCustomer').modal('show');
                                     return false; // Prevent form submission
                                 } else if (!hasSizeAndColor) {
                                     $('#sizeColorModal').modal('show');

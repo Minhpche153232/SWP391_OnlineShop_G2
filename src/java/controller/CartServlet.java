@@ -32,32 +32,35 @@ public class CartServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("currentUser");
-        
-        //get data filter
-        CategoryDAO categoryDAO = new CategoryDAO();
-        BrandDAO brandDAO = new BrandDAO();
-        TypeDAO typeDAO = new TypeDAO();
-        List<Category> categories = categoryDAO.getAllCategories();
-        List<Brand> brands = brandDAO.getAllBrands();
-        List<Type> types = typeDAO.getAllTypes();
-        request.setAttribute("categories", categories);
-        request.setAttribute("brands", brands);
-        request.setAttribute("types", types);
-        //
-
-        if (user != null) {
-            Map<ProductDetailKey, CartItem> cart = (Map<ProductDetailKey, CartItem>) session.getAttribute("cart");
-
-            if (cart == null) {
-                cart = new HashMap<>();
-                session.setAttribute("cart", cart);
-            }
-
-            request.setAttribute("cart", cart);
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+        if (user == null || !user.getRole().equals("3")) {
+            response.sendRedirect("home");
         } else {
-            session.setAttribute("notificationErr", "You must login first!");
-            response.sendRedirect("login");
+            //get data filter
+            CategoryDAO categoryDAO = new CategoryDAO();
+            BrandDAO brandDAO = new BrandDAO();
+            TypeDAO typeDAO = new TypeDAO();
+            List<Category> categories = categoryDAO.getAllCategories();
+            List<Brand> brands = brandDAO.getAllBrands();
+            List<Type> types = typeDAO.getAllTypes();
+            request.setAttribute("categories", categories);
+            request.setAttribute("brands", brands);
+            request.setAttribute("types", types);
+            //
+
+            if (user != null) {
+                Map<ProductDetailKey, CartItem> cart = (Map<ProductDetailKey, CartItem>) session.getAttribute("cart");
+
+                if (cart == null) {
+                    cart = new HashMap<>();
+                    session.setAttribute("cart", cart);
+                }
+
+                request.setAttribute("cart", cart);
+                request.getRequestDispatcher("cart.jsp").forward(request, response);
+            } else {
+                session.setAttribute("notificationErr", "You must login first!");
+                response.sendRedirect("login");
+            }
         }
 
     }

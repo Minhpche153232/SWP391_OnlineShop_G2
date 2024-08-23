@@ -43,8 +43,8 @@
     <servlet>
         <servlet-name>ResetPassword</servlet-name>
         <servlet-class>controller.ResetPassword</servlet-class>
-        </servlet>
-        <servlet>
+    </servlet>
+    <servlet>
         <servlet-name>ShopController</servlet-name>
         <servlet-class>controller.ShopController</servlet-class>
     </servlet>
@@ -63,6 +63,14 @@
     <servlet>
         <servlet-name>changeStatusOrder</servlet-name>
         <servlet-class>controller.admin.changeStatusOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelOrder</servlet-name>
+        <servlet-class>controller.CancelOrder</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddStaffController</servlet-name>
+        <servlet-class>controller.admin.AddStaffController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
@@ -115,8 +123,8 @@
     <servlet-mapping>
         <servlet-name>ResetPassword</servlet-name>
         <url-pattern>/resetpw</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ShopController</servlet-name>
         <url-pattern>/shop</url-pattern>
     </servlet-mapping>
@@ -136,5 +144,12 @@
         <servlet-name>changeStatusOrder</servlet-name>
         <url-pattern>/changeStatusOrder</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>CancelOrder</servlet-name>
+        <url-pattern>/cancelOrder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddStaffController</servlet-name>
+        <url-pattern>/admin/addStaff</url-pattern>
+    </servlet-mapping>
 </web-app>

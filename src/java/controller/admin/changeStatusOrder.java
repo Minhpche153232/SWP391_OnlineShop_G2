@@ -11,6 +11,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import models.User;
 
 /**
  *
@@ -18,24 +20,30 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 public class changeStatusOrder extends HttpServlet {
 
-  
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String orderId = request.getParameter("orderId");
-        String status = request.getParameter("status");
-        String statusChange = "";
-        if ("pending".equals(status)) {
-            statusChange = "on-going";
-        } else if ("on-going".equals(status)) {
-            statusChange = "success";
-        } 
-        if ("fail".equals(status)) {
-            statusChange = "fail";
+        HttpSession session = request.getSession();
+        Object objUser = session.getAttribute("currentUser");
+        User user = (User) objUser;
+        if (user == null || user.getRole().equals("3")) {
+            response.sendRedirect("/online_shop/home");
+        } else {
+            String orderId = request.getParameter("orderId");
+            String status = request.getParameter("status");
+            String statusChange = "";
+            if ("pending".equals(status)) {
+                statusChange = "on-going";
+            } else if ("on-going".equals(status)) {
+                statusChange = "success";
+            }
+            if ("fail".equals(status)) {
+                statusChange = "fail";
+            }
+            OrderDAO orderDAO = new OrderDAO();
+            boolean mess = orderDAO.changeStatus(statusChange, orderId);
+            response.sendRedirect("admin/order-manager?message=" + mess);
         }
-        OrderDAO orderDAO = new OrderDAO();
-        boolean mess = orderDAO.changeStatus(statusChange, orderId);
-        response.sendRedirect("admin/order-manager?message="+mess);
     }
 
     /**
@@ -49,7 +57,7 @@ public class changeStatusOrder extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+
     }
 
     /**

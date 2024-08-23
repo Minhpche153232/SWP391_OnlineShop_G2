@@ -25,43 +25,49 @@ public class ProductManagement extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Object objUser = session.getAttribute("currentUser");
+        User user = (User) objUser;
+        if (user == null || user.getRole().equals("3")) {
+            response.sendRedirect("/online_shop/home");
+        } else {
+            String searchParam = request.getParameter("searchParam");
+            Integer categoryId = request.getParameter("categoryId") != null && !request.getParameter("categoryId").isEmpty()
+                    ? Integer.valueOf(request.getParameter("categoryId")) : null;
+            Integer brandId = request.getParameter("brandId") != null && !request.getParameter("brandId").isEmpty()
+                    ? Integer.valueOf(request.getParameter("brandId")) : null;
+            Integer typeId = request.getParameter("typeId") != null && !request.getParameter("typeId").isEmpty()
+                    ? Integer.valueOf(request.getParameter("typeId")) : null;
+            Boolean isActive = request.getParameter("isActive") != null && !request.getParameter("isActive").isEmpty()
+                    ? Boolean.valueOf(request.getParameter("isActive")) : null;
+            int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
+            int pageSize = 5;  // Number of items per page
 
-        String searchParam = request.getParameter("searchParam");
-        Integer categoryId = request.getParameter("categoryId") != null && !request.getParameter("categoryId").isEmpty()
-                ? Integer.valueOf(request.getParameter("categoryId")) : null;
-        Integer brandId = request.getParameter("brandId") != null && !request.getParameter("brandId").isEmpty()
-                ? Integer.valueOf(request.getParameter("brandId")) : null;
-        Integer typeId = request.getParameter("typeId") != null && !request.getParameter("typeId").isEmpty()
-                ? Integer.valueOf(request.getParameter("typeId")) : null;
-        Boolean isActive = request.getParameter("isActive") != null && !request.getParameter("isActive").isEmpty()
-                ? Boolean.valueOf(request.getParameter("isActive")) : null;
-        int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
-        int pageSize = 5;  // Number of items per page
+            ProductDAO productDAO = new ProductDAO();
+            List<Product> products = productDAO.getAllProductWithParam(searchParam, categoryId, brandId, typeId, isActive);
 
-        ProductDAO productDAO = new ProductDAO();
-        List<Product> products = productDAO.getAllProductWithParam(searchParam, categoryId, brandId,typeId, isActive);
+            CategoryDAO categoryDAO = new CategoryDAO();
+            BrandDAO brandDAO = new BrandDAO();
+            List<Category> categories = categoryDAO.getAllCategories();
+            List<Brand> brands = brandDAO.getAllBrands();
 
-        CategoryDAO categoryDAO = new CategoryDAO();
-        BrandDAO brandDAO = new BrandDAO();
-        List<Category> categories = categoryDAO.getAllCategories();
-        List<Brand> brands = brandDAO.getAllBrands();
+            // Pagination
+            int totalProducts = products.size();
+            int totalPages = (int) Math.ceil(totalProducts / (double) pageSize);
+            List<Product> paginatedProducts = productDAO.Paging(products, page, pageSize);
 
-        // Pagination
-        int totalProducts = products.size();
-        int totalPages = (int) Math.ceil(totalProducts / (double) pageSize);
-        List<Product> paginatedProducts = productDAO.Paging(products, page, pageSize);
+            TypeDAO typeDAO = new TypeDAO();
+            List<Type> types = typeDAO.getAllTypes();
 
-        TypeDAO typeDAO = new TypeDAO();
-        List<Type> types = typeDAO.getAllTypes();
+            request.setAttribute("types", types);
+            request.setAttribute("products", paginatedProducts);
+            request.setAttribute("categories", categories);
+            request.setAttribute("brands", brands);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
 
-        request.setAttribute("types", types);
-        request.setAttribute("products", paginatedProducts);
-        request.setAttribute("categories", categories);
-        request.setAttribute("brands", brands);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("totalPages", totalPages);
-
-        request.getRequestDispatcher("product-management.jsp").forward(request, response);
+            request.getRequestDispatcher("product-management.jsp").forward(request, response);
+        }
     }
 
     @Override
@@ -79,9 +85,9 @@ public class ProductManagement extends HttpServlet {
                 int categoryId = Integer.parseInt(request.getParameter("categoryId"));
                 int brandId = Integer.parseInt(request.getParameter("brandId"));
                 int typeId = 0;
-                if(request.getParameter("typeId") != null){
-                                    typeId = Integer.parseInt(request.getParameter("typeId"));
- 
+                if (request.getParameter("typeId") != null) {
+                    typeId = Integer.parseInt(request.getParameter("typeId"));
+
                 }
                 float price = Float.parseFloat(request.getParameter("price"));
                 boolean status = request.getParameter("status").equals("1");
@@ -101,7 +107,7 @@ public class ProductManagement extends HttpServlet {
                 newProduct.setProductCode(productCode);
                 newProduct.setCategory(new CategoryDAO().getCategoryById(categoryId));
                 newProduct.setBrand(new BrandDAO().getBrandById(brandId));
-                if(typeId != 0){
+                if (typeId != 0) {
                     newProduct.setType(new TypeDAO().getTypeById(typeId));
                 }
                 newProduct.setPrice(price);
