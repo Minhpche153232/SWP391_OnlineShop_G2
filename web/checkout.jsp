@@ -115,7 +115,7 @@
                                             </tbody>
                                         </table>
                                         <div class="form-group">
-                                            <<input type="hidden" name="subtotal" value="${subtotal}">
+                                            <input type="hidden" name="subtotal" value="${subtotal}">
                                             <button type="submit" class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
                                         </div>
                                     </div>
@@ -128,7 +128,7 @@
         </div>
 
         <jsp:include page="footer.jsp"></jsp:include>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/custom.js"></script>
-    </body>
+            <script src="js/bootstrap.bundle.min.js"></script>
+            <script src="js/custom.js"></script>
+       </body>
 </html>

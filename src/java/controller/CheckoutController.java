@@ -1,10 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller;
 
 import dao.OrderDAO;
+import dao.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -25,7 +22,6 @@ import models.User;
  *
  * @author ADMIN
  */
-
 @WebServlet(name = "CheckoutController", urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
 
@@ -75,19 +71,15 @@ public class CheckoutController extends HttpServlet {
             response.sendRedirect("checkout");
             return;
         }
-
-      
         String address = request.getParameter("address");
         double subtotal = Double.parseDouble(request.getParameter("subtotal"));
-        System.out.println(address +" "  + subtotal);
 
         // Create Order object
         Order order = new Order();
         order.setUser(currentUser);
         order.setTotalPrice((float) subtotal);
         order.setToAddress(address);
-        order.setStatus("Pending");
-        // Assuming the ship date is calculated or predefined
+        order.setStatus("pending");
         order.setShipDate(null);
 
         List<OrderItem> orderItems = new ArrayList<>();
@@ -103,19 +95,35 @@ public class CheckoutController extends HttpServlet {
             orderItems.add(orderItem);
         }
 
-        // Save the order using OrderDAO
-        OrderDAO orderDAO = new OrderDAO();
-        boolean success = orderDAO.saveOrder(order, orderItems);
-
-        if (success) {
-            session.setAttribute("notification", "Order placed successfully!");
-            session.removeAttribute("cart"); // Clear the cart
+        if (currentUser.getBalance() < subtotal) {
+            // Insufficient balance
+            session.setAttribute("notificationErr", "Your balance is not enough to place the order.");
+            response.sendRedirect("checkout");
+            return;
         } else {
-            session.setAttribute("notificationErr", "Failed to place order. Please try again.");
+
+            Double newBalance = currentUser.getBalance() - subtotal;
+            currentUser.setBalance(newBalance.floatValue());
+
+            // Update user balance in the database
+            UserDAO userDAO = new UserDAO();
+            boolean isUpdated = userDAO.updateUserBalance(currentUser);
+            if (isUpdated) {
+
+                // Save the order using OrderDAO
+                OrderDAO orderDAO = new OrderDAO();
+                boolean success = orderDAO.saveOrder(order, orderItems);
+
+                if (success) {
+                    session.setAttribute("notification", "Order placed successfully!");
+                    session.removeAttribute("cart");
+                } else {
+                    session.setAttribute("notificationErr", "Failed to place order. Please try again.");
+                }
+            }
+
         }
 
-        response.sendRedirect("confirmation"); 
+        response.sendRedirect("thank-for-order");
     }
 }
-
-
