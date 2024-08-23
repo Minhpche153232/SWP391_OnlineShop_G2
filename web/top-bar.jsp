@@ -93,9 +93,19 @@
                                    style="margin-bottom: 0"><fmt:formatNumber value="${sessionScope.currentUser.balance}" type="number" groupingUsed="true" /> VND</a>
                             </li>
                         </c:if>
-                        <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
-                        </c:if>
-                        <c:if test="${sessionScope.currentUser == null}">
+                        <li style="position: relative;">
+                            <a class="nav-link" href="cart">
+                                <img src="images/cart.svg">
+                                    <c:if test="${not empty sessionScope.cart}">
+                                        <span class="cart-size" style="position: absolute; top: -10px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 5px; font-size: 12px;">
+                                            ${sessionScope.cart.size()}
+                                        </span>
+                                    </c:if>
+                            </a>
+                        </li>
+
+                    </c:if>
+                    <c:if test="${sessionScope.currentUser == null}">
                         <li style="display: flex; align-items: end">
                             <a class="nav-link btn btn-secondary" style="color: white; height: 35px;width:  75px; display: flex;
                                align-items: center;    justify-content: center;" href="login">Login</a></li>
