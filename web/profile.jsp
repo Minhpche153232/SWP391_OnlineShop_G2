@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -168,7 +169,7 @@
                                             <h6 class="mb-0">Balance</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="number" class="form-control" readonly name="balance" value=${sessionScope.currentUser.balance}>
+                                           <h6><fmt:formatNumber value="${sessionScope.currentUser.balance}" type="number" groupingUsed="true" /> VND</h6>
                                         </div>
                                     </div>
                                     <div class="row mb-3">

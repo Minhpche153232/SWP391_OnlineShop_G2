@@ -130,7 +130,13 @@
         </div>
         <div class="dropdown">
             <p class="p-click dropdown-toggle" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">
-                All categories
+         
+                 <c:if test="${category.categoryName != null}">
+                    ${category.categoryName}
+                </c:if>
+                <c:if test="${category.categoryName == null}">
+                         All categories
+                </c:if>
             </p>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <c:forEach items="${categories}" var="i">
@@ -141,7 +147,13 @@
         </div>
         <div class="dropdown">
             <p class="p-click dropdown-toggle" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">
-                ${types[0].typeName}
+                
+                 <c:if test="${type != null}">
+                    ${type.typeName}
+                </c:if>
+                <c:if test="${type == null}">
+                       All type
+                </c:if>
             </p>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <c:forEach items="${types}" var="i">

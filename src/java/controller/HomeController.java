@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import models.Brand;
 import models.Category;
+import models.Product;
 import models.ProductDetail;
 import models.Type;
 
@@ -36,8 +37,6 @@ public class HomeController extends HttpServlet {
 
         String price = request.getParameter("price");
         String search = request.getParameter("search");
-        String sizePR = request.getParameter("size");
-        String color = request.getParameter("color");
         String typeIdPR = request.getParameter("typeId");
         String categoryIdPR = request.getParameter("categoryId");
         String brandIdPR = request.getParameter("brandId");
@@ -56,9 +55,7 @@ public class HomeController extends HttpServlet {
             brandId = Integer.valueOf(brandIdPR);
         }
 
-        if (sizePR != null && !sizePR.equals("0") && !sizePR.equals("")) {
-            size = Integer.valueOf(sizePR);
-        }
+     
         if (price != null && !price.equals("0") && !price.equals("")) {
             try {
                 String[] range = price.split("-");
@@ -75,7 +72,8 @@ public class HomeController extends HttpServlet {
             rangePrice = null;
         }
 
-        List<ProductDetail> listCheapest = productDAO.getTopCheapestProduct(rangePrice, search, size, color, typeId, categoryId, brandId);
+              List<Product> listCheapest = productDAO.getProduct(rangePrice, search, typeId, categoryId, brandId);
+
         List<Category> categories = categoryDAO.getAllCategories();
         List<Brand> brands = brandDAO.getAllBrands();
         List<Type> types = typeDAO.getAllTypes();
@@ -88,7 +86,6 @@ public class HomeController extends HttpServlet {
         request.setAttribute("typeId", typeIdPR);
         request.setAttribute("search", search);
         request.setAttribute("price", price);
-        request.setAttribute("size", size);
 
         if (listCheapest.size() > 12) {
             listCheapest = listCheapest.subList(0, 11);

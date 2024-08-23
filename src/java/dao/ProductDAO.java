@@ -31,7 +31,84 @@ import models.Type;
  * @author Admin
  */
 public class ProductDAO extends DBContext {
+public List<Product> getProduct(Integer[] rangePrice, String search, Integer typeId, Integer categoryId, Integer brandId) {
+        DBContext dBContext = new DBContext();
+        List<Product> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT p.* FROM [OnlineShop_SWP391].[dbo].[Product] p WHERE 1=1");
 
+        if (search != null && !search.trim().isEmpty()) {
+            sql.append(" AND p.productName LIKE ?");
+        }
+       
+        if (typeId != null) {
+            sql.append(" AND p.typeId = ?");
+        }
+        if (categoryId != null) {
+            sql.append(" AND p.categoryId = ?");
+        }
+        if (brandId != null) {
+            sql.append(" AND p.brandId = ?");
+        }
+        if (rangePrice != null && rangePrice[0] != null) {
+            if (rangePrice.length > 1 && rangePrice[1] != null) {
+                sql.append(" AND p.price BETWEEN ? AND ?");
+            } else {
+                sql.append(" AND p.price >= ?");
+            }
+        }
+
+        sql.append(" ORDER BY p.price ASC");
+
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql.toString());
+            int paramIndex = 1;
+
+            if (search != null && !search.trim().isEmpty()) {
+                statement.setString(paramIndex++, "%" + search + "%");
+            }
+            
+            if (typeId != null) {
+                statement.setInt(paramIndex++, typeId);
+            }
+            if (categoryId != null) {
+                statement.setInt(paramIndex++, categoryId);
+            }
+            if (brandId != null) {
+                statement.setInt(paramIndex++, brandId);
+            }
+            if (rangePrice != null && rangePrice[0] != null) {
+                statement.setInt(paramIndex++, rangePrice[0]);
+                if (rangePrice.length > 1 && rangePrice[1] != null) {
+                    statement.setInt(paramIndex++, rangePrice[1]);
+                }
+            }
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("productId"));
+                p.setDescription(rs.getString("description"));
+                p.setImage(rs.getString("image"));
+                p.setProductName(rs.getString("productName"));
+                p.setPrice(rs.getFloat("price"));
+
+            
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (dBContext.conn != null) {
+                try {
+                    dBContext.conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
     public List<ProductDetail> getTopCheapestProduct(Integer[] rangePrice, String search, Integer size, String color, Integer typeId, Integer categoryId, Integer brandId) {
         DBContext dBContext = new DBContext();
         List<ProductDetail> list = new ArrayList<>();
@@ -72,12 +149,7 @@ public class ProductDAO extends DBContext {
             if (search != null && !search.trim().isEmpty()) {
                 statement.setString(paramIndex++, "%" + search + "%");
             }
-            if (size != null) {
-                statement.setInt(paramIndex++, size);
-            }
-            if (color != null) {
-                statement.setString(paramIndex++, color);
-            }
+            
             if (typeId != null) {
                 statement.setInt(paramIndex++, typeId);
             }
@@ -505,7 +577,7 @@ public class ProductDAO extends DBContext {
 //        d.setBrand(b);
 //        d.setCategory(c);
 //        dAO.addProduct(d);
-        List<ProductDetail> list = dAO.getTopCheapestProduct(null, "", null, null, null, null, null);
+        List<Product> list = dAO.getProduct(null, "", null, null, null);
         System.out.println(list);
     }
 
