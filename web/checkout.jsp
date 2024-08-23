@@ -55,7 +55,7 @@
                                     <h6 class="mb-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="fullName" value="${sessionScope.currentUser.fullname}" required>
+                                    <input type="text" readonly class="form-control" name="fullName" value="${sessionScope.currentUser.fullname}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -63,7 +63,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="email" class="form-control" name="email" value="${sessionScope.currentUser.email}" required>
+                                    <input type="email" readonly class="form-control" name="email" value="${sessionScope.currentUser.email}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -71,7 +71,7 @@
                                     <h6 class="mb-0">Phone</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="phone" value="${sessionScope.currentUser.phone}" required>
+                                    <input type="text"  readonly class="form-control" name="phone" value="${sessionScope.currentUser.phone}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
