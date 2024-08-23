@@ -31,6 +31,16 @@ public class ProductDetail {
         this.discount = discount;
     }
 
+    public ProductDetail(int productId, int size, String color, int unitInStock, String image,  int discount) {
+        this.productId = productId;
+        this.size = size;
+        this.color = color;
+        this.unitInStock = unitInStock;
+        this.image = image;
+        this.discount = discount;
+    }
+
+    
      public ProductDetail(int productId ,int size, String color, int unitInStock, String image) {
         this.size = size;
         this.color = color;
