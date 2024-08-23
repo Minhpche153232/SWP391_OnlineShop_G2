@@ -92,6 +92,7 @@
                             <button type="submit" class="btn">Add to cart</button>
                         </form>
                     </div> 
+                                 
 
                     <!-- Image and Selection Buttons Section -->
                     <div class="col-md-12 col-lg-5 mb-5 mb-lg-0">
@@ -100,6 +101,7 @@
                     </div>
                 </div>
             </div>
+                        <a style="margin-left:110px " href="shop" class="btn btn-info">Back</a>  
         </div>
         <!-- Modal for Not customer -->
         <div class="modal" id="notCustomer" tabindex="-1" role="dialog">
