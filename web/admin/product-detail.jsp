@@ -70,8 +70,8 @@
                                 <td>${detail.unitInStock}</td>
                                 <td>${detail.discount}%
 
-                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal${detail.size}${detail.color}">
-                                        <i class="fas fa-trash fa-fw"></i>
+                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#deleteModal${detail.size}${detail.color}">
+                                        <i class="fas fa-pen fa-fw"></i>
                                     </button>
                                     <div class="modal fade" id="deleteModal${detail.size}${detail.color}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel${detail.size}${detail.color}" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
@@ -181,7 +181,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="image">Product Image</label>
-                                    <input type="file" class="form-control-file" id="image" name="image">
+                                    <input type="file" class="form-control-file" id="image" name="image" required>
                                 </div>
                                 <input type="hidden" name="productId" value="${product.productId}">
                             </div>

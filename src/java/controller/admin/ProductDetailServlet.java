@@ -65,8 +65,9 @@ public class ProductDetailServlet extends HttpServlet {
             Part filePart = request.getPart("image"); // Retrieves <input type="file" name="image">
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
             String uploadPath = getServletContext().getRealPath("") + File.separator + "images" + File.separator + fileName;
-
+            
             File file = new File(uploadPath);
+            
             filePart.write(uploadPath);
 
             String imagePath = "images/" + fileName;
