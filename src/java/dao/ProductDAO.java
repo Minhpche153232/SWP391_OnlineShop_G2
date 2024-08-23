@@ -178,6 +178,7 @@ public class ProductDAO extends DBContext {
                     product.setProductCode(rs.getString("productCode"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getFloat("price"));
+                    product.setImage(rs.getString("image"));
 
                     Category category = new Category();
                     category.setCategoryId(rs.getInt("categoryId"));
@@ -264,7 +265,7 @@ public class ProductDAO extends DBContext {
     public void addProduct(Product product) {
         try {
             if (product.getType() != null) {
-                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description, image) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
                 PreparedStatement preparedStatement = conn.prepareStatement(query);
                 preparedStatement.setString(1, product.getProductName());
                 preparedStatement.setString(2, product.getProductCode());
@@ -274,9 +275,10 @@ public class ProductDAO extends DBContext {
                 preparedStatement.setFloat(6, product.getPrice());
                 preparedStatement.setBoolean(7, product.isActive());
                 preparedStatement.setString(8, product.getDescription());
+                preparedStatement.setString(9, product.getImage());
                 preparedStatement.executeUpdate();
             } else {
-                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId, price, status, description) VALUES (?, ?, ?, ?, ?,?,?)";
+                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId, price, status, description, image) VALUES (?, ?, ?, ?, ?,?,?,?)";
                 PreparedStatement preparedStatement = conn.prepareStatement(query);
                 preparedStatement.setString(1, product.getProductName());
                 preparedStatement.setString(2, product.getProductCode());
@@ -285,6 +287,7 @@ public class ProductDAO extends DBContext {
                 preparedStatement.setFloat(5, product.getPrice());
                 preparedStatement.setBoolean(6, product.isActive());
                 preparedStatement.setString(7, product.getDescription());
+                preparedStatement.setString(8, product.getImage());
 
                 preparedStatement.executeUpdate();
             }
@@ -339,7 +342,7 @@ public class ProductDAO extends DBContext {
 
     public void updateProduct(Product product) {
         try {
-            String query = "UPDATE Product SET productName = ?, productCode = ?, categoryId = ?, brandId = ?, typeId = ?, price = ?, status = ?, description = ? WHERE productId = ?";
+            String query = "UPDATE Product SET productName = ?, productCode = ?, categoryId = ?, brandId = ?, typeId = ?, price = ?, status = ?, description = ?, image = ? WHERE productId = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setString(2, product.getProductCode());
@@ -349,7 +352,8 @@ public class ProductDAO extends DBContext {
             preparedStatement.setFloat(6, product.getPrice());
             preparedStatement.setBoolean(7, product.isActive());
             preparedStatement.setString(8, product.getDescription());
-            preparedStatement.setInt(9, product.getProductId());
+            preparedStatement.setString(9, product.getImage());
+            preparedStatement.setInt(10, product.getProductId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

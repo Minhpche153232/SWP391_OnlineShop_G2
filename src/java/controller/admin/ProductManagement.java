@@ -7,11 +7,15 @@ package controller.admin;
 import dao.*;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.*;
 import models.*;
 
@@ -19,6 +23,7 @@ import models.*;
  *
  * @author ADMIN
  */
+@MultipartConfig
 @WebServlet(name = "ProductManagement", urlPatterns = {"/admin/manage-product"})
 public class ProductManagement extends HttpServlet {
 
@@ -84,24 +89,18 @@ public class ProductManagement extends HttpServlet {
                 String description = request.getParameter("description");
                 int categoryId = Integer.parseInt(request.getParameter("categoryId"));
                 int brandId = Integer.parseInt(request.getParameter("brandId"));
-                int typeId = 0;
-                if (request.getParameter("typeId") != null) {
-                    typeId = Integer.parseInt(request.getParameter("typeId"));
-
-                }
+                int typeId = request.getParameter("typeId") != null ? Integer.parseInt(request.getParameter("typeId")) : 0;
                 float price = Float.parseFloat(request.getParameter("price"));
                 boolean status = request.getParameter("status").equals("1");
-                // Check if product name or code already exists
-                if (productDAO.isProductNameExist(productName.trim())) {
-                    session.setAttribute("notificationErr", "Product name already exists.");
-                    response.sendRedirect(request.getContextPath() + "/admin/manage-product");
-                    return;
-                }
-                if (productDAO.isProductCodeExist(productCode.trim())) {
-                    session.setAttribute("notificationErr", "Product code already exists.");
-                    response.sendRedirect(request.getContextPath() + "/admin/manage-product");
-                    return;
-                }
+
+                // Handle image file upload
+                Part filePart = request.getPart("image"); // Retrieves <input type="file" name="image">
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+                String uploadPath = getServletContext().getRealPath("") + File.separator + "images" + File.separator + fileName;
+
+                File file = new File(uploadPath);
+                filePart.write(uploadPath);
+
                 Product newProduct = new Product();
                 newProduct.setProductName(productName);
                 newProduct.setProductCode(productCode);
@@ -113,6 +112,8 @@ public class ProductManagement extends HttpServlet {
                 newProduct.setPrice(price);
                 newProduct.setActive(status);
                 newProduct.setDescription(description);
+                newProduct.setImage("images/" + fileName); // Set the image path
+
                 try {
                     productDAO.addProduct(newProduct);
                     session.setAttribute("notification", "Product added successfully!");
@@ -131,6 +132,14 @@ public class ProductManagement extends HttpServlet {
                 float price = Float.parseFloat(request.getParameter("price"));
                 boolean status = "1".equals(request.getParameter("status"));
 
+                // Get the current image path from the hidden input field
+                String currentImage = request.getParameter("currentImage");
+
+                // Handle image file upload
+                Part filePart = request.getPart("image");
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String imagePath;
+
                 // Check if the product name already exists (excluding current product)
                 if (productDAO.isProductNameExist(productName, productId)) {
                     session.setAttribute("notificationErr", "Product name already exists.");
@@ -145,6 +154,16 @@ public class ProductManagement extends HttpServlet {
                     return;
                 }
 
+                if (fileName.isEmpty()) {
+                    // If no new image is uploaded, keep the current image
+                    imagePath = currentImage;
+                } else {
+                    // If a new image is uploaded, save it and use the new path
+                    String uploadPath = getServletContext().getRealPath("") + File.separator + "images" + File.separator + fileName;
+                    File file = new File(uploadPath);
+                    filePart.write(uploadPath);
+                    imagePath = "images/" + fileName;
+                }
                 Product product = new Product();
                 product.setProductId(productId);
                 product.setProductName(productName);
@@ -155,6 +174,7 @@ public class ProductManagement extends HttpServlet {
                 product.setPrice(price);
                 product.setActive(status);
                 product.setDescription(description);
+                product.setImage(imagePath);
 
                 try {
                     productDAO.updateProduct(product);

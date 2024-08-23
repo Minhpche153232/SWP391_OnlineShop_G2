@@ -62,7 +62,8 @@
                     <tbody>
                         <c:forEach var="detail" items="${product.productDetails}">
                             <tr>
-                                <td><img style="max-width: 80px" src="${detail.image}" alt="${product.productName}"/></td>
+
+                                <td><img style="max-width: 80px" src="${pageContext.request.contextPath}/${detail.image}" alt="${product.productName}"/></td>
                                 <td>${detail.size}</td>
                                 <td>${detail.color}</td>
                                 <td>${detail.unitInStock}</td>
@@ -117,8 +118,9 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form method="post" action="${pageContext.request.contextPath}/admin/product-detail" onsubmit="return validateProductDetailForm()">
+                        <form method="post" action="${pageContext.request.contextPath}/admin/product-detail" enctype="multipart/form-data" onsubmit="return validateProductDetailForm()">
                             <div class="modal-body">
+                                <!-- Existing form fields -->
                                 <div class="form-group">
                                     <label for="size">Size</label>
                                     <input type="number" class="form-control" id="size" name="size" required>
@@ -127,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="color">Color</label>
-                                    <input type="text" class="form-control" id="color" name="color" >
+                                    <input type="text" class="form-control" id="color" name="color" required>
                                     <div id="colorError" class="text-danger"></div>
                                 </div>
                                 <div class="form-group">
@@ -136,8 +138,8 @@
                                     <div id="unitInStockError" class="text-danger"></div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="image">Image Link</label>
-                                    <input type="text" class="form-control" id="image" name="image">
+                                    <label for="image">Product Image</label>
+                                    <input type="file" class="form-control-file" id="image" name="image" required>
                                 </div>
                                 <input type="hidden" name="productId" value="${product.productId}">
                             </div>
@@ -146,6 +148,7 @@
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
