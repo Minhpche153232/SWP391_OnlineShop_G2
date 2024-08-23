@@ -80,8 +80,10 @@ public class ProfileController extends HttpServlet {
         String avatar = request.getParameter("avatar");
         float balance = Float.parseFloat(balanceStr);
         AccountDAO accountDAO = new AccountDAO();
-        if (avatar != null) {
+        if (avatar != null && !"".equals(avatar)) {
             avatar = "images/" + avatar;
+        }else{
+            avatar = userCurrent.getAvatar();
         }
         userCurrent.setAvatar(avatar);
         userCurrent.setUserName(userName);
