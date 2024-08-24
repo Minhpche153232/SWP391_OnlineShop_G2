@@ -177,7 +177,7 @@ public class WalletManage extends HttpServlet {
                 if (user.getBalance() - amount < 0) {
                     request.setAttribute("ErrorMess", "Balance in account isn't enough to make transaction!");
                     request.setAttribute("ba", ba);
-                    request.getRequestDispatcher("deposit.jsp").forward(request, response);
+                    request.getRequestDispatcher("withdraw.jsp").forward(request, response);
                 } else {
                     request.setAttribute("ba", ba);
                     sess.setAttribute("amount", amount);
@@ -197,30 +197,43 @@ public class WalletManage extends HttpServlet {
                     sess.setAttribute("codePay", code);
                     sess.setMaxInactiveInterval(300);
                     new Email().sendEmailToConfirmPay(user.getEmail(), code);
+                    request.setAttribute("ba", ba);
                     request.setAttribute("notification", "Code had been sent to you!");
-                    request.getRequestDispatcher("confirm-bankaccount.jsp").forward(request, response);
+                    request.getRequestDispatcher("confirm-transaction.jsp").forward(request, response);
                 } else {
                     String code = (String) sess.getAttribute("codePay");
                     String codeInput = request.getParameter("codeCfmAccount");
                     if (code == null || code.isEmpty()) {
                         request.setAttribute("errorMessage", "Code is empty");
-                        request.getRequestDispatcher("confirm-bankaccount.jsp").forward(request, response);
+                        request.setAttribute("ba", ba);
+                        request.getRequestDispatcher("confirm-transaction.jsp").forward(request, response);
                     } else if (!code.equals(codeInput)) {
+                        request.setAttribute("ba", ba);
                         request.setAttribute("errorMessage", "Code is not correct");
-                        request.getRequestDispatcher("confirm-bankaccount.jsp").forward(request, response);
+                        request.getRequestDispatcher("confirm-transaction.jsp").forward(request, response);
                     } else {
                         if(trans.equals("deposit")){
-                            wdao.updateAccountBalance(wdao.getBankAccount(user.getUserId()).getBalance() + amount, user.getUserId());
-                            wdao.updateBankBalance(wdao.getBankAccount(user.getUserId()).getBalance() - amount, user.getUserId());
-                            user.setBalance(user.getBalance() + amount);
+                            //Update Account Balance
+                            int newAccBalance = (int) user.getBalance() + amount;
+                            wdao.updateAccountBalance(newAccBalance, user.getUserId());
+                            //Update Bank Balance
+                            int newBankBalance = wdao.getBankAccount(user.getUserId()).getBalance() - amount;
+                            wdao.updateBankBalance(newBankBalance, user.getUserId());
+                            //Set new user to session
+                            user.setBalance(newAccBalance);
                             sess.setAttribute("currentUser", user);
                             sess.removeAttribute("trans");
                             sess.removeAttribute("amount");
                             response.sendRedirect("home");
                         }else if(trans.equals("withdraw")){
-                            wdao.updateAccountBalance(wdao.getBankAccount(user.getUserId()).getBalance() - amount, user.getUserId());
-                            wdao.updateBankBalance(wdao.getBankAccount(user.getUserId()).getBalance() + amount, user.getUserId());
-                            user.setBalance(user.getBalance() - amount);
+                            //Update Account Balance
+                            int newAccBalance = (int) user.getBalance() - amount;
+                            wdao.updateAccountBalance(newAccBalance, user.getUserId());
+                            //Update Bank Balance
+                            int newBankBalance = wdao.getBankAccount(user.getUserId()).getBalance() + amount;
+                            wdao.updateBankBalance(newBankBalance, user.getUserId());
+                            //Set new user to session
+                            user.setBalance(newAccBalance);
                             sess.setAttribute("currentUser", user);
                             sess.removeAttribute("trans");
                             sess.removeAttribute("amount");

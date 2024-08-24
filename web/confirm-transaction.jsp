@@ -55,8 +55,8 @@
                                 <h5 class="text-danger">${ba.expertDate}</h5>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="expertDate">Amount:</label>
-                                <h5 class="text-danger">${requestScope.amount}</h5>
+                                <label class="form-label" for="amount">Amount:</label>
+                                <h5 class="text-danger">${sessionScope.amount} VND</h5>
                             </div>
                         </div>
                     </div>

@@ -20,7 +20,7 @@ public class DBContext {
     PreparedStatement ps;
     ResultSet rs;
     
-    private final String serverName = "DESKTOP-SJ965H8";
+    private final String serverName = "localhost";
     private final String dbName = "OnlineShop_SWP391";
     private final String portNumber = "1433";
     private final String userID = "sa";

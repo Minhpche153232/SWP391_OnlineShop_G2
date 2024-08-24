@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="amount">Amount:</label>
-                                    <input class="form-control" type="number" id="amount" name="amount" min="10000" placeholder="10000">
+                                    <input class="form-control" type="number" id="amount" name="amount" min="10000" placeholder="10000" required>
                                     <c:if test="${ErrorMess != null}">
                                         <h5 class="text-danger">${ErrorMess}</h5>
                                     </c:if>
