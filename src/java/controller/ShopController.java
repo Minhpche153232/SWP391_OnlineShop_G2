@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import models.Brand;
 import models.Category;
+import models.Product;
 import models.ProductDetail;
 import models.Type;
 
@@ -34,33 +35,32 @@ public class ShopController extends HttpServlet {
         BrandDAO brandDAO = new BrandDAO();
         TypeDAO typeDAO = new TypeDAO();
         Brand brand = new Brand();
-        
+        Category category = null;
+        Type type = null;
+
         String price = request.getParameter("price");
         String search = request.getParameter("search");
-        String sizePR = request.getParameter("size");
-        String color = request.getParameter("color");
+
         String typeIdPR = request.getParameter("typeId");
         String categoryIdPR = request.getParameter("categoryId");
         String brandIdPR = request.getParameter("brandId");
         Integer typeId = null;
         Integer categoryId = null;
         Integer brandId = null;
-        Integer size = null;
         Integer[] rangePrice = {null, null};
         if (typeIdPR != null && !typeIdPR.equals("0") && !typeIdPR.equals("")) {
             typeId = Integer.valueOf(typeIdPR);
+            type = typeDAO.getTypeById(typeId);
         }
         if (categoryIdPR != null && !categoryIdPR.equals("0") && !categoryIdPR.equals("")) {
             categoryId = Integer.valueOf(categoryIdPR);
+            category = categoryDAO.getCategoryById(categoryId);
         }
         if (brandIdPR != null && !brandIdPR.equals("") && !brandIdPR.equals("0")) {
             brandId = Integer.valueOf(brandIdPR);
             brand = brandDAO.getBrandById(brandId);
         }
 
-        if (sizePR != null && !sizePR.equals("0") && !sizePR.equals("")) {
-            size = Integer.valueOf(sizePR);
-        }
         if (price != null && !price.equals("0") && !price.equals("")) {
             try {
                 String[] range = price.split("-");
@@ -73,18 +73,15 @@ public class ShopController extends HttpServlet {
             }
 
         }
-        if(rangePrice[0] == null){
+        if (rangePrice[0] == null) {
             rangePrice = null;
         }
 
-        List<ProductDetail> listCheapest = productDAO.getTopCheapestProduct(rangePrice,search, size, color, typeId, categoryId, brandId);
+        List<Product> listCheapest = productDAO.getProduct(rangePrice, search, typeId, categoryId, brandId);
         List<Category> categories = categoryDAO.getAllCategories();
         List<Brand> brands = brandDAO.getAllBrands();
         List<Type> types = typeDAO.getAllTypes();
-        
-        
-        
-        
+
         request.setAttribute("categories", categories);
         request.setAttribute("brands", brands);
         request.setAttribute("types", types);
@@ -93,8 +90,10 @@ public class ShopController extends HttpServlet {
         request.setAttribute("typeId", typeIdPR);
         request.setAttribute("search", search);
         request.setAttribute("price", price);
-        request.setAttribute("size", size);
         request.setAttribute("brand", brand);
+        request.setAttribute("category", category);
+        request.setAttribute("type", type);
+
         request.setAttribute("listCheapest", listCheapest);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }

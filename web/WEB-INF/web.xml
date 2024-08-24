@@ -76,6 +76,18 @@
         <servlet-name>WalletManage</servlet-name>
         <servlet-class>controller.WalletManage</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SendMail</servlet-name>
+        <servlet-class>controller.SendMail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActiveAccount</servlet-name>
+        <servlet-class>controller.ActiveAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeMail</servlet-name>
+        <servlet-class>controller.ChangeMail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
         <url-pattern>/ChangePassword</url-pattern>
@@ -159,5 +171,17 @@
     <servlet-mapping>
         <servlet-name>WalletManage</servlet-name>
         <url-pattern>/wallet</url-pattern>
+        </servlet-mapping>
+<servlet-mapping>
+        <servlet-name>SendMail</servlet-name>
+        <url-pattern>/SendMail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveAccount</servlet-name>
+        <url-pattern>/active-account</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeMail</servlet-name>
+        <url-pattern>/ChangeMail</url-pattern>
     </servlet-mapping>
 </web-app>

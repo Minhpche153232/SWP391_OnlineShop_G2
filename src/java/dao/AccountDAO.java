@@ -529,6 +529,33 @@ public class AccountDAO {
         }
         return check;
     }
+    
+    public boolean changeEmailUser(String email, int userId) {
+        boolean check = false;
+        DBContext dBContext = new DBContext();
+        String sql = "UPDATE [dbo].[User] SET email = ? "
+                + " WHERE userId = ?";
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql);
+            statement.setString(1, email);
+            statement.setInt(2, userId);
+
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                check = true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            try {
+                dBContext.conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return check;
+    }
 
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();

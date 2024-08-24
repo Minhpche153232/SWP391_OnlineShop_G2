@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,7 +68,7 @@
                                                                          "https://bootdey.com/img/Content/avatar/avatar6.png"} 
                                                  alt="Admin" class="rounded-circle p-1 bg-primary" width="110" style="cursor: pointer">
                                         </label>
-                                        <input type="file" name="avatar" id="imageUpload" accept="image/*" style="display: none" 
+                                        <input type="file"  name="avatar" id="imageUpload" accept="image/*" style="display: none" 
                                                onchange="(function () {
                                                            let fileInput = document.getElementById('imageUpload');
                                                            const file = fileInput.files[0];
@@ -92,7 +93,7 @@
                                                     <a class="nav-link" href="admin/dashboard"><img src="images/icon-list.svg" width="24"/>
                                                         <span class="text-secondary">Dashboard</span></a></h6>
                                             </li>
-                                           
+
                                         </c:if>
                                         <c:if test="${sessionScope.currentUser.role eq '3'}">
                                             <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
@@ -168,7 +169,9 @@
                                             <h6 class="mb-0">Balance</h6>
                                         </div>
                                         <div class="col-sm-9 text-secondary">
-                                            <input type="number" class="form-control" readonly name="balance" value=${sessionScope.currentUser.balance}>
+                                            <input type="text" class="form-control" name="balance" hidden value=${sessionScope.currentUser.balance}>
+
+                                            <h6><fmt:formatNumber value="${sessionScope.currentUser.balance}" type="number" groupingUsed="true" /> VND</h6>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -213,6 +216,7 @@
             </div>
         </form>
         <%@include file="change-password.jsp" %>
+        <div style="margin-bottom: 100px"></div>
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
         <script type="text/javascript">

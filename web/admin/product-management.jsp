@@ -82,6 +82,7 @@
                                     <th>STT</th>
                                     <th>Code</th>
                                     <th>Name</th>
+                                    <th>Image</th>
                                     <th>Category</th>
                                     <th>Brand</th>
                                     <th>Type</th>
@@ -96,6 +97,7 @@
                                     <td>${status.index + 1}</td>
                                     <td><a href="${pageContext.request.contextPath}/admin/product-detail?productId=${product.productId}" />${product.productCode}</td>
                                     <td><a href="${pageContext.request.contextPath}/admin/product-detail?productId=${product.productId}" />${product.productName}</td>
+                                    <td><img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}" height=70></td>
                                     <td>${product.category.categoryName}</td>
                                     <td>${product.brand.brandName}</td>
                                     <td>${product.type.typeName}</td>
@@ -110,7 +112,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
-                                    <td>
+                                    <td style="width: 150px">
                                         <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editModal${product.productId}">
                                             <i class="fas fa-pen fa-fw"></i>
                                         </button>
@@ -143,7 +145,7 @@
                                                 <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
-                                        <form method="post" action="${pageContext.request.contextPath}/admin/manage-product" onsubmit="return validateEditForm(${product.productId})">
+                                        <form method="post" action="${pageContext.request.contextPath}/admin/manage-product" enctype="multipart/form-data" onsubmit="return validateEditForm(${product.productId})">
                                             <div class="modal-body">
                                                 <div class="form-group">
                                                     <label for="productName${product.productId}">Product Name</label>
@@ -154,6 +156,19 @@
                                                     <label for="productCode${product.productId}">Product Code</label>
                                                     <input type="text" class="form-control" id="productCode${product.productId}" name="productCode" value="${product.productCode}" required>
                                                     <div id="productCodeError${product.productId}" class="text-danger"></div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Current Image</label>
+                                                    <div>
+                                                        <img src="${pageContext.request.contextPath}/${product.image}" alt="${product.productName}" class="img-fluid" style="max-width: 150px;">
+                                                    </div>
+                                                </div>
+
+                                                <!-- File input for new image -->
+                                                <div class="form-group">
+                                                    <label for="image${product.productId}">Change Image</label>
+                                                    <input type="file" class="form-control-file" id="image${product.productId}" name="image">
+                                                    <input type="hidden" name="currentImage" value="${product.image}"> <!-- Hidden field to keep the current image path -->
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="categoryId${product.productId}">Category</label>
@@ -298,7 +313,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form method="post" action="${pageContext.request.contextPath}/admin/manage-product" onsubmit="return validateForm()">
+                    <form method="post" action="${pageContext.request.contextPath}/admin/manage-product" onsubmit="return validateForm()"  enctype="multipart/form-data">
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="productName">Product Name</label>
@@ -310,6 +325,10 @@
                                 <label for="productCode">Product Code</label>
                                 <input type="text" class="form-control" id="productCode" name="productCode" required>
                                 <div id="productCodeError" class="text-danger"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="image">Product Image</label>
+                                <input type="file" class="form-control-file" id="image" name="image" required>
                             </div>
                             <div class="form-group">
                                 <label for="categoryId">Category</label>

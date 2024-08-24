@@ -84,7 +84,7 @@
                                      align-items: baseline;">
                                     <input class="form-check-input" type="checkbox"  name="brand" value="" id="flexCheckChecked" <c:if test="${i.brandId eq brandId}"> checked</c:if>>
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            <a class="nav-link" href="shop?size=${size}&price=${price}&brandId=${i.brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">${i.brandName}</a>
+                                            <a class="nav-link" href="shop?price=${price}&brandId=${i.brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">${i.brandName}</a>
                                     </label>
                                 </div>
 
@@ -100,46 +100,33 @@
                                  align-items: baseline;">
                                 <input class="form-check-input" type="checkbox"  name="brand" value="" id="flexCheckChecked" <c:if test="${'500000-1000000' eq price}"> checked</c:if>>
                                     <label class="form-check-label" for="flexCheckChecked">
-                                        <a class="nav-link" href="shop?size=${size}&price=500000-1000000&brandId=${i.brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">500.000 - 1.000.000 VND</a>
+                                        <a class="nav-link" href="shop?price=500000-1000000&brandId=${brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">500.000 - 1.000.000 VND</a>
                                 </label>
                             </div>
                             <div class="form-check" style="display: flex;
                                  align-items: baseline;">
                                 <input class="form-check-input" type="checkbox"  name="brand" value="" id="flexCheckChecked" <c:if test="${'1000000-2000000' eq price}"> checked</c:if>>
                                     <label class="form-check-label" for="flexCheckChecked">
-                                        <a class="nav-link" href="shop?size=${size}&price=1000000-2000000&brandId=${i.brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">1.000.000 - 2.000.000 VND</a>
+                                        <a class="nav-link" href="shop?price=1000000-2000000&brandId=${brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">1.000.000 - 2.000.000 VND</a>
                                 </label>
                             </div>
                             <div class="form-check" style="display: flex;
                                  align-items: baseline;">
                                 <input class="form-check-input" type="checkbox"  name="brand" value="" id="flexCheckChecked" <c:if test="${'2000000-3000000' eq price}"> checked</c:if>>
                                     <label class="form-check-label" for="flexCheckChecked">
-                                        <a class="nav-link" href="shop?size=${size}&price=2000000-3000000&brandId=${i.brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">2.000.000 - 3.000.000 VND</a>
+                                        <a class="nav-link" href="shop?price=2000000-3000000&brandId=${brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">2.000.000 - 3.000.000 VND</a>
                                 </label>
                             </div>
                             <div class="form-check" style="display: flex;
                                  align-items: baseline;">
                                 <input class="form-check-input" type="checkbox"  name="brand" value="" id="flexCheckChecked" <c:if test="${'4000000' eq price}"> checked</c:if>>
                                     <label class="form-check-label" for="flexCheckChecked">
-                                        <a class="nav-link" href="shop?size=${size}&price=4000000&brandId=${i.brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">Bigger 4.000.000 VND</a>
+                                        <a class="nav-link" href="shop?&price=4000000&brandId=${brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">Bigger 4.000.000 VND</a>
                                 </label>
                             </div>
 
                         </div>
-                        <div style="height: fit-content; background-color: white; padding: 5px 10px; border-radius:4px; margin-bottom: 20px ">
-                            <div style="font-size: 14px; font-weight: bold; color: black">
-                                Size
-                            </div>
-                            <c:forEach begin="${36}" end="${43}"  var="i">
-                                <div class="form-check" style="display: flex;
-                                     align-items: baseline;">
-                                    <input class="form-check-input" type="checkbox"  name="size" value="" id="flexCheckChecked" <c:if test="${size eq i}"> checked</c:if>>
-                                        <label class="form-check-label" for="flexCheckChecked">
-                                            <a class="nav-link" href="shop?size=${i}&price=${price}&brandId=${brandId}&categoryId=${categoryId}&typeId=${typeId}" style="color: black">${i}</a>
-                                    </label>
-                                </div>
-                            </c:forEach>   
-                        </div>
+                        
                         <div style="height: fit-content; background-color: white; padding: 5px 10px; border-radius:4px; margin-bottom: 20px ">
                             <div style="font-size: 14px; font-weight: bold; color: black">
                                 Category
@@ -149,7 +136,7 @@
                                      align-items: baseline;">
                                     <input class="form-check-input" type="checkbox"  name="brand" value="" id="flexCheckChecked" <c:if test="${i.categoryId eq categoryId}"> checked</c:if>>
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            <a class="nav-link" href="shop?size=${size}&price=${price}&brandId=${brandId}&categoryId=${i.categoryId}&typeId=${typeId}" style="color: black">${i.categoryName}</a>
+                                            <a class="nav-link" href="shop?price=${price}&brandId=${brandId}&categoryId=${i.categoryId}&typeId=${typeId}" style="color: black">${i.categoryName}</a>
                                     </label>
                                 </div>
 
@@ -165,7 +152,7 @@
                                      align-items: baseline;">
                                     <input class="form-check-input" type="checkbox"  name="brand" value="" id="flexCheckChecked" <c:if test="${i.typeId eq typeId}"> checked</c:if>>
                                         <label class="form-check-label" for="flexCheckChecked">
-                                            <a class="nav-link" href="shop?size=${size}&price=${price}&brandId=${brandId}&categoryId=${categoryId}&typeId=${i.typeId}" style="color: black">${i.typeName}</a>
+                                            <a class="nav-link" href="shop?price=${price}&brandId=${brandId}&categoryId=${categoryId}&typeId=${i.typeId}" style="color: black">${i.typeName}</a>
                                     </label>
                                 </div>
 
@@ -177,12 +164,12 @@
                         <div class="row">
                             <c:forEach items="${listCheapest}" var="i">
                                 <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                                    <a class="product-item" href="product-detail?id=${i.product.productId}">
-                                        <img src="${i.product.image}" class="img-fluid product-thumbnail">
+                                    <a class="product-item" href="product-detail?id=${i.productId}">
+                                        <img src="${i.image}" class="img-fluid product-thumbnail">
                                         <!--<img src="images/air_gray_03.png" class="img-fluid product-thumbnail">-->
-                                        <h3 class="product-title">${i.product.productName}</h3>
+                                        <h3 class="product-title">${i.productName}</h3>
                                         <strong class="product-price">
-                                            <fmt:formatNumber value="${i.product.price}" type="number" groupingUsed="true" /> VND
+                                            <fmt:formatNumber value="${i.price}" type="number" groupingUsed="true" /> VND
                                         </strong>
                                     </a>
                                 </div> 

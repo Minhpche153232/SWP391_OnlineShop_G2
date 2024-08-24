@@ -31,7 +31,84 @@ import models.Type;
  * @author Admin
  */
 public class ProductDAO extends DBContext {
+public List<Product> getProduct(Integer[] rangePrice, String search, Integer typeId, Integer categoryId, Integer brandId) {
+        DBContext dBContext = new DBContext();
+        List<Product> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT p.* FROM [OnlineShop_SWP391].[dbo].[Product] p WHERE 1=1");
 
+        if (search != null && !search.trim().isEmpty()) {
+            sql.append(" AND p.productName LIKE ?");
+        }
+       
+        if (typeId != null) {
+            sql.append(" AND p.typeId = ?");
+        }
+        if (categoryId != null) {
+            sql.append(" AND p.categoryId = ?");
+        }
+        if (brandId != null) {
+            sql.append(" AND p.brandId = ?");
+        }
+        if (rangePrice != null && rangePrice[0] != null) {
+            if (rangePrice.length > 1 && rangePrice[1] != null) {
+                sql.append(" AND p.price BETWEEN ? AND ?");
+            } else {
+                sql.append(" AND p.price >= ?");
+            }
+        }
+
+        sql.append(" ORDER BY p.price ASC");
+
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql.toString());
+            int paramIndex = 1;
+
+            if (search != null && !search.trim().isEmpty()) {
+                statement.setString(paramIndex++, "%" + search + "%");
+            }
+            
+            if (typeId != null) {
+                statement.setInt(paramIndex++, typeId);
+            }
+            if (categoryId != null) {
+                statement.setInt(paramIndex++, categoryId);
+            }
+            if (brandId != null) {
+                statement.setInt(paramIndex++, brandId);
+            }
+            if (rangePrice != null && rangePrice[0] != null) {
+                statement.setInt(paramIndex++, rangePrice[0]);
+                if (rangePrice.length > 1 && rangePrice[1] != null) {
+                    statement.setInt(paramIndex++, rangePrice[1]);
+                }
+            }
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("productId"));
+                p.setDescription(rs.getString("description"));
+                p.setImage(rs.getString("image"));
+                p.setProductName(rs.getString("productName"));
+                p.setPrice(rs.getFloat("price"));
+
+            
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (dBContext.conn != null) {
+                try {
+                    dBContext.conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
     public List<ProductDetail> getTopCheapestProduct(Integer[] rangePrice, String search, Integer size, String color, Integer typeId, Integer categoryId, Integer brandId) {
         DBContext dBContext = new DBContext();
         List<ProductDetail> list = new ArrayList<>();
@@ -72,12 +149,7 @@ public class ProductDAO extends DBContext {
             if (search != null && !search.trim().isEmpty()) {
                 statement.setString(paramIndex++, "%" + search + "%");
             }
-            if (size != null) {
-                statement.setInt(paramIndex++, size);
-            }
-            if (color != null) {
-                statement.setString(paramIndex++, color);
-            }
+            
             if (typeId != null) {
                 statement.setInt(paramIndex++, typeId);
             }
@@ -178,6 +250,7 @@ public class ProductDAO extends DBContext {
                     product.setProductCode(rs.getString("productCode"));
                     product.setDescription(rs.getString("description"));
                     product.setPrice(rs.getFloat("price"));
+                    product.setImage(rs.getString("image"));
 
                     Category category = new Category();
                     category.setCategoryId(rs.getInt("categoryId"));
@@ -253,6 +326,7 @@ public class ProductDAO extends DBContext {
                 detail.setColor(rs.getString("color"));
                 detail.setUnitInStock(rs.getInt("unitInStock"));
                 detail.setImage(rs.getString("image"));
+                detail.setDiscount(rs.getInt("discount"));
                 details.add(detail);
             }
         } catch (SQLException e) {
@@ -264,7 +338,7 @@ public class ProductDAO extends DBContext {
     public void addProduct(Product product) {
         try {
             if (product.getType() != null) {
-                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description) VALUES (?, ?, ?, ?, ?, ?,?,?)";
+                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId,typeId, price, status, description, image) VALUES (?, ?, ?, ?, ?, ?,?,?,?)";
                 PreparedStatement preparedStatement = conn.prepareStatement(query);
                 preparedStatement.setString(1, product.getProductName());
                 preparedStatement.setString(2, product.getProductCode());
@@ -274,9 +348,10 @@ public class ProductDAO extends DBContext {
                 preparedStatement.setFloat(6, product.getPrice());
                 preparedStatement.setBoolean(7, product.isActive());
                 preparedStatement.setString(8, product.getDescription());
+                preparedStatement.setString(9, product.getImage());
                 preparedStatement.executeUpdate();
             } else {
-                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId, price, status, description) VALUES (?, ?, ?, ?, ?,?,?)";
+                String query = "INSERT INTO Product (productName, productCode, categoryId, brandId, price, status, description, image) VALUES (?, ?, ?, ?, ?,?,?,?)";
                 PreparedStatement preparedStatement = conn.prepareStatement(query);
                 preparedStatement.setString(1, product.getProductName());
                 preparedStatement.setString(2, product.getProductCode());
@@ -285,6 +360,7 @@ public class ProductDAO extends DBContext {
                 preparedStatement.setFloat(5, product.getPrice());
                 preparedStatement.setBoolean(6, product.isActive());
                 preparedStatement.setString(7, product.getDescription());
+                preparedStatement.setString(8, product.getImage());
 
                 preparedStatement.executeUpdate();
             }
@@ -339,7 +415,7 @@ public class ProductDAO extends DBContext {
 
     public void updateProduct(Product product) {
         try {
-            String query = "UPDATE Product SET productName = ?, productCode = ?, categoryId = ?, brandId = ?, typeId = ?, price = ?, status = ?, description = ? WHERE productId = ?";
+            String query = "UPDATE Product SET productName = ?, productCode = ?, categoryId = ?, brandId = ?, typeId = ?, price = ?, status = ?, description = ?, image = ? WHERE productId = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setString(1, product.getProductName());
             preparedStatement.setString(2, product.getProductCode());
@@ -349,7 +425,8 @@ public class ProductDAO extends DBContext {
             preparedStatement.setFloat(6, product.getPrice());
             preparedStatement.setBoolean(7, product.isActive());
             preparedStatement.setString(8, product.getDescription());
-            preparedStatement.setInt(9, product.getProductId());
+            preparedStatement.setString(9, product.getImage());
+            preparedStatement.setInt(10, product.getProductId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -417,13 +494,14 @@ public class ProductDAO extends DBContext {
 
     public void addProductDetail(ProductDetail detail) {
         try {
-            String query = "INSERT INTO ProductDetails (productId, size, color, unitInStock, image) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO ProductDetails (productId, size, color, unitInStock, image, discount) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, detail.getProductId());
             ps.setInt(2, detail.getSize());
             ps.setString(3, detail.getColor());
             ps.setInt(4, detail.getUnitInStock());
             ps.setString(5, detail.getImage());
+            ps.setInt(6, detail.getDiscount());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -432,13 +510,14 @@ public class ProductDAO extends DBContext {
 
     public void updateProductDetail(ProductDetail detail) {
         try {
-            String query = "UPDATE ProductDetails SET unitInStock = ? ,  image = ? WHERE productId = ? AND size = ? AND color = ? ";
+            String query = "UPDATE ProductDetails SET unitInStock = ? ,  image = ?, discount = ? WHERE productId = ? AND size = ? AND color = ? ";
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setInt(1, detail.getUnitInStock());
             ps.setString(2, detail.getImage());
-            ps.setInt(3, detail.getProductId());
-            ps.setInt(4, detail.getSize());
-            ps.setString(5, detail.getColor());
+            ps.setInt(3, detail.getDiscount());
+            ps.setInt(4, detail.getProductId());
+            ps.setInt(5, detail.getSize());
+            ps.setString(6, detail.getColor());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -452,6 +531,19 @@ public class ProductDAO extends DBContext {
             ps.setInt(1, productId);
             ps.setInt(2, size);
             ps.setString(3, color);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void updateProductDiscount(int productId, int size, String color, int discount) {
+        try {
+            String query = "Update ProductDetails set discount = ?  WHERE productId = ? AND size = ? AND color = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, discount);
+            ps.setInt(2, productId);
+            ps.setInt(3, size);
+            ps.setString(4, color);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -505,7 +597,7 @@ public class ProductDAO extends DBContext {
 //        d.setBrand(b);
 //        d.setCategory(c);
 //        dAO.addProduct(d);
-        List<ProductDetail> list = dAO.getTopCheapestProduct(null, "", null, null, null, null, null);
+        List<Product> list = dAO.getProduct(null, "", null, null, null);
         System.out.println(list);
     }
 

@@ -29,7 +29,10 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-           //get data filter
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+
+        //get data filter
         CategoryDAO categoryDAO = new CategoryDAO();
         BrandDAO brandDAO = new BrandDAO();
         TypeDAO typeDAO = new TypeDAO();
@@ -77,8 +80,10 @@ public class ProfileController extends HttpServlet {
         String avatar = request.getParameter("avatar");
         float balance = Float.parseFloat(balanceStr);
         AccountDAO accountDAO = new AccountDAO();
-        if(avatar != null){
-            avatar = "images/"+avatar;
+        if (avatar != null && !"".equals(avatar)) {
+            avatar = "images/" + avatar;
+        }else{
+            avatar = userCurrent.getAvatar();
         }
         userCurrent.setAvatar(avatar);
         userCurrent.setUserName(userName);

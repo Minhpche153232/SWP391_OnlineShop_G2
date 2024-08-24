@@ -26,19 +26,36 @@
                     </div>
                 </div>
             </div>
-
-            <div class="untree_co-section">
-                <div class="container">
+        <c:if test="${not empty sessionScope.notification}">
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="text-align: center">
+                ${sessionScope.notification}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <%
+                session.removeAttribute("notification");
+            %>
+        </c:if>
+        <c:if test="${not empty sessionScope.notificationErr}">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: center">
+                ${sessionScope.notificationErr}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <%
+                session.removeAttribute("notificationErr");
+            %>
+        </c:if>
+        <div class="untree_co-section">
+            <div class="container">
+                <form action="checkout" method="post">
                     <div class="row mb-5">
-                        <div class="col-md-8 mb-5 mb-md-0">
+                        <div class="col-md-6 mb-5 mb-md-0">
                             <h2 class="h3 mb-3 text-black">Shipping Information</h2>
-                            <form action="order" method="post">
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Full Name</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" name="fullName" value="${sessionScope.currentUser.fullname}" required>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Full Name</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" readonly class="form-control" name="fullName" value="${sessionScope.currentUser.fullname}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -46,7 +63,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="email" class="form-control" name="email" value="${sessionScope.currentUser.email}" required>
+                                    <input type="email" readonly class="form-control" name="email" value="${sessionScope.currentUser.email}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -54,7 +71,7 @@
                                     <h6 class="mb-0">Phone</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    <input type="text" class="form-control" name="phone" value="${sessionScope.currentUser.phone}" required>
+                                    <input type="text"  readonly class="form-control" name="phone" value="${sessionScope.currentUser.phone}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -65,66 +82,53 @@
                                     <input type="text" class="form-control" name="address" value="${sessionScope.currentUser.address}" required>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Gender</h6>
-                                </div>
-                                <div class="col-sm-9 text-secondary">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female" ${sessionScope.currentUser.gender eq false ? 'checked' : ''}>
-                                        <label class="form-check-label" for="genderFemale">Female</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" ${sessionScope.currentUser.gender eq true ? 'checked' : ''}>
-                                        <label class="form-check-label" for="genderMale">Male</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
 
-                    <div class="col-md-4">
-                        <div class="row mb-5">
-                            <div class="col-md-12">
-                                <h2 class="h3 mb-3 text-black">Your Order</h2>
-                                <div class="p-3 p-lg-5 border">
-                                    <table class="table site-block-order-table mb-5">
-                                        <thead>
-                                        <th>Product</th>
-                                        <th></th>
-                                        <th>Total</th>
-                                        <th>Size</th>
-                                        <th>Color</th>
-                                        </thead>
-                                        <tbody>
-                                            <c:forEach var="entry" items="${cart.entrySet()}">
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="row mb-5">
+                                <div class="col-md-12">
+                                    <h2 class="h3 mb-3 text-black">Your Order</h2>
+                                    <div class="p-3 p-lg-5 border">
+                                        <table class="table site-block-order-table mb-5">
+                                            <thead>
+                                            <th>Product</th>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th>Size</th>
+                                            <th>Color</th>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach var="entry" items="${cart.entrySet()}">
+                                                    <tr>
+                                                        <td>${entry.value.productDetail.product.productName} <strong class="mx-2">x</strong> ${entry.value.quantity}</td>
+                                                        <td><img src="${entry.value.productDetail.image}" alt="alt" height="50"/></td>
+                                                        <td>${(entry.value.quantity * entry.value.productDetail.product.price) - (entry.value.quantity * entry.value.productDetail.product.price) * entry.value.productDetail.discount / 100} VND</td>
+                                                        <td>${entry.value.productDetail.size}</td>
+                                                        <td>${entry.value.productDetail.color}</td>
+                                                    </tr>
+                                                </c:forEach>
                                                 <tr>
-                                                    <td>${entry.value.productDetail.product.productName} <strong class="mx-2">x</strong> ${entry.value.quantity}</td>
-                                                    <td><img src="${entry.value.productDetail.image}" alt="alt" height="50"/></td>
-                                                    <td>${(entry.value.quantity * entry.value.productDetail.product.price) - (entry.value.quantity * entry.value.productDetail.product.price) * entry.value.productDetail.discount / 100} VND</td>
-                                                    <td>${entry.value.productDetail.size}</td>
-                                                    <td>${entry.value.productDetail.color}</td>
+                                                    <td class="text-black font-weight-bold"><strong>Total</strong></td>
+                                                    <td class="text-black font-weight-bold"><strong>${subtotal} VND</strong></td>
                                                 </tr>
-                                            </c:forEach>
-                                            <tr>
-                                                <td class="text-black font-weight-bold"><strong>Total</strong></td>
-                                                <td class="text-black font-weight-bold"><strong>${subtotal} VND</strong></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
+                                            </tbody>
+                                        </table>
+                                        <div class="form-group">
+                                            <input type="hidden" name="subtotal" value="${subtotal}">
+                                            <button type="submit" class="btn btn-black btn-lg py-3 btn-block">Place Order</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 
         <jsp:include page="footer.jsp"></jsp:include>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/custom.js"></script>
-    </body>
+            <script src="js/bootstrap.bundle.min.js"></script>
+            <script src="js/custom.js"></script>
+       </body>
 </html>
