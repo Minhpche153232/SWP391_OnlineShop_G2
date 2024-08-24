@@ -74,7 +74,7 @@ public class WalletDAO extends DBContext {
             ps.setString(3, ba.getExpertDate());
             ps.setString(4, ba.getCardNumber());
             ps.setString(5, ba.getBankCode());
-            ps.setInt(6, 2000000);
+            ps.setInt(6, 10000000);
             ps.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -116,13 +116,5 @@ public class WalletDAO extends DBContext {
     }
     public static void main(String[] args) {
         WalletDAO dao = new WalletDAO();
-        String test = "^(1[0-2]|[1-9])/([12][0-9]|3[01]|[1-9])$";
-        String test2 = "[0-9]+";
-        String input = "0000";
-        if(input.matches(test2)){
-            System.out.println("True");
-        }else{
-            System.out.println("False");
-        }
     }
 }

@@ -152,7 +152,7 @@ public class WalletManage extends HttpServlet {
                         wdao.linkBankAccount(ba);
                         sess.removeAttribute("baTmp");
                         sess.removeAttribute("codeLinkBA");
-                        response.sendRedirect("wallet?action=createAccount");
+                        response.sendRedirect("wallet?action=deposit");
                     }
                 }
             } else if (action.equals("deposit")) {
