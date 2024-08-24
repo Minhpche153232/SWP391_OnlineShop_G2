@@ -6,6 +6,7 @@ package controller;
 
 import dao.BrandDAO;
 import dao.CategoryDAO;
+import dao.ProductDAO;
 import dao.TypeDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -78,10 +79,9 @@ public class CartServlet extends HttpServlet {
         }
 
         if ("update".equals(action)) {
-            updateCartItem(request, cart);
-            session.setAttribute("notification", "Update successfully!");
+            updateCartItem(request, cart, session);
+
         } else if ("remove".equals(action)) {
-            System.out.println("OKK");
             removeCartItem(request, cart);
             session.setAttribute("notification", "Remove successfully!");
         }
@@ -90,17 +90,24 @@ public class CartServlet extends HttpServlet {
         response.sendRedirect("cart"); // Redirect back to the cart page
     }
 
-    private void updateCartItem(HttpServletRequest request, Map<ProductDetailKey, CartItem> cart) {
+    private void updateCartItem(HttpServletRequest request, Map<ProductDetailKey, CartItem> cart, HttpSession session) {
+        ProductDAO pdao = new ProductDAO();
+
         int productId = Integer.parseInt(request.getParameter("productId"));
         int size = Integer.parseInt(request.getParameter("size"));
         String color = request.getParameter("color");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
-
+        int availableStock = pdao.getAvailableStock(productId, size, color);
         ProductDetailKey key = new ProductDetailKey(productId, size, color);
 
         if (cart.containsKey(key)) {
             if (quantity > 0) {
-                cart.get(key).setQuantity(quantity);
+                if (quantity <= availableStock) {
+                    cart.get(key).setQuantity(quantity);
+                    session.setAttribute("notification", "Update successfully!");
+                } else {
+                    request.getSession().setAttribute("notificationErr", "Out of stock, you can only order maximun  " + availableStock + " products!");
+                }
 
             } else {
                 cart.remove(key); // Remove the item if quantity is set to zero
@@ -121,4 +128,5 @@ public class CartServlet extends HttpServlet {
             cart.remove(key);
         }
     }
+
 }

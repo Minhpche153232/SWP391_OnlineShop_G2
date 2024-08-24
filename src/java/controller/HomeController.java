@@ -55,7 +55,6 @@ public class HomeController extends HttpServlet {
             brandId = Integer.valueOf(brandIdPR);
         }
 
-     
         if (price != null && !price.equals("0") && !price.equals("")) {
             try {
                 String[] range = price.split("-");
@@ -72,7 +71,8 @@ public class HomeController extends HttpServlet {
             rangePrice = null;
         }
 
-              List<Product> listCheapest = productDAO.getProduct(rangePrice, search, typeId, categoryId, brandId);
+        List<Product> listCheapest = productDAO.getProductSeal();
+        List<Product> listNewProduct = productDAO.getTop12NewProduct();
 
         List<Category> categories = categoryDAO.getAllCategories();
         List<Brand> brands = brandDAO.getAllBrands();
@@ -91,6 +91,7 @@ public class HomeController extends HttpServlet {
             listCheapest = listCheapest.subList(0, 11);
         }
         request.setAttribute("listCheapest", listCheapest);
+        request.setAttribute("listNewProduct", listNewProduct);
 
         request.getRequestDispatcher("home.jsp").forward(request, response);
     }

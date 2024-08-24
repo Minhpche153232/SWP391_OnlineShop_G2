@@ -97,7 +97,7 @@
                             <a class="nav-link" href="cart">
                                 <img src="images/cart.svg">
                                     <c:if test="${not empty sessionScope.cart}">
-                                        <span class="cart-size" style="position: absolute; top: -10px; right: -10px; background-color: red; color: white; border-radius: 50%; padding: 5px; font-size: 12px;">
+                                        <span class="cart-size" style="position: absolute; top: -10px; right: -10px; color: red; border-radius: 50%; padding: 5px; font-size: 12px;">
                                             ${sessionScope.cart.size()}
                                         </span>
                                     </c:if>

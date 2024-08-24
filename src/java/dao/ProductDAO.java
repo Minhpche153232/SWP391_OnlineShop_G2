@@ -31,7 +31,88 @@ import models.Type;
  * @author Admin
  */
 public class ProductDAO extends DBContext {
-public List<Product> getProduct(Integer[] rangePrice, String search, Integer typeId, Integer categoryId, Integer brandId) {
+
+    public List<Product> getTop12NewProduct() {
+        DBContext dBContext = new DBContext();
+        List<Product> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT TOP(12) * FROM Product p \n"
+                + "ORDER BY p.productId DESC");
+
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql.toString());
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("productId"));
+                p.setDescription(rs.getString("description"));
+                p.setImage(rs.getString("image"));
+                p.setProductName(rs.getString("productName"));
+                p.setPrice(rs.getFloat("price"));
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (dBContext.conn != null) {
+                try {
+                    dBContext.conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<Product> getProductSeal() {
+        DBContext dBContext = new DBContext();
+        List<Product> list = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT TOP(12)  p.*, TB1.TotalQuantity\n"
+                + "FROM (\n"
+                + "    SELECT \n"
+                + "        p.productId, \n"
+                + "        SUM(od.quantity) AS TotalQuantity \n"
+                + "    FROM \n"
+                + "        OrderDetails od \n"
+                + "    JOIN \n"
+                + "        Product p ON p.productId = od.productId \n"
+                + "    GROUP BY \n"
+                + "        p.productId\n"
+                + ") AS TB1\n"
+                + "JOIN Product p ON p.productId = TB1.productId\n"
+                + "ORDER BY TB1.TotalQuantity DESC;");
+
+        try {
+            PreparedStatement statement = dBContext.conn.prepareStatement(sql.toString());
+
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Product p = new Product();
+                p.setProductId(rs.getInt("productId"));
+                p.setDescription(rs.getString("description"));
+                p.setImage(rs.getString("image"));
+                p.setProductName(rs.getString("productName"));
+                p.setPrice(rs.getFloat("price"));
+
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            if (dBContext.conn != null) {
+                try {
+                    dBContext.conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return list;
+    }
+
+    public List<Product> getProduct(Integer[] rangePrice, String search, Integer typeId, Integer categoryId, Integer brandId) {
         DBContext dBContext = new DBContext();
         List<Product> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT p.* FROM [OnlineShop_SWP391].[dbo].[Product] p WHERE 1=1");
@@ -39,7 +120,7 @@ public List<Product> getProduct(Integer[] rangePrice, String search, Integer typ
         if (search != null && !search.trim().isEmpty()) {
             sql.append(" AND p.productName LIKE ?");
         }
-       
+
         if (typeId != null) {
             sql.append(" AND p.typeId = ?");
         }
@@ -66,7 +147,7 @@ public List<Product> getProduct(Integer[] rangePrice, String search, Integer typ
             if (search != null && !search.trim().isEmpty()) {
                 statement.setString(paramIndex++, "%" + search + "%");
             }
-            
+
             if (typeId != null) {
                 statement.setInt(paramIndex++, typeId);
             }
@@ -92,8 +173,6 @@ public List<Product> getProduct(Integer[] rangePrice, String search, Integer typ
                 p.setProductName(rs.getString("productName"));
                 p.setPrice(rs.getFloat("price"));
 
-            
-
                 list.add(p);
             }
         } catch (SQLException e) {
@@ -109,6 +188,7 @@ public List<Product> getProduct(Integer[] rangePrice, String search, Integer typ
         }
         return list;
     }
+
     public List<ProductDetail> getTopCheapestProduct(Integer[] rangePrice, String search, Integer size, String color, Integer typeId, Integer categoryId, Integer brandId) {
         DBContext dBContext = new DBContext();
         List<ProductDetail> list = new ArrayList<>();
@@ -149,7 +229,7 @@ public List<Product> getProduct(Integer[] rangePrice, String search, Integer typ
             if (search != null && !search.trim().isEmpty()) {
                 statement.setString(paramIndex++, "%" + search + "%");
             }
-            
+
             if (typeId != null) {
                 statement.setInt(paramIndex++, typeId);
             }
@@ -536,6 +616,7 @@ public List<Product> getProduct(Integer[] rangePrice, String search, Integer typ
             e.printStackTrace();
         }
     }
+
     public void updateProductDiscount(int productId, int size, String color, int discount) {
         try {
             String query = "Update ProductDetails set discount = ?  WHERE productId = ? AND size = ? AND color = ?";
@@ -597,8 +678,25 @@ public List<Product> getProduct(Integer[] rangePrice, String search, Integer typ
 //        d.setBrand(b);
 //        d.setCategory(c);
 //        dAO.addProduct(d);
-        List<Product> list = dAO.getProduct(null, "", null, null, null);
+        List<Product> list = dAO.getTop12NewProduct();
         System.out.println(list);
+    }
+
+    public int getAvailableStock(int pid, int size, String color) {
+        try {
+            String query = "Select unitInStock from ProductDetails where color = ? and productId = ? and size = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, color);
+            preparedStatement.setInt(2, pid);
+            preparedStatement.setInt(3, size);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("unitInStock");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

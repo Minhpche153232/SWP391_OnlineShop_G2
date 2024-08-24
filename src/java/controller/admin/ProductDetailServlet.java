@@ -83,7 +83,7 @@ public class ProductDetailServlet extends HttpServlet {
                 } else {
                     existingDetail.setImage(existingDetail.getImage());
                 }
-
+                existingDetail.setDiscount(discount);
                 // Update the product detail in the database
                 try {
                     productDAO.updateProductDetail(existingDetail);

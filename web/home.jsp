@@ -62,7 +62,7 @@
                             <div class="col-12">
                                 <h2 class="mb-4 section-title">Nike Air Force 1 Scales will also be provided with its original white laces.</h2>
                                 <p class="mb-4">Nike Air Force 1 Scales is the custom sneaker for men and women, embellished and enriched by the python print fabric in shades of brown on the toe box, midfoot, and heel. </p>
-                            
+
                             </div> 
                         </div> 
 
@@ -109,13 +109,15 @@
             </div>
             <button type="submit" class="btn btn-primary" style="margin-left: 20px">Search</button>
         </form>-->
-                        <div class="col-8" style="margin-left: 20px">
+                    <div class="col-8" style="margin-left: 20px">
+                        <h4>Best seller</h4>
+
                         <div class="row">
 
                             <c:forEach items="${listCheapest}" var="i">
                                 <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
                                     <a class="product-item" href="product-detail?id=${i.productId}">
-                                        <img src="${i.image}" class="img-fluid product-thumbnail">
+                                        <img style="width: 200px; height: 200px" src="${i.image}" class="img-fluid product-thumbnail">
                                         <!--<img src="images/air_gray_03.png" class="img-fluid product-thumbnail">-->
                                         <h3 class="product-title">${i.productName}</h3>
                                         <strong class="product-price">
@@ -137,6 +139,38 @@
             </div>
         </div>
         <!-- End Product Section -->
+        <div class="product-section">
+            <div class="container">
+                <div class="row">
+                    <div class="">
+                        <h4>New products</h4>
+
+                        <div class="row">
+
+                            <c:forEach items="${listNewProduct}" var="i">
+                                <div class="col-2">
+                                    <a class="product-item" href="product-detail?id=${i.productId}">
+                                        <img style="width: 200px; height: 200px" src="${i.image}" class="img-fluid product-thumbnail">
+                                        <!--<img src="images/air_gray_03.png" class="img-fluid product-thumbnail">-->
+                                        <h3 class="product-title">${i.productName}</h3>
+                                        <strong class="product-price">
+                                            <fmt:formatNumber value="${i.price}" type="number" groupingUsed="true" /> VND
+                                        </strong>
+                                    </a>
+                                </div> 
+
+
+                            </c:forEach>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
 
         <!-- Start Popular Product -->
         <div class="popular-product">
@@ -164,7 +198,8 @@
         </div>
         <!-- End Popular Product -->
 
-        
+
+
 
         <!-- Start Blog Section -->
         <div class="blog-section">
@@ -178,7 +213,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
         </div>
         <!-- End Blog Section -->	

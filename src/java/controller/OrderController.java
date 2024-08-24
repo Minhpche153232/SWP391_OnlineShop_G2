@@ -33,55 +33,63 @@ public class OrderController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
+
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute("currentUser");
-            if (user == null || !user.getRole().equals("3")) {
+            String userIdStr = request.getParameter("userId");
+            if (user == null) {
                 response.sendRedirect("home");
             } else {
-                //get data filter
-                CategoryDAO categoryDAO = new CategoryDAO();
-                BrandDAO brandDAO = new BrandDAO();
-                TypeDAO typeDAO = new TypeDAO();
-                List<Category> categories = categoryDAO.getAllCategories();
-                List<Brand> brands = brandDAO.getAllBrands();
-                List<Type> types = typeDAO.getAllTypes();
-                request.setAttribute("categories", categories);
-                request.setAttribute("brands", brands);
-                request.setAttribute("types", types);
-                //
-                String message = request.getParameter("message");
-                String search = request.getParameter("search");
-                String userIdStr = request.getParameter("userId");
-                String status = request.getParameter("status");
-                if (status == null) {
-                    status = "pending";
-                }
-                int userId = 0;
-                if (userIdStr == null) {
-                    userId = user.getUserId();
+                if (((user.getRole().equals("1") || user.getRole().equals("2")) && userIdStr == null) || (user.getRole().equals("3") && userIdStr != null)) {
+                    response.sendRedirect("home");
                 } else {
-                    try {
-                        userId = Integer.parseInt(userIdStr);
-                    } catch (Exception e) {
 
-                        response.sendRedirect("home");
+                    //get data filter
+                    CategoryDAO categoryDAO = new CategoryDAO();
+                    BrandDAO brandDAO = new BrandDAO();
+                    TypeDAO typeDAO = new TypeDAO();
+                    List<Category> categories = categoryDAO.getAllCategories();
+                    List<Brand> brands = brandDAO.getAllBrands();
+                    List<Type> types = typeDAO.getAllTypes();
+                    request.setAttribute("categories", categories);
+                    request.setAttribute("brands", brands);
+                    request.setAttribute("types", types);
+                    //
+                    String message = request.getParameter("message");
+                    String search = request.getParameter("search");
+
+                    String status = request.getParameter("status");
+                    if (status == null) {
+                        status = "pending";
                     }
-                }
-                OrderDAO orderDAO = new OrderDAO();
-                List<OrderItem> listOrderDetail = orderDAO.getMyOrder(userId, search);
-                List<OrderItem> listOrderDetail2 = new ArrayList<>();
+                    int userId = 0;
 
-                for (OrderItem orderItem : listOrderDetail) {
-                    if (orderItem.getOrder().getStatus().equals(status)) {
-                        listOrderDetail2.add(orderItem);
+                    if (userIdStr == null) {
+                        userId = user.getUserId();
+                    } else {
+                        try {
+                            userId = Integer.parseInt(userIdStr);
+                        } catch (Exception e) {
+
+                            response.sendRedirect("home");
+                        }
                     }
-                }
-                request.setAttribute("status", status);
-                request.setAttribute("search", search);
-                request.setAttribute("message", message);
+                    OrderDAO orderDAO = new OrderDAO();
+                    List<OrderItem> listOrderDetail = orderDAO.getMyOrder(userId, search);
+                    List<OrderItem> listOrderDetail2 = new ArrayList<>();
 
-                request.setAttribute("listOrderDetail", listOrderDetail2);
-                request.getRequestDispatcher("order.jsp").forward(request, response);
+                    for (OrderItem orderItem : listOrderDetail) {
+                        if (orderItem.getOrder().getStatus().equals(status)) {
+                            listOrderDetail2.add(orderItem);
+                        }
+                    }
+                    request.setAttribute("status", status);
+                    request.setAttribute("search", search);
+                    request.setAttribute("message", message);
+
+                    request.setAttribute("listOrderDetail", listOrderDetail2);
+                    request.getRequestDispatcher("order.jsp").forward(request, response);
+                }
             }
         } catch (Exception e) {
             response.sendRedirect("home");
