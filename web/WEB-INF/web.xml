@@ -73,6 +73,10 @@
         <servlet-class>controller.admin.AddStaffController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>WalletManage</servlet-name>
+        <servlet-class>controller.WalletManage</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>SendMail</servlet-name>
         <servlet-class>controller.SendMail</servlet-class>
     </servlet>
@@ -165,6 +169,10 @@
         <url-pattern>/admin/addStaff</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>WalletManage</servlet-name>
+        <url-pattern>/wallet</url-pattern>
+        </servlet-mapping>
+<servlet-mapping>
         <servlet-name>SendMail</servlet-name>
         <url-pattern>/SendMail</url-pattern>
     </servlet-mapping>

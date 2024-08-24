@@ -95,20 +95,19 @@ public class CheckoutController extends HttpServlet {
             orderItems.add(orderItem);
         }
 
-//        if (currentUser.getBalance() < subtotal) {
-//            // Insufficient balance
-//            session.setAttribute("notificationErr", "Your balance is not enough to place the order.");
-//            response.sendRedirect("checkout");
-//            return;
-//        } else {
+        if (currentUser.getBalance() < subtotal) {
+            // Insufficient balance
+            session.setAttribute("notificationErr", "Your balance is not enough to place the order.");
+            response.sendRedirect("checkout");
+            return;
+        } else {
+            Double newBalance = currentUser.getBalance() - subtotal;
+            currentUser.setBalance(newBalance.floatValue());
 
-//            Double newBalance = currentUser.getBalance() - subtotal;
-//            currentUser.setBalance(newBalance.floatValue());
-//
-//            // Update user balance in the database
-//            UserDAO userDAO = new UserDAO();
-//            boolean isUpdated = userDAO.updateUserBalance(currentUser);
-//            if (isUpdated) {
+            // Update user balance in the database
+            UserDAO userDAO = new UserDAO();
+            boolean isUpdated = userDAO.updateUserBalance(currentUser);
+            if (isUpdated) {
 
                 // Save the order using OrderDAO
                 OrderDAO orderDAO = new OrderDAO();
@@ -120,9 +119,9 @@ public class CheckoutController extends HttpServlet {
                 } else {
                     session.setAttribute("notificationErr", "Failed to place order. Please try again.");
                 }
-            //}
+            }
 
-        //}
+        }
 
         response.sendRedirect("thank-for-order");
     }

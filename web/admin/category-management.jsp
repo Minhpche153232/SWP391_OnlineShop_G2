@@ -29,10 +29,10 @@
 
             <!-- Search and Filter Form -->
             <div class="d-flex col-12 justify-content-between">
-                <form method="post" action="#" class="search-form">
+                <form method="post" action="category" class="search-form">
                     <input type="text" name="txtSearch" placeholder="Search by name" value="${txtSearch}" class="form-input">
                     <input type="hidden" name="service" value="search">
-                    <button type="submit" class="form-button">Search</button>
+                    <button class="form-button">Search</button>
                 </form>
                 <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addCategoryModal">
                     Add new category
@@ -51,14 +51,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${listC}" var="c" varStatus="count">
+                        <c:forEach items="${listCate}" var="cate" varStatus="count">
                             <tr>
                                 <th>${count.index+1}</th>
-                                <td>${c.categoryId}</td>
-                                <td>${c.categoryName}</td>
+                                <td>${cate.categoryId}</td>
+                                <td>${cate.categoryName}</td>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${c.status}">
+                                        <c:when test="${cate.status}">
                                             <span class="text-success">Active</span>
                                         </c:when>
                                         <c:otherwise>
@@ -67,17 +67,17 @@
                                     </c:choose>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editModal${c.categoryId}">
+                                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editModal${cate.categoryId}">
                                         <i class="fas fa-pen fa-fw"></i>
                                     </button>
                                     <c:choose>
-                                        <c:when test="${c.status}">
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#deactivateModal${c.categoryId}" data-toggle="tooltip" title="Deactivate Category" data-placement="top">
+                                        <c:when test="${cate.status}">
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#deactivateModal${cate.categoryId}" data-toggle="tooltip" title="Deactivate Brand" data-placement="top">
                                                 <i class="fas fa-ban fa-fw"></i>
                                             </button>
                                         </c:when>
                                         <c:otherwise>
-                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#activateModal${c.categoryId}"data-toggle="tooltip" title="Activate Category" data-placement="top">
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#activateModal${cate.categoryId}"data-toggle="tooltip" title="Activate Brand" data-placement="top">
                                                 <i class="fas fa-undo fa-fw"></i>
                                             </button>
                                         </c:otherwise>
@@ -86,31 +86,31 @@
                             </tr>
 
                             <!-- Edit Modal -->
-                        <div class="modal fade" id="editModal${c.categoryId}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel${c.categoryId}" aria-hidden="true">
+                        <div class="modal fade" id="editModal${cate.categoryId}" tabindex="-1" role="dialog" aria-labelledby="editModalLabel${cate.categoryId}" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="editModalLabel${c.categoryId}">Edit Category</h5>
+                                        <h5 class="modal-title" id="editModalLabel${cate.categoryId}">Edit Category</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="category" onsubmit="return validateEditForm(${c.categoryId})">
+                                    <form method="post" action="category" onsubmit="return validateEditForm(${cate.categoryId})">
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label for="categoryId${c.categoryId}">Category Id</label>
-                                                <input type="text" class="form-control" id="categoryId${c.categoryId}" name="categoryId" value="${c.categoryId}" readonly>
-                                                <div id="categoryIdError${c.categoryId}" class="text-danger"></div>
+                                                <label for="categoryId${cate.categoryId}">Category Id:</label>
+                                                <input type="text" class="form-control" id="categoryId${cate.categoryId}" name="categoryId" value="${cate.categoryId}" readonly>
+                                                <div id="categoryIdError${cate.categoryId}" class="text-danger"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="categoryName${c.categoryId}">Category Name</label>
-                                                <input type="text" class="form-control" id="categoryName${b.categoryId}" name="categoryName" value="${c.categoryName}" required>
-                                                <div id="categoryNameError${c.categoryId}" class="text-danger"></div>
+                                                <label for="categoryName${cate.categoryId}">Category Name:</label>
+                                                <input type="text" class="form-control" id="categoryName${cate.categoryId}" name="categoryName" value="${cate.categoryName}" required>
+                                                <div id="categoryNameError${cate.categoryId}" class="text-danger"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="description${c.categoryId}">Description</label>
-                                                <input type="text" class="form-control" id="description${c.categoryId}" name="description" value="${c.description}" required>
-                                                <div id="descriptionError${c.categoryId}" class="text-danger"></div>
+                                                <label for="categoryDescription${cate.categoryId}">Description:</label>
+                                                <input type="text" class="form-control" id="categoryDescription${cate.categoryId}" name="categoryDescription" value="${cate.description}" required>
+                                                <div id="categoryDescriptionError${cate.categoryId}" class="text-danger"></div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -129,21 +129,17 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="addCategoryModal">Add new Category</h5>
+                                        <h5 class="modal-title" id="addCategoryModal">Add new brand</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="category" onsubmit="return validateAddForm()">
+                                    <form method="post" action="brand" onsubmit="return validateAddForm()">
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <label for="categoryName">Category Name</label>
-                                                <input type="text" class="form-control" id="categoryName" name="categoryName" required>
-                                                <div id="categoryNameError" class="text-danger"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="description" class="form-label">Description</label>
-                                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                                <label for="brandName">Brand Name</label>
+                                                <input type="text" class="form-control" id="brandName" name="brandName" required>
+                                                <div id="brandNameError" class="text-danger"></div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -155,7 +151,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--End Add new category modal-->
+                        <!--End Add new brand modal-->
 
                         <!--Activate Brand-->
                         <div class="modal fade" id="activateModal${b.brandId}" tabindex="-1" role="dialog" aria-labelledby="activateModalLabel${b.brandId}" aria-hidden="true">
@@ -172,14 +168,14 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                        <a class="btn btn-danger" href="brand?service=delete&bId=${c.brandId}&status=${c.status}">
-                                            ${c.status == true ? "Inactive" : "Active"}</a>
+                                        <a class="btn btn-danger" href="brand?service=delete&bId=${b.brandId}&status=${b.status}">
+                                            ${b.status == true ? "Inactive" : "Active"}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!--Deactivate Brand-->
-                        <div class="modal fade" id="deactivateModal${c.categoryId}" tabindex="-1" role="dialog" aria-labelledby="deactivateModalLabel${product.productId}" aria-hidden="true">
+                        <div class="modal fade" id="deactivateModal${b.brandId}" tabindex="-1" role="dialog" aria-labelledby="deactivateModalLabel${product.productId}" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -209,20 +205,14 @@
 </div>
 <script>
     function validateAddForm() {
-        let categoryName = document.getElementById("categoryName").value.trim();
-        let description = document.getElementById("description").value.trim();
+        let brandName = document.getElementById("brandName").value.trim();
         let isValid = true;
 
         // Clear previous error messages
-        document.getElementById("categoryNameError").innerText = "";
-        document.getElementById("descriptionError").innerText = "";
+        document.getElementById("brandNameError").innerText = "";
 
-        if (!categoryName) {
-            document.getElementById("categoryNameError").innerText = "Category name is required.";
-            isValid = false;
-        }
-        if (!description) {
-            document.getElementById("descriptionError").innerText = "Description is required.";
+        if (!brandName) {
+            document.getElementById("brandNameError").innerText = "Brand name is required.";
             isValid = false;
         }
 
@@ -230,19 +220,19 @@
     }
     function validateEditForm(categoryId) {
         let categoryName = document.getElementById("categoryName" + categoryId).value.trim();
-        let description = document.getElementById("description" + categoryId).value.trim();
+        let categoryDescription = document.getElementById("categoryDescription" + categoryId).value.trim();
         let isValid = true;
 
         // Clear previous error messages
         document.getElementById("categoryNameError" + categoryId).innerText = "";
-        document.getElementById("descriptionError" + categoryId).innerText = "";
+        document.getElementById("categoryDescriptionError" + categoryId).innerText = "";
 
         if (!categoryName) {
             document.getElementById("categoryNameError" + categoryId).innerText = "Category name is required.";
             isValid = false;
         }
-        if (!description) {
-            document.getElementById("descriptionError" + categoryId).innerText = "Description is required.";
+        if (!categoryDescription) {
+            document.getElementById("categoryDescriptionError" + categoryId).innerText = "Description is required";
             isValid = false;
         }
 
