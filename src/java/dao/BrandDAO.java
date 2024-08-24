@@ -51,20 +51,22 @@ public class BrandDAO extends DBContext {
         return brand;
     }
 
-    public boolean checkBrandExist(String txtName) {
-        Category c = null;
+    public Brand checkBrandExist(String txtName) {
+        Brand b = new Brand();
         try {
             String query = "SELECT * FROM Brand WHERE brandName = ?";
             ps = conn.prepareStatement(query);
             ps.setString(1, txtName);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return true;
+                b.setBrandId(rs.getInt("brandId"));
+                b.setBrandName(rs.getString("brandName"));
+                b.setStatus(rs.getBoolean("status"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return b;
     }
 
     public boolean AddNewBrand(Brand b) {
@@ -108,7 +110,7 @@ public class BrandDAO extends DBContext {
                 query.append(" where ");
                 for(int i = 0; i < listSearch.length; i++){
                     query.append("brandName like ? ");
-                    if(i < listSearch.length - i){
+                    if(i < listSearch.length - 1){
                         query.append(" or ");
                     }
                 }
@@ -153,8 +155,9 @@ public class BrandDAO extends DBContext {
         BrandDAO dao = new BrandDAO();
         String txtSearch = "Nike Adidas Puma";
         String[] listSearch = txtSearch.split(" ");
-        List<Brand> list = dao.getAllBrands();
-        Brand brand = new Brand();
-        System.out.println(brand);
+        List<Brand> list = dao.searchBrandByName(listSearch);
+        for (Brand b : list) {
+            System.out.println(b.toString());
+        }
     }
 }

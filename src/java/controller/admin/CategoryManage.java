@@ -28,7 +28,7 @@ public class CategoryManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1") ||user != null && user.getRole().equals("2")) {
+        if (user != null && user.getRole().equals("1") || user != null && user.getRole().equals("2")) {
             if (service == null) {
                 List<Category> list = dao.getAllCategories();
                 request.setAttribute("listCate", list);
@@ -46,7 +46,7 @@ public class CategoryManage extends HttpServlet {
                 dao.DeleteCategory(c);
                 response.sendRedirect("category");
             }
-        }else{
+        } else {
             response.sendRedirect("../home");
         }
     }
@@ -62,13 +62,19 @@ public class CategoryManage extends HttpServlet {
             String name = request.getParameter("categoryName").trim().replace("\\s+", " ");
             String description = request.getParameter("categoryDescription").trim().replace("\\s+", " ");
             Category c = new Category(id, name, description);
+            Category exC = dao.checkCategoryExist(name.trim());
             if (name.isEmpty() || name == null
                     || description.isEmpty() || description == null
                     || name.equals(" ") || description.equals(" ")) {
                 sess.setAttribute("notificationErr", "Please fill all blank.");
                 response.sendRedirect("category");
-            } else if (dao.checkCategoryExist(name.trim()) == null) {
-                sess.setAttribute("notificationErr", "Please fill all blank.");
+            } else if (exC.getCategoryName().equals(c.getCategoryName())
+                    && exC.getCategoryId() != c.getCategoryId()) {
+                sess.setAttribute("notificationErr", "Category is already exist.");
+                response.sendRedirect("category");
+            } else if (exC.getCategoryId() == c.getCategoryId()) {
+                dao.UpdateCategory(c);
+                sess.setAttribute("notification", "Category updated successfully!");
                 response.sendRedirect("category");
             } else {
                 dao.UpdateCategory(c);
@@ -76,25 +82,39 @@ public class CategoryManage extends HttpServlet {
                 response.sendRedirect("category");
             }
         } else if ("add".equals(service)) {
-            String name = request.getParameter("cateName").trim().replace("\\s+", " ");
-            String description = request.getParameter("description").trim().replace("\\s+", " ");
+            String name = request.getParameter("categoryName").trim().replace("\\s+", " ");
+            String description = request.getParameter("categoryDescription").trim().replace("\\s+", " ");
             Category c = new Category();
             c.setCategoryName(name);
             c.setDescription(description);
             if (name.isEmpty() || name == null
                     || description.isEmpty() || description == null
                     || name.equals(" ") || description.equals(" ")) {
-                request.setAttribute("mess", "Please fill all blank.");
-                request.setAttribute("cate", c);
-                request.getRequestDispatcher("add-category.jsp").forward(request, response);
-            } else if (dao.checkCategoryExist(name.trim()) == null) {
-                request.setAttribute("mess", "Category is already exist");
-                request.setAttribute("cate", c);
-                request.getRequestDispatcher("add-category.jsp").forward(request, response);
+                sess.setAttribute("notificationErr", "Please fill all blank.");
+                response.sendRedirect("category");
+            } else if (dao.checkCategoryExist(name.trim()).getCategoryId() != 0) {
+                sess.setAttribute("notificationErr", "Category is already exist");
+                response.sendRedirect("category");
             } else {
                 dao.AddNewCategory(c);
+                sess.setAttribute("notification", "Category add successfully!");
                 response.sendRedirect("category");
             }
+        }else if ("search".equals(service)) {
+            String txtSearch = request.getParameter("txtSearch").trim();
+            String[] listSearch = txtSearch.split(" ");
+            if (listSearch.length > 0) {
+                List<Category> list = dao.searchCategoryByName(listSearch);
+                request.setAttribute("listCate", list);
+                request.setAttribute("txtSearch", txtSearch);
+                request.getRequestDispatcher("category-management.jsp").forward(request, response);
+            } else {
+                List<Category> list = dao.getAllCategories();
+                request.setAttribute("listCate", list);
+                request.setAttribute("txtSearch", txtSearch);
+                request.getRequestDispatcher("category-management.jsp").forward(request, response);
+            }
+
         }
     }
 

@@ -28,9 +28,7 @@ public class BrandManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user == null || !user.getRole().equals("1") || !user.getRole().equals("2")) {
-            response.sendRedirect("/online_shop/home");
-        } else {
+        if (user != null && user.getRole().equals("1") || user != null && user.getRole().equals("2")) {
             if (service == null) {
                 List<Brand> list = dao.getAllBrands();
                 request.setAttribute("listB", list);
@@ -48,6 +46,8 @@ public class BrandManage extends HttpServlet {
                 dao.DeleteBrand(b);
                 response.sendRedirect("brand");
             }
+        } else {
+            response.sendRedirect("/online_shop/home");
         }
 
     }
@@ -70,11 +70,18 @@ public class BrandManage extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("brandId"));
             String name = request.getParameter("brandName").trim().replace("\\s+", " ");
             Brand b = new Brand(id, name);
+            Brand exB = dao.checkBrandExist(name);
             if (name.isEmpty() || name == null || name.equals(" ")) {
                 sess.setAttribute("notificationErr", "Please fill all blank.");
                 response.sendRedirect("brand");
-            } else if (dao.checkBrandExist(name.trim()) == true) {
+            } else if (exB.getBrandName().equals(b.getBrandName())
+                    && exB.getBrandId() != b.getBrandId()) {
                 sess.setAttribute("notificationErr", "Brand is already exist");
+                response.sendRedirect("brand");
+            } else if (exB.getBrandName().equals(b.getBrandName())
+                    && exB.getBrandId() == b.getBrandId()) {
+                dao.UpdateBrand(b);
+                sess.setAttribute("notification", "Brand updated successfully!");
                 response.sendRedirect("brand");
             } else {
                 dao.UpdateBrand(b);
@@ -85,10 +92,11 @@ public class BrandManage extends HttpServlet {
             String name = request.getParameter("brandName").trim().replace("\\s+", " ");
             Brand b = new Brand();
             b.setBrandName(name);
+            Brand exB = dao.checkBrandExist(name);
             if (name.isEmpty() || name == null || name.equals(" ")) {
                 sess.setAttribute("notificationErr", "Please fill all blank.");
                 response.sendRedirect("brand");
-            } else if (dao.checkBrandExist(name.trim()) == true) {
+            } else if (exB.getBrandName().equals(b.getBrandName())) {
                 sess.setAttribute("notificationErr", "Brand is already exist");
                 response.sendRedirect("brand");
             } else {

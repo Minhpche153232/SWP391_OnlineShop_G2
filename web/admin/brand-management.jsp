@@ -159,7 +159,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to activate this product?
+                                        Are you sure you want to activate this brand?
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -174,13 +174,13 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="deactivateModalLabel${product.productId}">Confirm Deactivation</h5>
+                                        <h5 class="modal-title" id="deactivateModalLabel${b.brandId}">Confirm Deactivation</h5>
                                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">×</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Are you sure you want to deactivate this product?
+                                        Are you sure you want to deactivate this brand?
                                     </div>
                                     <div class="modal-footer">
                                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
