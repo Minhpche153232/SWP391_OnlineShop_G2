@@ -24,6 +24,7 @@ public class CategoryDAO extends DBContext {
                 Category category = new Category();
                 category.setCategoryId(rs.getInt("categoryId"));
                 category.setCategoryName(rs.getString("categoryName"));
+                category.setDescription(rs.getString("description"));
                 category.setStatus(rs.getBoolean("status"));
                 categories.add(category);
             }
@@ -45,6 +46,7 @@ public class CategoryDAO extends DBContext {
                 category.setCategoryId(rs.getInt("categoryId"));
                 category.setCategoryName(rs.getString("categoryName"));
                 category.setDescription(rs.getString("description"));
+                category.setStatus(rs.getBoolean("status"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,20 +54,23 @@ public class CategoryDAO extends DBContext {
         return category;
     }
 
-    public boolean checkCategoryExist(String txtName) {
-        Category c = null;
+    public Category checkCategoryExist(String txtName) {
+        Category c = new Category();
         try {
             String query = "SELECT * FROM Category WHERE categoryName = ?";
             ps = conn.prepareStatement(query);
             ps.setString(1, txtName);
             rs = ps.executeQuery();
             while (rs.next()) {
-                return true;
+                c.setCategoryId(rs.getInt("categoryId"));
+                c.setCategoryName(rs.getString("categoryName"));
+                c.setDescription(rs.getString("description"));
+                c.setStatus(rs.getBoolean("status"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return c;
     }
 
     public boolean AddNewCategory(Category c) {
@@ -101,7 +106,8 @@ public class CategoryDAO extends DBContext {
         }
         return false;
     }
-    public boolean DeleteCategory(Category c){
+
+    public boolean DeleteCategory(Category c) {
         try {
             String query = """
                            Update Category set status = ?
@@ -118,14 +124,49 @@ public class CategoryDAO extends DBContext {
         return false;
     }
 
+    public List<Category> searchCategoryByName(String[] listSearch) {
+        List<Category> list = new ArrayList<>();
+        try {
+            conn = new DBContext().conn;
+            StringBuilder query = new StringBuilder();
+            query.append("SELECT * FROM Category");
+            if (listSearch != null && listSearch.length > 0) {
+                query.append(" where ");
+                for (int i = 0; i < listSearch.length; i++) {
+                    query.append("categoryName like ? ");
+                    if (i < listSearch.length - 1) {
+                        query.append(" or ");
+                    }
+                }
+                ps = conn.prepareStatement(query.toString());
+                for (int i = 0; i < listSearch.length; i++) {
+                    ps.setString(i + 1, "%" + listSearch[i] + "%");
+                }
+            }
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Category c = new Category();
+                c.setCategoryId(rs.getInt("categoryId"));
+                c.setCategoryName(rs.getString("categoryName"));
+                c.setDescription(rs.getString("description"));
+                c.setStatus(rs.getBoolean("status"));
+                list.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         CategoryDAO dao = new CategoryDAO();
-        Category c = new Category(3, "Forum", "Adidas Forum");
-        if (dao.checkCategoryExist(c.getCategoryName()) == false) {
-            boolean check = dao.UpdateCategory(c);
-            System.out.println(check);
-        } else {
-            System.out.println("Loi");
+        Category cTmp = new Category(3, "Forum", "Adidas Forum");
+        String txtSearch = "Running";
+        String[] listSearch = txtSearch.split(" ");
+        List<Category> list = dao.searchCategoryByName(listSearch);
+        //System.out.println(list);
+        for (Category c : list) {
+            System.out.println(c);
         }
     }
 }
