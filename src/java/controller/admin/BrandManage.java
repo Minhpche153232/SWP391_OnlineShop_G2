@@ -28,7 +28,7 @@ public class BrandManage extends HttpServlet {
         String service = request.getParameter("service");
         HttpSession sess = request.getSession();
         User user = (User) sess.getAttribute("currentUser");
-        if (user != null && user.getRole().equals("1") || user != null && user.getRole().equals("2")) {
+        if (user == null || !user.getRole().equals("1") || !user.getRole().equals("2")) {
             response.sendRedirect("/online_shop/home");
         } else {
             if (service == null) {
