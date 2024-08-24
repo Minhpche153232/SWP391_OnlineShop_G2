@@ -109,9 +109,10 @@ public class ProductDetail {
 
     @Override
     public String toString() {
-        return "ProductDetail{" + "product=" + product + ", size=" + size + ", color=" + color + ", unitInStock=" + unitInStock + ", image=" + image + '}';
+        return "ProductDetail{" + "product=" + product + ", size=" + size + ", color=" + color + ", unitInStock=" + unitInStock + ", image=" + image + ", productId=" + productId + ", discount=" + discount + '}';
     }
 
+   
     
 
 }

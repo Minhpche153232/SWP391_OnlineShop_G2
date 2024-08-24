@@ -92,8 +92,9 @@ public class OrderItem {
 
     @Override
     public String toString() {
-        return "OrderItem{" + "product=" + product + ", size=" + size + ", color=" + color + ", image=" + image + ", order=" + order + ", totalPrice=" + totalPrice + '}';
+        return "OrderItem{" + "product=" + product + ", size=" + size + ", color=" + color + ", image=" + image + ", order=" + order + ", totalPrice=" + totalPrice + ", quantity=" + quantity + '}';
     }
+
 
   
 }

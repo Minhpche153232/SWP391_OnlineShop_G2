@@ -12,6 +12,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import models.OrderItem;
+import models.ProductDetail;
 import models.User;
 
 /**
@@ -42,6 +45,22 @@ public class changeStatusOrder extends HttpServlet {
             }
             OrderDAO orderDAO = new OrderDAO();
             boolean mess = orderDAO.changeStatus(statusChange, orderId);
+            if(mess && statusChange.equals("success")){
+                List<OrderItem> listItem =  orderDAO.getMyOrder(Integer.parseInt(orderId));
+                List<ProductDetail> listDetail = orderDAO.getProductDetailMyOrder(Integer.parseInt(orderId));
+                for (ProductDetail productDetail : listDetail) {
+                    int unitInStock = productDetail.getUnitInStock();
+                    int quantityOrder = 0;
+                    for (OrderItem i : listItem) {
+                        if(i.getProduct().getProductId() == productDetail.getProductId() &&  (productDetail.getColor() == null ? i.getColor() == null : productDetail.getColor().equals(i.getColor())) &&  productDetail.getSize() == i.getSize()){
+                            quantityOrder = i.getQuantity();
+                            break;
+                        }
+                    }
+                    int quantity = unitInStock - quantityOrder;
+                    orderDAO.changeQuantityProduct(quantity, productDetail.getProductId(), productDetail.getColor(), productDetail.getSize()+"");
+                }
+            }
             response.sendRedirect("admin/order-manager?message=" + mess);
         }
     }

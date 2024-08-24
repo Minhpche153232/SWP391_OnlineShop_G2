@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="order-item row" style="--bs-gutter-x: 0">
                                             <div class="col-2">
-                                                <img style="width: 200px; height: 200px" src="https://product.hstatic.net/200000642007/product/43bld_3asxcdn3n_1_d82520f09e3a4d35bad2314f520ec660_b16b22cbd3a448db96bfb816700253d3_master.jpg" alt="Image" class="img-fluid">
+                                                <img style="width: 200px; height: 200px" src="${i.product.image}" alt="Image" class="img-fluid">
                                             </div>
                                             <div class="product-name col-8" style="padding-top: 20px">
                                                 <h2 class="h5 text-black">${i.product.productName}</h2>
