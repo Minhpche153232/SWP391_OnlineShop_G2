@@ -57,7 +57,7 @@
                             <th>Color</th>
                             <th>Units in Stock</th>
                             <th>Discount</th>
-                            <th>Action</th>
+<!--                            <th>Action</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -104,7 +104,7 @@
                                     </div>
                                 </td>
                                 </td>
-                                <td> 
+<!--                                <td> 
                                     <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal${detail.size}${detail.color}">
                                         <i class="fas fa-trash fa-fw"></i>
                                     </button>
@@ -133,7 +133,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </td>
+                                </td>-->
                             </tr>
                         </c:forEach>
                     </tbody>
