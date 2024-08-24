@@ -1,4 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<style>
+    .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+    .dropdown-menu {
+        margin-top: 0; /* Adjust if needed */
+    }
+</style>
 <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar" style="background-color: #202020 !important">
 
     <div class="container">
@@ -57,6 +67,18 @@
                 <c:if test="${sessionScope.currentUser != null}">
                     <li>
                         <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" type="button" id="dropdownMenuButton" 
+                               aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">Wallet</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <h5 class="dropdown-item">${sessionScope.currentUser.balance} VND</h5>
+                                <a class="dropdown-item" href="wallet?action=deposit">Deposit</a>
+                                <a class="dropdown-item" href="wallet?action=withdraw">Withdraw</a>
+                                <a class="dropdown-item" href="wallet?action=history">History</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="profile" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0"><img src="images/user.svg"></a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <c:if test="${sessionScope.currentUser !=  null}">
@@ -72,20 +94,16 @@
                             </div>
                         </div>
                     </li>
-                    <li>
-                        <div class="dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" type="button"
-                               id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">${sessionScope.currentUser.balance} VND</a>
-                        </div>
-                    </li>
-                    <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
-                </c:if>
-                <c:if test="${sessionScope.currentUser == null}">
+                    <c:if test="${sessionScope.currentUser.role == 3}">
+                        <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${sessionScope.currentUser == null}">
                     <li style="display: flex; align-items: end">
                         <a class="nav-link btn btn-secondary" style="color: white; height: 35px;width:  75px; display: flex;
                            align-items: center;    justify-content: center;" href="login">Login</a></li>
                     <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
-                </c:if>
+                    </c:if>
             </ul>
         </div>
     </div>

@@ -72,6 +72,10 @@
         <servlet-name>AddStaffController</servlet-name>
         <servlet-class>controller.admin.AddStaffController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WalletManage</servlet-name>
+        <servlet-class>controller.WalletManage</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ChangePassword</servlet-name>
         <url-pattern>/ChangePassword</url-pattern>
@@ -151,5 +155,9 @@
     <servlet-mapping>
         <servlet-name>AddStaffController</servlet-name>
         <url-pattern>/admin/addStaff</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WalletManage</servlet-name>
+        <url-pattern>/wallet</url-pattern>
     </servlet-mapping>
 </web-app>

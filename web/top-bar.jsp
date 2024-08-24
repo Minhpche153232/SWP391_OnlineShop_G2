@@ -66,21 +66,36 @@
                         <a class="nav-link" href="home" >Home</a>
                     </li>
                     <li id="shop"><a class="nav-link" href="shop" >Shop</a></li>
-
                 </ul>
+                <c:if test="${sessionScope.currentUser != null}">
+                    <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+
+                    </ul>
+                </c:if>
+
                 <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
                     <c:if test="${sessionScope.currentUser != null}">
                         <li>
                             <div class="dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" type="button" id="dropdownMenuButton" 
+                                   aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0">Wallet</a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <h5 class="dropdown-item">${sessionScope.currentUser.balance} VND</h5>
+                                    <a class="dropdown-item" href="wallet?action=deposit">Deposit</a>
+                                    <a class="dropdown-item" href="wallet?action=withdraw">Withdraw</a>
+                                    <a class="dropdown-item" href="wallet?action=history">History</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="dropdown">
                                 <a class="nav-link dropdown-toggle" href="profile" type="button" id="dropdownMenuButton" aria-haspopup="true" aria-expanded="false" style="margin-bottom: 0"><img src="images/user.svg"></a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <c:if test="${sessionScope.currentUser !=  null}">
-                                        <c:if test="${sessionScope.currentUser.role == 3}">
-                                            <a  class="dropdown-item"  href="order">My order</a>
-                                        </c:if>
-                                        <c:if test="${sessionScope.currentUser.role == 1 or sessionScope.currentUser.role == 2}">
-                                            <a  class="dropdown-item"  href="admin/dashboard">Dashboard</a>
-                                        </c:if>
+                                    <c:if test="${sessionScope.currentUser.role == 3}">
+                                        <a  class="dropdown-item"  href="order">My order</a>
+                                    </c:if>
+                                    <c:if test="${sessionScope.currentUser.role == 1 or sessionScope.currentUser.role == 2}">
+                                        <a  class="dropdown-item"  href="admin/dashboard">Dashboard</a>
                                     </c:if>
                                     <a  class="dropdown-item"  href="profile">Profile</a>
                                     <a class="dropdown-item" href="logout">Logout</a>
@@ -88,12 +103,8 @@
                             </div>
                         </li>
                         <c:if test="${sessionScope.currentUser.role == 3}">
-                            <li>
-                                <a class="nav-link " href="#" type="button"
-                                   style="margin-bottom: 0"><fmt:formatNumber value="${sessionScope.currentUser.balance}" type="number" groupingUsed="true" /> VND</a>
-                            </li>
-                        </c:if>
-                        <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
+                            <li><a class="nav-link" href="cart"><img src="images/cart.svg"></a></li>
+                            </c:if>
                         </c:if>
                         <c:if test="${sessionScope.currentUser == null}">
                         <li style="display: flex; align-items: end">
